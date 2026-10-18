@@ -3,11 +3,13 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>BR Smart Timetable · โรงเรียนบ้านไร่</title>
 <link rel="icon" href="logo.png"><link rel="manifest" href="manifest.json"><meta name="theme-color" content="#f6f7fb"><meta name="description" content="ระบบจัดตารางสอน โรงเรียนบ้านไร่">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preload" as="font" type="font/woff" href="fonts/THSarabunNew.woff" crossorigin><link rel="preload" as="font" type="font/woff" href="fonts/THSarabunNew-Bold.woff" crossorigin>
 <style>
+@font-face{font-family:'TH Sarabun New';font-weight:400;font-style:normal;font-display:swap;src:url(fonts/THSarabunNew.woff) format('woff')}
+@font-face{font-family:'TH Sarabun New';font-weight:700;font-style:normal;font-display:swap;src:url(fonts/THSarabunNew-Bold.woff) format('woff')}
 :root{--ink:#101d3f;--ink2:#1b2c5c;--blue:#27409f;--sky:#eceff8;--gold:#e8a900;--ruby:#c2303f;--mint:#1f8a70;--bg:#f5f2ea;--card:#fffdf8;--line:#e4ddcf;--tx:#1d2336;--mut:#767a8c}
 *{box-sizing:border-box}
-body{margin:0;font-family:'IBM Plex Sans Thai',system-ui,sans-serif;background:var(--bg);color:var(--tx);font-size:14px;line-height:1.5;font-variant-numeric:tabular-nums}
+body{margin:0;font-family:'TH Sarabun New','Sarabun','Noto Sans Thai',system-ui,sans-serif;background:var(--bg);color:var(--tx);font-size:14px;line-height:1.5;font-variant-numeric:tabular-nums}
 button,select,input,textarea{font:inherit;color:inherit}
 .shell{display:grid;grid-template-columns:264px 1fr;min-height:100vh}
 .side{background:var(--ink);color:#c5cce6;padding:18px 12px;display:flex;flex-direction:column;gap:2px;position:sticky;top:0;height:100vh;overflow-y:auto}
@@ -65,7 +67,7 @@ table.t{width:100%;border-collapse:collapse}.t th,.t td{padding:9px 8px;border-b
 .wel h1{color:#fff;font-size:clamp(28px,6vw,46px);margin:0}.wf{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}.wf span{padding:5px 13px;border-radius:6px;border:1px solid #ffffff33;font-size:13px}
 .wn b{color:var(--gold);font-size:22px}.cr{text-align:center;color:var(--mut);font-size:12px;padding:18px 0 4px}
 @media(max-width:820px){.shell{grid-template-columns:1fr}.side{position:fixed;inset:auto 0 0 0;height:auto;flex-direction:row;padding:6px 4px calc(6px + env(safe-area-inset-bottom));z-index:40;gap:0;overflow:visible;border-top:1px solid #ffffff22}.brand,.term,.grp,.sub2,.me,.nav small,.legend{display:none}.nav{flex-direction:column;gap:2px;padding:6px 2px;font-size:10.5px;text-align:center;flex:1}.nav.on::before{display:none}.badge{position:absolute;top:0;right:6px;margin:0}main{padding:18px 14px 96px}.toast{bottom:84px}}
-@media print{@page{size:A4 landscape;margin:10mm}body{background:#fff}.side,.noprint,.toast,.mask,.legend{display:none!important}.shell{display:block}main{padding:0;max-width:none}.sheet{border:0;padding:0;margin:0;break-after:page;page-break-after:always}.sheet:last-child{break-after:auto}.gridw{border:0;overflow:visible}table.g{border-collapse:collapse;min-width:0}.g th,.g td{border:1px solid #444!important;height:50px}.g thead th,.g tbody th{background:#eee!important;color:#000;position:static}.blk{background:#fff!important;border:0;border-left:3px solid #000}.blk b,.blk small{color:#000!important}.sheet::after{content:'BR Smart Timetable · พัฒนาโดย ครูเฉลิมพล จันทร์แดง · โรงเรียนบ้านไร่';display:block;text-align:center;font-size:10px;color:#555;margin-top:8px}}
+@media print{body{background:#fff}.side,.noprint,.toast,.mask,.legend{display:none!important}.shell{display:block}main{padding:0;max-width:none}.gridw{border:0;overflow:visible}}
 /* v2.1 light premium */
 :root{--ink:#111827;--ink2:#1f2937;--blue:#3b5bfd;--gold:#f5a524;--ruby:#e5484d;--mint:#12a594;--bg:#f6f7fb;--card:#fff;--line:#e8eaf1;--tx:#111827;--mut:#6b7280;--r:18px}
 .side{background:#fff;color:#4b5563;border-right:1px solid var(--line);padding:20px 14px}
@@ -96,6 +98,43 @@ td.empty:hover{background:#fff8e6}
 @media print{.sheet,.gridw{box-shadow:none}}
 details.man{background:var(--card);border:1px solid var(--line);border-radius:var(--r);margin-bottom:12px;padding:0 20px}details.man summary{cursor:pointer;padding:16px 0;font-weight:600;font-size:16px;color:var(--ink);list-style:none;display:flex;justify-content:space-between}details.man summary::after{content:'+';font-size:20px;color:var(--mut)}details.man[open] summary::after{content:'–'}details.man>div{padding:0 0 18px;line-height:1.75}details.man ul,details.man ol{margin:0;padding-left:22px}details.man li{margin-bottom:6px}
 @media print{details.man{border:0;break-inside:avoid}details.man summary::after{display:none}}
+/* v2.6 : ฟอนต์ฝัง TH Sarabun New · กระดาษพรีวิว · ช่องตารางปรับขนาดอัตโนมัติ */
+body{font-size:18px;line-height:1.35}
+.brand b{font-size:17px}.brand small{font-size:14px}.term{font-size:14px}.grp{font-size:13px}.nav small{font-size:14px}.badge{font-size:13px}.sub2 button{font-size:15px}.me{font-size:14px}
+h1{font-size:32px}h2{font-size:20px}.stat b{font-size:38px}.stat span{font-size:15px}.hint{font-size:15px}.chip em{font-size:14px}.t th{font-size:15px}.tag{font-size:14px}.legend{font-size:14px}.cr{font-size:14px}.wf span{font-size:15px}.btn.big{font-size:19px}
+.g thead th{font-size:16px}.g th small{font-size:13px}.ghost{font-size:13px}td.brk{font-size:14px}
+@media(max-width:820px){.nav{font-size:12.5px}}
+.g td{position:relative;padding:0}
+.cin{position:absolute;inset:3px;display:flex;flex-direction:column;gap:2px}
+.blk{flex:1;min-height:0;height:auto;margin:0;overflow:hidden;font-size:15px;line-height:1.2;padding:3px 7px;display:flex;flex-direction:column;justify-content:center;overflow-wrap:anywhere}
+.blk b{font-size:1em;line-height:1.15}.blk small{display:block;font-size:.88em;line-height:1.15}.blk .cd{font-style:normal;font-weight:400;font-size:.85em;opacity:.75}
+.copan{display:flex;gap:6px 14px;flex-wrap:wrap;align-items:center;padding:8px 0;border-bottom:1px dashed var(--line)}.copan>span{color:var(--mut)}.ck{display:inline-flex;align-items:center;gap:5px;cursor:pointer}.ck input{width:auto}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-bottom:14px}.fgrid label{display:grid;gap:4px;color:var(--mut)}
+.pv{width:100%;overflow:hidden;margin:0 0 16px;position:relative}.pv.full{overflow:auto}
+.pv>.sheet{width:297mm;height:209mm;padding:8mm 10mm;margin:0;display:flex;flex-direction:column;background:#fff;overflow:hidden;border-radius:6px}
+.pv>.sheet header{flex:none;height:20mm;margin:0 0 2mm;gap:12px}.pv>.sheet header img{width:17mm;height:17mm;object-fit:contain}.pv>.sheet header>div{line-height:1.25}.pv>.sheet header b{font-size:21px}
+.pv>.sheet .gridw{flex:none;border:0;border-radius:0;box-shadow:none;overflow:hidden}
+.pv>.sheet table.g{min-width:0;width:100%}
+.pv>.sheet .blk{font-size:19px}
+.pv>.sheet .g thead th{height:10mm;padding:1mm 2px;font-size:15px;line-height:1.1}
+.pv>.sheet .g tbody th,.pv>.sheet .g tbody td{height:26mm}.pv>.sheet .g tbody th{width:20mm;font-size:16px}
+.pv>.sheet .g th,.pv>.sheet .g td{border-right:1px solid #444;border-bottom:1px solid #444}.pv>.sheet .g thead th{border-top:1px solid #444}.pv>.sheet .g th:first-child{border-left:1px solid #444}
+.pv>.sheet .g{border:0}
+.pv>.sheet footer{flex:none;height:24mm;margin:2mm 0 0;align-items:end}
+.pv>.sheet .credit{flex:none;text-align:center;font-size:12px;color:#666;margin-top:auto;padding-top:1mm}
+.sig{font-size:16px;line-height:1.25}
+@media print{
+@page{size:A4 landscape;margin:8mm 10mm}
+html,body{background:#fff}.cr{display:none!important}
+*{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.pv{height:auto!important;overflow:visible;margin:0}.pv+.pv{break-before:page;page-break-before:always}
+.pv>.sheet{transform:none!important;width:277mm;height:193mm;padding:0;border:0;box-shadow:none;border-radius:0}
+.sheet{border:0;box-shadow:none;padding:0;margin:0}
+.rep .t th,.rep .t td{padding:2px 8px;font-size:15px}.rep header{margin-bottom:4px}.rep footer{margin-top:8px}
+table.g{border-collapse:collapse;min-width:0}.g th,.g td{border:1px solid #444!important}
+.g thead th,.g tbody th{background:#eee!important;color:#000;position:static}
+.blk{background:#fff!important;border:0;border-left:3px solid #000;box-shadow:none;border-radius:0}.blk b,.blk small,.blk .cd{color:#000!important}
+}
 </style></head><body><div id="app"></div><div id="modal"></div>
 <script>
 const D=['จันทร์','อังคาร','พุธ','พฤหัสบดี','ศุกร์'],$=s=>document.querySelector(s);
@@ -120,8 +159,22 @@ function render(){
  const V={dash:vDash,tt:vTT,print:vPrint,sub:vSub,data:vData,ver:vVer,help:vHelp,auto:vAuto}[S.view]();
  const sub=Object.keys(TN).filter(x=>x!='users').map(x=>`<button class="${S.tab==x?'on':''}" data-act="tab" data-v="${x}">${TN[x]}</button>`).join('');
  const nav=NAV.map(([g,it])=>`<div class="grp">${g}</div>`+it.map(([k,t,s,i])=>`<button class="nav ${S.view==k?'on':''}" data-act="nav" data-v="${k}"><svg viewBox="0 0 24 24"><path d="${IC[i]}"/></svg><span>${t}<small>${s}</small></span>${bd[k]||''}</button>${k=='data'&&S.view=='data'?`<div class="sub2">${sub}</div>`:''}`).join('')).join('');
- $('#app').innerHTML=`<div class="shell"><aside class="side"><div class="brand"><img src="logo.png" alt=""><b>BR Smart Timetable<small>โรงเรียนบ้านไร่</small></b></div><div class="term">${term()}</div>${nav}<div class="me"><a href="#" data-act="logout">← หน้าต้อนรับ</a><div class="credit">พัฒนาโดย<br>ครูเฉลิมพล จันทร์แดง<br>โรงเรียนบ้านไร่</div></div></aside><main>${V}<div class="cr noprint">BR Smart Timetable v2.0 · พัฒนาโดย ครูเฉลิมพล จันทร์แดง · โรงเรียนบ้านไร่ สพป.เชียงใหม่ เขต 5</div></main></div>`}
+ $('#app').innerHTML=`<div class="shell"><aside class="side"><div class="brand"><img src="logo.png" alt=""><b>BR Smart Timetable<small>โรงเรียนบ้านไร่</small></b></div><div class="term">${term()}</div>${nav}<div class="me"><a href="#" data-act="logout">← หน้าต้อนรับ</a><div class="credit">พัฒนาโดย<br>ครูเฉลิมพล จันทร์แดง<br>โรงเรียนบ้านไร่</div></div></aside><main>${V}<div class="cr noprint">BR Smart Timetable v2.6 · พัฒนาโดย ครูเฉลิมพล จันทร์แดง · โรงเรียนบ้านไร่ สพป.เชียงใหม่ เขต 5</div></main></div>`;afterRender()}
 
+const esc=x=>String(x??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const SS=(k,d='')=>{const v=(S.d.settings||{})[k];return v==null||v===''?d:v};
+const schoolInfo=()=>({school:SS('school','โรงเรียนบ้านไร่'),office:SS('office','สพป.เชียงใหม่ เขต 5'),director:SS('director'),academic:SS('academic'),credit:SS('showcredit','1')!='0'});
+const CO0={class:{subject:1,code:0,teacher:1,class:0,room:0},teacher:{subject:1,code:0,teacher:0,class:1,room:1},room:{subject:1,code:0,teacher:1,class:1,room:0}};
+const COL=[['subject','วิชา'],['code','รหัสวิชา'],['teacher','ชื่อครู'],['class','ชั้น'],['room','ห้อง']],MODEN={class:'ตารางรายชั้น',teacher:'ตารางรายครู',room:'ตารางรายห้อง'};
+function getCO(){let u={};try{u=JSON.parse(SS('cellopts','{}'))||{}}catch(e){}return Object.fromEntries(Object.keys(CO0).map(m=>[m,{...CO0[m],...(u[m]||{})}]))}
+function getHR(){try{return JSON.parse(SS('homerooms','{}'))||{}}catch(e){return{}}}
+const hrNames=cid=>(getHR()[cid]||[]).filter(Boolean).map(i=>by(S.d.teachers,i)?.name).filter(Boolean).join(' และ ');
+const hrOf=tid=>S.d.classes.filter(c=>(getHR()[c.id]||[]).includes(+tid)).map(c=>c.name).join(', ');
+function coPanel(modes){const o=getCO();return modes.map(m=>`<div class="copan"><b>${MODEN[m]}</b><span>แสดงในช่อง:</span>${COL.map(([k,t])=>`<label class="ck"><input type="checkbox" data-co="${m}.${k}" ${o[m][k]?'checked':''} ${canEdit()?'':'disabled'}> ${t}</label>`).join('')}</div>`).join('')}
+function fitBlocks(){document.querySelectorAll('.blk').forEach(b=>{b.style.fontSize='';let fs=parseFloat(getComputedStyle(b).fontSize),g=0;while((b.scrollHeight>b.clientHeight+1||b.scrollWidth>b.clientWidth+1)&&fs>7&&g++<60){fs-=.5;b.style.fontSize=fs+'px'}})}
+function fitPaper(){document.querySelectorAll('.pv').forEach(pv=>{const sh=pv.firstElementChild;sh.style.transform='';pv.style.height='';const full=S.pz=='full',W=sh.offsetWidth,H=sh.offsetHeight,k=full?1:Math.min(1,pv.clientWidth/W);pv.classList.toggle('full',full);sh.style.transformOrigin='0 0';if(k<1)sh.style.transform=`scale(${k})`;pv.style.height=Math.ceil(H*k)+2+'px'})}
+function afterRender(){fitPaper();fitBlocks()}
+addEventListener('resize',()=>fitPaper());document.fonts?.addEventListener?.('loadingdone',()=>{fitBlocks();fitPaper()});
 function conflicts(){const o=[],seen={t:{},r:{},c:{}},nm={t:'ครูชนคาบ',r:'ห้องชนคาบ',c:'ชั้นเรียนซ้อนคาบ'};
  for(const e of S.d.entries)for(const [k,v] of [['t',e.teacher_id],['t',e.teacher2_id],['r',e.room_id],['c',e.class_id]]){if(!v)continue;const key=v+'|'+e.day+'|'+e.period;if(seen[k][key])o.push({e,msg:`${nm[k]} · ${by(S.d.classes,e.class_id)?.name} ${D[e.day-1]} คาบ ${by(S.d.periods,e.period)?.label}`});else seen[k][key]=1}
  return o}
@@ -134,19 +187,25 @@ function vTT(){const d=S.d,m=S.mode,pc=s=>d.entries.filter(e=>e.class_id==S.sel&
  return `<h1>จัดตารางสอน</h1><p class="sub">${canEdit()?'ลากวิชาไปวางในช่องว่าง หรือแตะช่องว่าง/คาบเพื่อแก้ไข':'โหมดอ่านอย่างเดียว'}</p><div class="bar noprint"><select data-ch="mode"><option value="class" ${m=='class'?'selected':''}>รายชั้นเรียน</option><option value="teacher" ${m=='teacher'?'selected':''}>รายครู</option><option value="room" ${m=='room'?'selected':''}>รายห้อง</option></select><select data-ch="sel">${opts(l,S.sel)}</select><input id="q" placeholder="ค้นหาวิชา/ครู/ห้อง" style="width:170px"><button class="btn" data-act="check">ตรวจตาราง</button><button class="btn" data-act="printcur">🖨 พิมพ์ตารางนี้</button><button class="btn" data-act="undo" ${S.un.length?'':'disabled'}>↶ Undo</button><button class="btn" data-act="redo" ${S.re.length?'':'disabled'}>↷ Redo</button>${S.clip?'<button class="btn gold" data-act="noclip">ยกเลิกคัดลอก</button>':''}</div>
  ${m=='class'&&canEdit()?`<div class="pal">วิชา:${d.subjects.length?d.subjects.map(s=>`<span class="chip ${s.periods&&pc(s)>=s.periods?'done':''}" draggable="true" data-drag="S:${s.id}" style="--h:${col(s.name)}">${s.name}<em>${pc(s)}${s.periods?'/'+s.periods:''}</em></span>`).join(''):' ยังไม่มีรายวิชา'}</div>`:''}${m=='class'&&canEdit()?'<p class="hint">ลากวิชาไปวางในช่องว่าง · ระหว่างลากจะเห็นเงาจางของคาบที่ชั้นอื่นใช้อยู่ ป้องกันครูหรือห้องซ้อนกัน</p>':''}${grid(m,S.sel,true)}`}
 const tnm=e=>[e.teacher_id,e.teacher2_id].filter(Boolean).map(i=>by(S.d.teachers,i)?.name).filter(Boolean).join(' / ');
-function blk(e,m,ui){const s=by(S.d.subjects,e.subject_id),t={name:tnm(e)},c=by(S.d.classes,e.class_id),r=by(S.d.rooms,e.room_id);
- return `<div class="blk" ${ui?`data-act="edit" data-id="${e.id}" ${m=='class'?`draggable="true" data-drag="E:${e.id}"`:''}`:''} style="--h:${col(s?.name)}"><b>${s?.name||'-'}</b><small>${m=='class'?t?.name||'':m=='room'?(c?.name||'')+' · '+(t?.name||''):c?.name||''}${r&&m!='room'?' · '+r.name:''}</small></div>`}
+function blk(e,m,ui){const s=by(S.d.subjects,e.subject_id),c=by(S.d.classes,e.class_id),r=by(S.d.rooms,e.room_id),o=getCO()[m],L=[];
+ if(o.subject||o.code)L.push(`<b>${o.subject?esc(s?.name||'-'):''}${o.code&&s?.code?`<i class="cd">${o.subject?' ':''}${esc(s.code)}</i>`:''}</b>`);
+ const tn=o.teacher?tnm(e):'';if(tn)L.push(`<small>${esc(tn)}</small>`);
+ const x=[o.class&&c?.name,o.room&&r?.name].filter(Boolean).join(' · ');if(x)L.push(`<small>${esc(x)}</small>`);
+ if(!L.length)L.push('<b>-</b>');
+ return `<div class="blk" ${ui?`data-act="edit" data-id="${e.id}" ${m=='class'?`draggable="true" data-drag="E:${e.id}"`:''}`:''} style="--h:${col(s?.name)}">${L.join('')}</div>`}
 function grid(m,id,ui){const P=S.d.periods,u=ui&&canEdit();
- return `<div class="gridw"><table class="g"><thead><tr><th>วัน</th>${P.map(p=>`<th>${p.is_break?p.label:'คาบ '+p.label}<small>${p.start||''}${p.end?'–'+p.end:''}</small></th>`).join('')}</tr></thead><tbody>${D.map((n,i)=>`<tr><th class="${new Date().getDay()==i+1?'tod':''}">${n}</th>${P.map(p=>{if(+p.is_break)return `<td class="brk">${p.label}</td>`;const es=S.d.entries.filter(e=>e.day==i+1&&e.period==p.id&&(m=='class'?e.class_id==id:m=='room'?e.room_id==id:(e.teacher_id==id||e.teacher2_id==id)));return `<td class="${es.length?'':'empty'}" ${u&&m=='class'?`data-d="${i+1}" data-p="${p.id}"`:''}>${es.map(e=>blk(e,m,u)).join('')}</td>`}).join('')}</tr>`).join('')}</tbody></table></div>`}
+ return `<div class="gridw"><table class="g"><thead><tr><th>วัน</th>${P.map(p=>`<th>${p.is_break?p.label:'คาบ '+p.label}<small>${p.start||''}${p.end?'–'+p.end:''}</small></th>`).join('')}</tr></thead><tbody>${D.map((n,i)=>`<tr><th class="${new Date().getDay()==i+1?'tod':''}">${n}</th>${P.map(p=>{if(+p.is_break)return `<td class="brk">${p.label}</td>`;const es=S.d.entries.filter(e=>e.day==i+1&&e.period==p.id&&(m=='class'?e.class_id==id:m=='room'?e.room_id==id:(e.teacher_id==id||e.teacher2_id==id)));return `<td class="${es.length?'':'empty'}" ${u&&m=='class'?`data-d="${i+1}" data-p="${p.id}"`:''}>${es.length?`<div class="cin">${es.map(e=>blk(e,m,u)).join('')}</div>`:''}</td>`}).join('')}</tr>`).join('')}</tbody></table></div>`}
 function busyAt(day,per,ex){const t={},r={};for(const x of S.d.entries)if(x.day==day&&x.period==per&&x.id!=ex){const cn=by(S.d.classes,x.class_id)?.name||'';if(x.teacher_id)t[x.teacher_id]=cn;if(x.teacher2_id)t[x.teacher2_id]=cn;if(x.room_id)r[x.room_id]=cn}return{t,r}}
 function entryModal(e){const d=S.d,b=busyAt(e.day,e.period,e.id);S.ed=e;
  if(!e.teacher_id){const c={};d.entries.filter(x=>x.subject_id==e.subject_id).forEach(x=>c[x.teacher_id]=(c[x.teacher_id]||0)+(x.class_id==e.class_id?5:1));const p=Object.keys(c).filter(k=>!b.t[k]).sort((a,z)=>c[z]-c[a])[0];if(p)e.teacher_id=+p}
  const so=(l,m,s)=>l.map(x=>`<option value="${x.id}" ${x.id==s?'selected':''} ${m[x.id]?'disabled':''}>${x.name}${m[x.id]?' — ติดสอน '+m[x.id]:''}</option>`).join('');
  modal(`<h3>${e.id?'แก้ไขคาบ':'เพิ่มคาบ'} · ${D[e.day-1]} คาบ ${by(d.periods,e.period).label}</h3><label>วิชา<select id="f1">${opts(d.subjects,e.subject_id)}</select></label><label>ครู (ครูที่ติดคาบนี้เลือกไม่ได้)<select id="f2"><option value="">เลือกครู</option>${so(d.teachers,b.t,e.teacher_id)}</select></label><label>ครูคนที่ 2 (ถ้ามี เช่น ชั้นที่มีครูประจำชั้น 2 คน)<select id="f4"><option value="">-</option>${so(d.teachers,b.t,e.teacher2_id)}</select></label><label>ห้อง (ถ้ามี)<select id="f3"><option value="">-</option>${so(d.rooms,b.r,e.room_id)}</select></label><div class="row"><button class="btn pri" data-act="saveE">บันทึก</button>${e.id?'<button class="btn" data-act="copyE">คัดลอก</button><button class="btn dng" data-act="delE">ลบคาบ</button>':''}<button class="btn" data-act="close">ยกเลิก</button></div>`)}
 
-function vPrint(){if(S.pm=='report')return reportH();const d=S.d,pm=S.pm,one=pm.endsWith('1'),isT=pm.startsWith('teacher'),isR=pm.startsWith('room'),l=isT?d.teachers:isR?d.rooms:d.classes;if(!by(l,S.ps))S.ps=l[0]?.id;
- const sheet=x=>{const n=d.entries.filter(e=>isT?(e.teacher_id==x.id||e.teacher2_id==x.id):isR?e.room_id==x.id:e.class_id==x.id).length;return `<section class="sheet"><header><img src="logo.png" alt=""><div><b>โรงเรียนบ้านไร่</b> สพป.เชียงใหม่ เขต 5<br>${isT?'ตารางสอนครู':isR?'ตารางการใช้ห้อง':'ตารางเรียนชั้น'} <b>${x.name}</b> · ${term()}</div></header>${grid(isT?'teacher':isR?'room':'class',x.id,false)}<footer><div>รวม ${n} คาบ/สัปดาห์</div><div class="sig"><i></i>ผู้อำนวยการโรงเรียน</div><div class="sig"><i></i>ฝ่ายวิชาการ</div></footer></section>`};
- return `<div class="noprint"><h1>พิมพ์ตารางสอน</h1><p class="sub">A4 แนวนอน · ขึ้นหน้าใหม่ทุกรายการ · บันทึกเป็น PDF ได้จากหน้าต่างพิมพ์</p><div class="bar"><select data-ch="pm">${PM.map(o=>`<option value="${o[0]}" ${pm==o[0]?'selected':''}>${o[1]}</option>`).join('')}</select>${one?`<select data-ch="ps">${opts(l,S.ps)}</select>`:''}<button class="btn gold" data-act="print">🖨 พิมพ์ / บันทึก PDF</button></div></div>${(one?l.filter(x=>x.id==S.ps):l).map(sheet).join('')||'<p class="sub">ยังไม่มีข้อมูล</p>'}`}
+function vPrint(){if(S.pm=='report')return reportH();const d=S.d,pm=S.pm,one=pm.endsWith('1'),isT=pm.startsWith('teacher'),isR=pm.startsWith('room'),mode=isT?'teacher':isR?'room':'class',l=isT?d.teachers:isR?d.rooms:d.classes,si=schoolInfo();if(!by(l,S.ps))S.ps=l[0]?.id;
+ const sig=(n,t)=>`<div class="sig"><i></i>${n?`(${esc(n)})<br>`:''}${t}</div>`;
+ const sheet=x=>{const n=d.entries.filter(e=>isT?(e.teacher_id==x.id||e.teacher2_id==x.id):isR?e.room_id==x.id:e.class_id==x.id).length,hr=isT?(hrOf(x.id)?'ครูประจำชั้น '+hrOf(x.id):''):isR?'':(hrNames(x.id)?'ครูประจำชั้น: '+hrNames(x.id):'');
+  return `<div class="pv"><section class="sheet"><header><img src="logo.png" alt=""><div><b>${esc(si.school)}</b> ${esc(si.office)}<br>${isT?'ตารางสอนครู':isR?'ตารางการใช้ห้อง':'ตารางเรียนชั้น'} <b>${esc(x.name)}</b> · ${term()}${hr?`<br>${esc(hr)}`:''}</div></header>${grid(mode,x.id,false)}<footer><div>รวม ${n} คาบ/สัปดาห์</div>${sig(si.director,'ผู้อำนวยการโรงเรียน')}${sig(si.academic,'ฝ่ายวิชาการ')}</footer>${si.credit?'<div class="credit">BR Smart Timetable · พัฒนาโดย ครูเฉลิมพล จันทร์แดง · โรงเรียนบ้านไร่</div>':''}</section></div>`};
+ return `<div class="noprint"><h1>พิมพ์ตารางสอน</h1><p class="sub">ตัวอย่างตรงกับกระดาษ A4 แนวนอน · ขึ้นหน้าใหม่ทุกรายการ · บันทึกเป็น PDF ได้จากหน้าต่างพิมพ์</p><div class="bar"><select data-ch="pm">${PM.map(o=>`<option value="${o[0]}" ${pm==o[0]?'selected':''}>${o[1]}</option>`).join('')}</select>${one?`<select data-ch="ps">${opts(l,S.ps)}</select>`:''}<button class="btn" data-act="pzoom">${S.pz=='full'?'🔍 ย่อให้พอดีจอ':'🔍 ดูขนาดจริง'}</button><button class="btn gold" data-act="print">🖨 พิมพ์ / บันทึก PDF</button></div><details class="man" style="padding:0 16px"><summary style="font-size:16px;padding:10px 0">ปรับข้อมูลที่แสดงในช่องตาราง (${MODEN[mode]})</summary><div>${coPanel([mode])}<p class="hint" style="margin:8px 0 0">ตัวอักษรจะย่อให้พอดีช่องอัตโนมัติ · ตั้งค่าทุกประเภทได้ที่ ข้อมูลพื้นฐาน → ตั้งค่าโรงเรียน</p></div></details></div>${(one?l.filter(x=>x.id==S.ps):l).map(sheet).join('')||'<p class="sub">ยังไม่มีข้อมูล</p>'}`}
 
 function vSub(){const d=S.d,dow=new Date(S.sd+'T00:00:00Z').getUTCDay(),pi=id=>d.periods.findIndex(p=>p.id==id);
  const es=d.entries.filter(e=>e.day==dow).sort((a,b)=>pi(a.period)-pi(b.period)),act=(e)=>d.subs.find(s=>s.entry_id==e.id&&s.date==S.sd&&s.status=='approved');
@@ -158,19 +217,24 @@ function subModal(id){const d=S.d,e=by(d.entries,id),busy=new Set(d.entries.filt
  modal(`<h3>จัดสอนแทน · ${by(d.classes,e.class_id)?.name} ${by(d.subjects,e.subject_id)?.name}</h3><label>ครูที่ว่างในคาบนี้<select id="f1">${opts(free)}</select></label><label>เหตุผล<textarea id="f2" rows="2" placeholder="เช่น ลาป่วย / ไปราชการ"></textarea></label><div class="row"><button class="btn pri" data-act="subsave" ${free.length?'':'disabled'}>บันทึก</button><button class="btn" data-act="close">ยกเลิก</button></div>${free.length?'':'<small>ไม่มีครูว่างในคาบนี้</small>'}`)}
 
 const F={teachers:[['name','ชื่อครู'],['load','ภาระงาน (คาบ)','number']],subjects:[['code','รหัสวิชา'],['name','ชื่อวิชา'],['periods','คาบ/สัปดาห์','number']],classes:[['name','ชั้นเรียน']],rooms:[['name','ห้อง']],periods:[['label','ชื่อคาบ'],['start','เริ่ม','time'],['end','สิ้นสุด','time'],['is_break','พัก (1=ใช่)','number']]};
-const TN={teachers:'ครู',subjects:'รายวิชา',assignments:'การมอบหมายสอน',classes:'ชั้นเรียน',rooms:'ห้อง',periods:'คาบ/เวลา',users:'บัญชีผู้ใช้',settings:'ปีการศึกษา'};
+const TN={teachers:'ครู',subjects:'รายวิชา',assignments:'การมอบหมายสอน',classes:'ชั้นเรียน',rooms:'ห้อง',periods:'คาบ/เวลา',users:'บัญชีผู้ใช้',settings:'ตั้งค่าโรงเรียน'};
+function setH(){const d=S.d,si=schoolInfo(),on=canEdit(),dis=on?'':'disabled',tsel=(cid,i)=>`<select data-hr="${cid}.${i}" ${dis}><option value="">-</option>${opts(d.teachers,(getHR()[cid]||[])[i])}</select>`;
+ return `<h2>ปีการศึกษาและข้อมูลโรงเรียน</h2><div class="fgrid"><label>ปีการศึกษา<input id="yr" value="${esc(d.settings.year||'')}" ${dis}></label><label>ภาคเรียน<input id="tm" value="${esc(d.settings.term||'')}" ${dis}></label><label>ชื่อโรงเรียน<input id="sc" value="${esc(si.school)}" ${dis}></label><label>สังกัด<input id="of" value="${esc(si.office)}" ${dis}></label><label>ชื่อผู้อำนวยการ (พิมพ์ใต้ลายเซ็น)<input id="dr" value="${esc(si.director)}" placeholder="เช่น นายสมชาย ใจดี" ${dis}></label><label>ชื่อฝ่ายวิชาการ (พิมพ์ใต้ลายเซ็น)<input id="ac" value="${esc(si.academic)}" placeholder="เช่น นางสาวสมหญิง รักเรียน" ${dis}></label></div><label class="ck"><input type="checkbox" id="scr" ${si.credit?'checked':''} ${dis}> แสดงเครดิตผู้พัฒนาท้ายตารางที่พิมพ์</label>
+ <h2 style="margin-top:22px">ครูประจำชั้น</h2><table class="t"><tr><th>ชั้น</th><th>ครูประจำชั้นคนที่ 1</th><th>ครูประจำชั้นคนที่ 2 (ถ้ามี)</th></tr>${d.classes.map(c=>`<tr><td>${esc(c.name)}</td><td>${tsel(c.id,0)}</td><td>${tsel(c.id,1)}</td></tr>`).join('')||'<tr><td colspan="3">ยังไม่มีชั้นเรียน</td></tr>'}</table>
+ <h2 style="margin-top:22px">ข้อมูลที่แสดงในช่องตารางสอน</h2><p class="hint">เลือกได้แยกตามประเภทตาราง ใช้ทั้งหน้าจอและตอนพิมพ์ ตัวอักษรย่อให้พอดีช่องอัตโนมัติ</p>${coPanel(['class','teacher','room'])}
+ ${on?'<div class="bar" style="margin-top:16px"><button class="btn pri" data-act="saveset">บันทึกการตั้งค่า</button></div>':''}`}
 function vData(){const t=S.tab,tabs=Object.keys(TN).filter(k=>k!='users');if(!tabs.includes(t))S.tab=t=tabs[0];let body='';
  if(F[t]){const f=F[t],row=(r)=>`<tr data-t="${t}" data-id="${r.id||''}">${f.map(c=>`<td><input data-k="${c[0]}" type="${c[2]||'text'}" value="${r[c[0]]??''}" ${canEdit()?'':'disabled'}></td>`).join('')}<td>${canEdit()?(r.id?`<button class="btn dng" data-act="del" data-t="${t}" data-id="${r.id}">ลบ</button>`:`<button class="btn pri" data-act="add">เพิ่ม</button>`):''}</td></tr>`;
   body=`<table class="t"><tr>${f.map(c=>`<th>${c[1]}</th>`).join('')}<th></th></tr>${S.d[t].map(row).join('')}${canEdit()?row({}):''}</table><p class="sub">แก้ไขช่องแล้วระบบบันทึกอัตโนมัติ</p>`}
  else if(t=='assignments')body=asgH();
- else if(t=='settings')body=`<div class="bar"><label>ปีการศึกษา <input id="yr" value="${S.d.settings.year||''}"></label><label>ภาคเรียน <input id="tm" value="${S.d.settings.term||''}"></label><button class="btn pri" data-act="saveset">บันทึก</button></div>`;
+ else if(t=='settings')body=setH();
  else body=`<table class="t"><tr><th>ชื่อผู้ใช้</th><th>ชื่อ</th><th>บทบาท</th></tr>${S.d.users.map(u=>`<tr><td>${u.username}</td><td>${u.name}</td><td>${u.role}</td></tr>`).join('')}</table><h2 style="margin-top:18px">เพิ่ม/รีเซ็ตรหัสผ่านผู้ใช้</h2><div class="bar"><input id="u1" placeholder="ชื่อผู้ใช้"><input id="u2" placeholder="ชื่อ-สกุล"><input id="u3" type="password" placeholder="รหัสผ่าน (≥6)"><select id="u4"><option value="academic">ฝ่ายวิชาการ</option><option value="teacher">ครู</option><option value="viewer">ผู้บริหาร</option><option value="admin">ผู้ดูแลระบบ</option></select><button class="btn pri" data-act="saveuser">บันทึก</button></div>`;
  return `<h1>ข้อมูลพื้นฐาน</h1><p class="sub">ข้อมูลกลางเก็บบน Cloudflare D1 ใช้ร่วมกันทุกอุปกรณ์</p><div class="tabs">${tabs.map(k=>`<button class="btn ${k==t?'on':''}" data-act="tab" data-v="${k}">${TN[k]}</button>`).join('')}</div><div class="card" style="overflow-x:auto">${body}</div>`}
 
 const PM=[['teacher1','ตารางครูรายบุคคล'],['teacherN','ครูทุกคน (แยกหน้า)'],['class1','ตารางรายชั้น'],['classN','ทุกชั้น (แยกหน้า)'],['room1','ตารางห้อง (รายห้อง)'],['roomN','ทุกห้อง (แยกหน้า)'],['report','รายงานฝ่ายวิชาการ']];
 function snap(){S.un.push(JSON.stringify(S.d.entries));if(S.un.length>30)S.un.shift();S.re=[]}
 function reportH(){const d=S.d,slots=d.periods.filter(p=>!+p.is_break).length*5,cf=conflicts().length,pub=d.versions.find(v=>v.status=='published'),sb=d.subs.filter(s=>s.status=='approved').length;
- return `<div class="noprint"><h1>พิมพ์ตารางสอน</h1><p class="sub">รายงานฝ่ายวิชาการ · A4 แนวนอน</p><div class="bar"><select data-ch="pm">${PM.map(o=>`<option value="${o[0]}" ${S.pm==o[0]?'selected':''}>${o[1]}</option>`).join('')}</select><button class="btn gold" data-act="print">🖨 พิมพ์ / บันทึก PDF</button></div></div><section class="sheet"><header><img src="logo.png" alt=""><div><b>รายงานฝ่ายวิชาการ</b><br>โรงเรียนบ้านไร่ สพป.เชียงใหม่ เขต 5 · ${term()}<br>ฉบับเผยแพร่: ${pub?pub.name:'ยังไม่มี'} · ข้อขัดแย้ง ${cf} · สอนแทน (อนุมัติ) ${sb} ครั้ง</div></header><table class="t"><tr><th>ครู</th><th>เป้าหมาย (คาบ)</th><th>จัดแล้ว</th><th>ส่วนต่าง</th></tr>${d.teachers.map(t=>{const c=d.entries.filter(e=>e.teacher_id==t.id||e.teacher2_id==t.id).length;return `<tr><td>${t.name}</td><td>${t.load||'-'}</td><td>${c}</td><td>${t.load?c-t.load:'-'}</td></tr>`}).join('')}</table><br><table class="t"><tr><th>ชั้นเรียน</th><th>คาบที่จัด</th><th>ช่องทั้งหมด</th><th>ว่าง</th></tr>${d.classes.map(c=>{const n=d.entries.filter(e=>e.class_id==c.id).length;return `<tr><td>${c.name}</td><td>${n}</td><td>${slots}</td><td>${slots-n}</td></tr>`}).join('')}</table><footer><div></div><div class="sig"><i></i>ฝ่ายวิชาการ</div><div class="sig"><i></i>ผู้อำนวยการโรงเรียน</div></footer></section>`}
+ return `<div class="noprint"><h1>พิมพ์ตารางสอน</h1><p class="sub">รายงานฝ่ายวิชาการ · A4 แนวนอน</p><div class="bar"><select data-ch="pm">${PM.map(o=>`<option value="${o[0]}" ${S.pm==o[0]?'selected':''}>${o[1]}</option>`).join('')}</select><button class="btn gold" data-act="print">🖨 พิมพ์ / บันทึก PDF</button></div></div><section class="sheet rep"><header><img src="logo.png" alt=""><div><b>รายงานฝ่ายวิชาการ</b><br>${esc(schoolInfo().school)} ${esc(schoolInfo().office)} · ${term()}<br>ฉบับเผยแพร่: ${pub?pub.name:'ยังไม่มี'} · ข้อขัดแย้ง ${cf} · สอนแทน (อนุมัติ) ${sb} ครั้ง</div></header><table class="t"><tr><th>ครู</th><th>เป้าหมาย (คาบ)</th><th>จัดแล้ว</th><th>ส่วนต่าง</th></tr>${d.teachers.map(t=>{const c=d.entries.filter(e=>e.teacher_id==t.id||e.teacher2_id==t.id).length;return `<tr><td>${t.name}</td><td>${t.load||'-'}</td><td>${c}</td><td>${t.load?c-t.load:'-'}</td></tr>`}).join('')}</table><br><table class="t"><tr><th>ชั้นเรียน</th><th>คาบที่จัด</th><th>ช่องทั้งหมด</th><th>ว่าง</th></tr>${d.classes.map(c=>{const n=d.entries.filter(e=>e.class_id==c.id).length;return `<tr><td>${c.name}</td><td>${n}</td><td>${slots}</td><td>${slots-n}</td></tr>`}).join('')}</table><footer><div></div><div class="sig"><i></i>${schoolInfo().academic?`(${esc(schoolInfo().academic)})<br>`:''}ฝ่ายวิชาการ</div><div class="sig"><i></i>${schoolInfo().director?`(${esc(schoolInfo().director)})<br>`:''}ผู้อำนวยการโรงเรียน</div></footer></section>`}
 function setupCard(){const d=S.d,st=[['เพิ่มรายชื่อครู',d.teachers.length,'data','teachers'],['เพิ่มรายวิชา',d.subjects.length,'data','subjects'],['จัดคาบแรกในตารางสอน',d.entries.length,'tt']];if(st.every(x=>x[1]))return '';
  return `<div class="card" style="border-color:var(--gold)"><h2>เริ่มต้นใช้งาน</h2>${st.map(x=>`<div class="row" style="align-items:center;padding:6px 0"><span class="tag ${x[1]?'ok':''}">${x[1]?'✓':'○'}</span> ${x[0]} ${x[1]?'':`<button class="btn" data-act="goto" data-v="${x[2]}" data-t="${x[3]||''}">ไปที่หน้านี้</button>`}</div>`).join('')}</div>`}
 const fdt=x=>String(x||'').slice(0,16).replace('T',' ');
@@ -267,13 +331,15 @@ const A={
  subcancel:e=>{if(confirm('ยกเลิกรายการสอนแทน?'))act(()=>api('sub/'+e.dataset.id,'DELETE'),'ยกเลิกแล้ว')},
  del:e=>{if(confirm('ลบรายการนี้?'))act(()=>api(`crud/${e.dataset.t}/${e.dataset.id}`,'DELETE'),'ลบแล้ว')},
  add:e=>saveRow(e.closest('tr')),
- saveset:()=>act(()=>api('settings','POST',{year:$('#yr').value,term:$('#tm').value}),'บันทึกแล้ว'),
+ saveset:()=>{const hr={};document.querySelectorAll('[data-hr]').forEach(x=>{const [c,i]=x.dataset.hr.split('.');(hr[c]=hr[c]||[null,null])[+i]=x.value?+x.value:null});act(()=>api('settings','POST',{year:$('#yr').value,term:$('#tm').value,school:$('#sc').value,office:$('#of').value,director:$('#dr').value,academic:$('#ac').value,showcredit:$('#scr').checked,homerooms:hr}),'บันทึกแล้ว')},
+ pzoom:()=>{S.pz=S.pz=='full'?'fit':'full';render()},
  saveuser:()=>act(()=>api('users','POST',{username:$('#u1').value,name:$('#u2').value,password:$('#u3').value,role:$('#u4').value}),'บันทึกผู้ใช้แล้ว')
 };
 function saveRow(tr){const b={id:tr.dataset.id||undefined};tr.querySelectorAll('input').forEach(i=>b[i.dataset.k]=i.type=='number'?+i.value:i.value);if(!(b.name||b.label))return toast('กรุณากรอกชื่อ',true);act(()=>api('crud/'+tr.dataset.t,'POST',b),'บันทึกแล้ว')}
 document.addEventListener('click',ev=>{const e=ev.target.closest('[data-act]');if(e){if(e.dataset.act=='logout')ev.preventDefault();return A[e.dataset.act]?.(e,ev)}
  const td=ev.target.closest('td.empty[data-d]');if(td&&canEdit()&&S.mode=='class')entryModal(S.clip?{...S.clip,id:0,class_id:S.sel,day:+td.dataset.d,period:+td.dataset.p}:{class_id:S.sel,day:+td.dataset.d,period:+td.dataset.p,subject_id:S.d.subjects[0]?.id})});
 document.addEventListener('change',ev=>{const t=ev.target,k=t.dataset.ch;
+ if(t.dataset.co){const [m,f]=t.dataset.co.split('.'),o=getCO();o[m][f]=t.checked?1:0;S.d.settings.cellopts=JSON.stringify(o);render();api('settings','POST',{cellopts:o}).catch(e=>toast(e.message,true));return}
  if(k=='restore'){doRestore(t.files[0]);return}if(k){S[k=='sel'?(S.view=='print'?'ps':'sel'):k]=k=='mode'?t.value:k=='sd'||k=='pm'?t.value:+t.value;if(k=='mode')S.sel=null;if(k=='pm')S.ps=null;render();return}
  const tr=t.closest('tr[data-t]');if(tr&&tr.dataset.id)saveRow(tr)});
 document.addEventListener('submit',async ev=>{if(ev.target.id!='lf')return;ev.preventDefault();const f=ev.target;try{const r=await api('login','POST',{username:f.u.value.trim(),password:f.p.value});localStorage.setItem('brt',r.token);await load();render()}catch(e){toast(e.message,true)}});

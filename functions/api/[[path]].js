@@ -98,8 +98,8 @@ export async function onRequest({request:req,env,params}){
     const dupes=rows=>{const s=new Set();for(const r of rows)for(const [k,v] of [['t',r.teacher_id],['t',r.teacher2_id],['c',r.class_id],['r',r.room_id]]){if(!v)continue;const key=k+v+'|'+r.day+'|'+r.period;if(s.has(key))return true;s.add(key)}return false};
     if(p0=='assignments'&&path[1]=='replace'&&m=='POST'){await db.batch(put('assignments',body.rows));await audit('replace assignments',{n:(body.rows||[]).length});return J({ok:1})}
     if(p0=='entries'&&path[1]=='replace'&&m=='POST'){await db.batch(put('entries',body.rows));await audit('replace entries',{n:(body.rows||[]).length});return J({ok:1})}
-    if(p0=='backup'&&m=='GET'){const o={app:'br-smart-timetable',at:new Date().toISOString()};for(const t of Object.keys(C))o[t]=await all(t);return J(o)}
-    if(p0=='restore'&&m=='POST'){if(body.app!='br-smart-timetable')return J({error:'ไฟล์สำรองไม่ถูกต้อง'},400);await db.batch(Object.keys(C).flatMap(t=>put(t,body[t])));await audit('restore',{at:body.at});await note('กู้คืนข้อมูลจากไฟล์สำรอง');return J({ok:1})}
+    if(p0=='backup'&&m=='GET'){const o={app:'br-smart-timetable',at:new Date().toISOString()};for(const t of Object.keys(C))o[t]=await all(t);o.settings_kv=await all('settings');return J(o)}
+    if(p0=='restore'&&m=='POST'){if(body.app!='br-smart-timetable')return J({error:'ไฟล์สำรองไม่ถูกต้อง'},400);await db.batch([...Object.keys(C).flatMap(t=>put(t,body[t])),...(body.settings_kv||[]).filter(r=>r&&r.key&&r.key!='seeded').map(r=>db.prepare('INSERT INTO settings VALUES(?,?) ON CONFLICT(key) DO UPDATE SET value=excluded.value').bind(String(r.key),String(r.value??'')))]);await audit('restore',{at:body.at});await note('กู้คืนข้อมูลจากไฟล์สำรอง');return J({ok:1})}
     if(p0=='version'){
       const id=path[1],step=path[2];
       if(m=='POST'&&!id){const rows=await all('entries');await db.prepare("INSERT INTO versions(name,status,snapshot,created) VALUES(?, 'draft',?,?)").bind(cl(body.name)||'ฉบับร่าง',JSON.stringify(rows),new Date().toISOString()).run();await audit('save version',{name:body.name});return J({ok:1})}
@@ -114,7 +114,13 @@ export async function onRequest({request:req,env,params}){
     }
     if(p0=='notif'&&m=='POST'){await db.prepare('UPDATE notifications SET seen=1').run();return J({ok:1})}
     if(p0=='settings'&&admin&&m=='POST'){
-      for(const k of ['year','term'])if(body[k])await db.prepare('INSERT INTO settings VALUES(?,?) ON CONFLICT(key) DO UPDATE SET value=excluded.value').bind(k,String(body[k])).run();
+      const up=(k,v)=>db.prepare('INSERT INTO settings VALUES(?,?) ON CONFLICT(key) DO UPDATE SET value=excluded.value').bind(k,String(v)).run();
+      for(const k of ['year','term'])if(body[k])await up(k,cl(body[k]).slice(0,40));
+      for(const k of ['school','office','director','academic'])if(typeof body[k]=='string')await up(k,cl(body[k]).trim().slice(0,120));
+      if(body.showcredit!==undefined)await up('showcredit',body.showcredit?'1':'0');
+      if(body.cellopts&&typeof body.cellopts=='object'){let o={};try{o=JSON.parse((await db.prepare("SELECT value FROM settings WHERE key='cellopts'").first())?.value||'{}')||{}}catch(e){}for(const m of ['class','teacher','room'])if(body.cellopts[m]&&typeof body.cellopts[m]=='object'){o[m]=o[m]||{};for(const f of ['subject','code','teacher','class','room'])if(f in body.cellopts[m])o[m][f]=body.cellopts[m][f]?1:0}await up('cellopts',JSON.stringify(o))}
+      if(body.homerooms&&typeof body.homerooms=='object'){const o={};for(const [c,a] of Object.entries(body.homerooms)){const ids=[].concat(a||[]).slice(0,2).map(x=>Number.isInteger(+x)&&+x>0?+x:null);if(+c>0)o[+c]=ids}await up('homerooms',JSON.stringify(o))}
+      await audit('save settings',Object.keys(body));
       return J({ok:1});
     }
     return J({error:'ไม่พบเมนูนี้ หรือไม่มีสิทธิ์'},404);
