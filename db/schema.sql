@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS subjects(id INTEGER PRIMARY KEY, code TEXT, name TEXT
 CREATE TABLE IF NOT EXISTS classes(id INTEGER PRIMARY KEY, name TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS rooms(id INTEGER PRIMARY KEY, name TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS periods(id INTEGER PRIMARY KEY, label TEXT, start TEXT, end TEXT, is_break INTEGER DEFAULT 0);
-CREATE TABLE IF NOT EXISTS entries(id INTEGER PRIMARY KEY, class_id INTEGER, subject_id INTEGER, teacher_id INTEGER, room_id INTEGER, day INTEGER, period INTEGER);
+CREATE TABLE IF NOT EXISTS entries(id INTEGER PRIMARY KEY, class_id INTEGER, subject_id INTEGER, teacher_id INTEGER, teacher2_id INTEGER, room_id INTEGER, day INTEGER, period INTEGER);
 CREATE INDEX IF NOT EXISTS ix_e_slot ON entries(day, period);
 CREATE TABLE IF NOT EXISTS subs(id INTEGER PRIMARY KEY, date TEXT, entry_id INTEGER, sub_teacher_id INTEGER, reason TEXT, status TEXT DEFAULT 'approved', by TEXT, created TEXT);
 CREATE TABLE IF NOT EXISTS audit_logs(id INTEGER PRIMARY KEY, user TEXT, action TEXT, detail TEXT, at TEXT);
@@ -29,4 +29,4 @@ INSERT INTO classes(name) SELECT 'ป.6' WHERE NOT EXISTS(SELECT 1 FROM settings
 INSERT OR IGNORE INTO settings VALUES('year','2569');
 INSERT OR IGNORE INTO settings VALUES('term','1');
 INSERT OR IGNORE INTO settings VALUES('seeded','1');
-CREATE TABLE IF NOT EXISTS assignments(id INTEGER PRIMARY KEY, class_id INTEGER, subject_id INTEGER, teacher_id INTEGER, room_id INTEGER, periods INTEGER DEFAULT 1);
+CREATE TABLE IF NOT EXISTS assignments(id INTEGER PRIMARY KEY, class_id INTEGER, subject_id INTEGER, teacher_id INTEGER, teacher2_id INTEGER, room_id INTEGER, periods INTEGER DEFAULT 1);

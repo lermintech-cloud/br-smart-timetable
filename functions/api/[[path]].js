@@ -10,7 +10,7 @@ async function saveUser(db,username,name,password,role){const salt=b64(crypto.ge
   await db.prepare('INSERT INTO users(username,name,role,salt,hash) VALUES(?,?,?,?,?) ON CONFLICT(username) DO UPDATE SET name=excluded.name,role=excluded.role,salt=excluded.salt,hash=excluded.hash').bind(username,name,role,salt,h).run()}
 
 const cl=s=>String(s??'').replace(/[<>"&]/g,'');
-const T={teachers:['name','load'],subjects:['code','name','periods'],classes:['name'],rooms:['name'],periods:['label','start','end','is_break'],assignments:['class_id','subject_id','teacher_id','room_id','periods']};
+const T={teachers:['name','load'],subjects:['code','name','periods'],classes:['name'],rooms:['name'],periods:['label','start','end','is_break'],assignments:['class_id','subject_id','teacher_id','teacher2_id','room_id','periods']};
 const REF={teachers:'teacher_id',subjects:'subject_id',classes:'class_id',rooms:'room_id',periods:'period'};
 
 async function checkEntry(db,e){
@@ -18,7 +18,9 @@ async function checkEntry(db,e){
   if(!per)return 'ไม่พบคาบเรียน';
   if(per.is_break)return 'ไม่สามารถวางคาบในช่วงพัก';
   if(e.day<1||e.day>5)return 'วันไม่ถูกต้อง';
-  for(const [c,v,msg] of [['teacher_id',e.teacher_id,'ครูมีคาบสอนชนกับชั้น'],['room_id',e.room_id,'ห้องถูกใช้งานแล้วโดยชั้น'],['class_id',e.class_id,'ชั้นเรียนนี้มีวิชาซ้อนคาบอยู่แล้ว']]){
+  if(e.teacher2_id&&e.teacher2_id==e.teacher_id)return 'ครูคนที่ 2 ต้องไม่ซ้ำกับครูคนแรก';
+  for(const tv of [e.teacher_id,e.teacher2_id]){if(!tv)continue;const r=await db.prepare('SELECT c.name cn FROM entries x JOIN classes c ON c.id=x.class_id WHERE (x.teacher_id=? OR x.teacher2_id=?) AND x.day=? AND x.period=? AND x.id!=?').bind(tv,tv,e.day,e.period,e.id||0).first();if(r)return `ครูมีคาบสอนชนกับชั้น ${r.cn}`}
+  for(const [c,v,msg] of [['room_id',e.room_id,'ห้องถูกใช้งานแล้วโดยชั้น'],['class_id',e.class_id,'ชั้นเรียนนี้มีวิชาซ้อนคาบอยู่แล้ว']]){
     if(!v)continue;
     const r=await db.prepare(`SELECT c.name cn FROM entries x JOIN classes c ON c.id=x.class_id WHERE x.${c}=? AND x.day=? AND x.period=? AND x.id!=?`).bind(v,e.day,e.period,e.id||0).first();
     if(r)return `${msg} ${r.cn}`;
@@ -28,8 +30,8 @@ async function checkSub(db,b){
   const en=await db.prepare('SELECT * FROM entries WHERE id=?').bind(b.entry_id).first();
   if(!en)return 'ไม่พบคาบสอนประจำ';
   if(new Date(b.date+'T00:00:00Z').getUTCDay()!==en.day)return 'วันที่ไม่ตรงกับวันของคาบสอน';
-  if(en.teacher_id==b.sub_teacher_id)return 'ครูแทนต้องไม่ใช่ครูเจ้าของคาบ';
-  if(await db.prepare('SELECT 1 FROM entries WHERE teacher_id=? AND day=? AND period=?').bind(b.sub_teacher_id,en.day,en.period).first())return 'ครูแทนมีคาบสอนปกติในช่วงเวลานี้';
+  if(en.teacher_id==b.sub_teacher_id||en.teacher2_id==b.sub_teacher_id)return 'ครูแทนต้องไม่ใช่ครูเจ้าของคาบ';
+  if(await db.prepare('SELECT 1 FROM entries WHERE (teacher_id=? OR teacher2_id=?) AND day=? AND period=?').bind(b.sub_teacher_id,b.sub_teacher_id,en.day,en.period).first())return 'ครูแทนมีคาบสอนปกติในช่วงเวลานี้';
   if(await db.prepare("SELECT 1 FROM subs s JOIN entries x ON x.id=s.entry_id WHERE s.status='approved' AND s.date=? AND s.sub_teacher_id=? AND x.period=?").bind(b.date,b.sub_teacher_id,en.period).first())return 'ครูแทนมีรายการสอนแทนอื่นในช่วงเวลานี้';
   if(await db.prepare("SELECT 1 FROM subs WHERE status='approved' AND date=? AND entry_id=?").bind(b.date,b.entry_id).first())return 'คาบนี้มีครูสอนแทนแล้ว';
 }
@@ -57,7 +59,7 @@ export async function onRequest({request:req,env,params}){
     if(p0=='crud'&&T[path[1]]){
       const t=path[1],cols=T[t];
       if(m=='DELETE'){
-        if(REF[t]&&await db.prepare(`SELECT 1 FROM entries WHERE ${REF[t]}=?`).bind(path[2]).first())return J({error:'ข้อมูลนี้ถูกใช้ในตารางสอนแล้ว ลบไม่ได้'},409);
+        if(REF[t]&&await db.prepare(`SELECT 1 FROM entries WHERE ${REF[t]}=?${t=='teachers'?' OR teacher2_id=?':''}`).bind(...(t=='teachers'?[path[2],path[2]]:[path[2]])).first())return J({error:'ข้อมูลนี้ถูกใช้ในตารางสอนแล้ว ลบไม่ได้'},409);
         await db.prepare(`DELETE FROM ${t} WHERE id=?`).bind(path[2]).run();await audit('delete '+t,{id:path[2]});return J({ok:1});
       }
       const v=cols.map(c=>typeof body[c]=='string'?cl(body[c]):body[c]??null);
@@ -71,12 +73,12 @@ export async function onRequest({request:req,env,params}){
         await db.prepare("UPDATE subs SET status='cancelled' WHERE entry_id=?").bind(path[1]).run();
         await audit('delete entry',{id:path[1]});return J({ok:1});
       }
-      const e={id:body.id||0,class_id:+body.class_id,subject_id:+body.subject_id,teacher_id:+body.teacher_id,room_id:body.room_id?+body.room_id:null,day:+body.day,period:+body.period};
+      const e={id:body.id||0,class_id:+body.class_id,subject_id:+body.subject_id,teacher_id:+body.teacher_id,teacher2_id:body.teacher2_id?+body.teacher2_id:null,room_id:body.room_id?+body.room_id:null,day:+body.day,period:+body.period};
       if(!e.class_id||!e.subject_id||!e.teacher_id)return J({error:'กรุณาเลือกวิชาและครู'},400);
       const err=await checkEntry(db,e);if(err)return J({error:err},409);
-      const v=[e.class_id,e.subject_id,e.teacher_id,e.room_id,e.day,e.period];
-      if(e.id)await db.prepare('UPDATE entries SET class_id=?,subject_id=?,teacher_id=?,room_id=?,day=?,period=? WHERE id=?').bind(...v,e.id).run();
-      else await db.prepare('INSERT INTO entries(class_id,subject_id,teacher_id,room_id,day,period) VALUES(?,?,?,?,?,?)').bind(...v).run();
+      const v=[e.class_id,e.subject_id,e.teacher_id,e.teacher2_id,e.room_id,e.day,e.period];
+      if(e.id)await db.prepare('UPDATE entries SET class_id=?,subject_id=?,teacher_id=?,teacher2_id=?,room_id=?,day=?,period=? WHERE id=?').bind(...v,e.id).run();
+      else await db.prepare('INSERT INTO entries(class_id,subject_id,teacher_id,teacher2_id,room_id,day,period) VALUES(?,?,?,?,?,?,?)').bind(...v).run();
       await audit('save entry',e);return J({ok:1});
     }
     if(p0=='sub'){
@@ -90,10 +92,10 @@ export async function onRequest({request:req,env,params}){
       await saveUser(db,body.username,body.name||body.username,body.password,['admin','academic','teacher','viewer'].includes(body.role)?body.role:'teacher');
       await audit('save user',{u:body.username,r:body.role});return J({ok:1});
     }
-    const EC=['id','class_id','subject_id','teacher_id','room_id','day','period'];
-    const C={teachers:['id','name','load'],subjects:['id','code','name','periods'],classes:['id','name'],rooms:['id','name'],periods:['id','label','start','end','is_break'],entries:EC,subs:['id','date','entry_id','sub_teacher_id','reason','status','by','created'],assignments:['id','class_id','subject_id','teacher_id','room_id','periods']};
+    const EC=['id','class_id','subject_id','teacher_id','teacher2_id','room_id','day','period'];
+    const C={teachers:['id','name','load'],subjects:['id','code','name','periods'],classes:['id','name'],rooms:['id','name'],periods:['id','label','start','end','is_break'],entries:EC,subs:['id','date','entry_id','sub_teacher_id','reason','status','by','created'],assignments:['id','class_id','subject_id','teacher_id','teacher2_id','room_id','periods']};
     const put=(t,rows)=>[db.prepare(`DELETE FROM ${t}`),...(rows||[]).map(r=>db.prepare(`INSERT INTO ${t}(${C[t].join(',')}) VALUES(${C[t].map(()=>'?').join(',')})`).bind(...C[t].map(c=>typeof r[c]=='string'?cl(r[c]):r[c]??null)))];
-    const dupes=rows=>{const s=new Set();for(const r of rows)for(const k of ['teacher_id','class_id','room_id']){if(!r[k])continue;const key=k+r[k]+'|'+r.day+'|'+r.period;if(s.has(key))return true;s.add(key)}return false};
+    const dupes=rows=>{const s=new Set();for(const r of rows)for(const [k,v] of [['t',r.teacher_id],['t',r.teacher2_id],['c',r.class_id],['r',r.room_id]]){if(!v)continue;const key=k+v+'|'+r.day+'|'+r.period;if(s.has(key))return true;s.add(key)}return false};
     if(p0=='assignments'&&path[1]=='replace'&&m=='POST'){await db.batch(put('assignments',body.rows));await audit('replace assignments',{n:(body.rows||[]).length});return J({ok:1})}
     if(p0=='entries'&&path[1]=='replace'&&m=='POST'){await db.batch(put('entries',body.rows));await audit('replace entries',{n:(body.rows||[]).length});return J({ok:1})}
     if(p0=='backup'&&m=='GET'){const o={app:'br-smart-timetable',at:new Date().toISOString()};for(const t of Object.keys(C))o[t]=await all(t);return J(o)}
