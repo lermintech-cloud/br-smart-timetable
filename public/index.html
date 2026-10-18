@@ -9,7 +9,7 @@
 <meta name="description" content="ระบบจัดและพิมพ์ตารางสอนอัจฉริยะ โรงเรียนบ้านไร่ สพป.เชียงใหม่ เขต 5">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Prompt:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500;600;700&family=Sora:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Prompt:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="preload" as="font" type="font/woff" href="fonts/THSarabunNew.woff" crossorigin>
 <link rel="preload" as="font" type="font/woff" href="fonts/THSarabunNew-Bold.woff" crossorigin>
 <style>
@@ -1573,6 +1573,116 @@ details.man summary .ic{margin-right:10px}
 .theme-btn .ic{width:1.1em;height:1.1em}
 details.man summary .ic,.man h3 .ic{color:var(--primary)}
 #q{padding-left:36px;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236a7d78' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM21 21l-4.3-4.3'/%3E%3C/svg%3E") no-repeat 12px 50%/16px}
+
+/* =========================================================
+   v5.0 — Premium layer: เลย์เอาต์ลอย, โหมดมืด, Command bar, Hero, เส้นเวลาปัจจุบัน
+   ========================================================= */
+:root{--font-num:'Sora','Anuphan',system-ui,sans-serif}
+body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(55% 45% at 88% -8%,rgba(22,163,127,.17),transparent 70%),radial-gradient(45% 40% at -5% 105%,rgba(242,181,59,.13),transparent 70%),radial-gradient(rgba(11,37,35,.07) 1px,transparent 1.3px) 0 0/22px 22px}
+.shell{grid-template-columns:300px 1fr}
+.side{top:14px;height:calc(100vh - 28px);margin:14px 0 14px 14px;border-radius:28px;border:0;background:linear-gradient(170deg,#0f322f 0%,#0a2321 48%,#071a19 100%);box-shadow:0 30px 60px -30px rgba(7,25,24,.65),inset 0 0 0 1px rgba(255,255,255,.07)}
+.brand b{font-family:var(--font-num);letter-spacing:-.01em}
+
+.topbar{position:sticky;top:0;z-index:30;display:flex;justify-content:space-between;align-items:center;gap:12px;margin:-36px -44px 26px;padding:14px 44px;background:linear-gradient(to bottom,color-mix(in srgb,var(--bg) 94%,transparent) 55%,transparent)}
+.cmdk-btn{display:flex;align-items:center;gap:10px;min-width:min(380px,60vw);padding:10px 14px;border:0;border-radius:14px;background:var(--card);box-shadow:var(--shadow-sm);color:var(--tx-mut);cursor:pointer;transition:box-shadow .2s}
+.cmdk-btn:hover{box-shadow:var(--shadow-md)}
+.cmdk-btn svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+.cmdk-btn kbd{margin-left:auto;font:500 11px var(--font-num);padding:2px 7px;border-radius:7px;background:var(--line);color:var(--tx-mut)}
+.tb-r{display:flex;align-items:center;gap:14px;color:var(--tx-mut);font-size:13px}
+.icon-btn{width:40px;height:40px;border:0;border-radius:13px;background:var(--card);box-shadow:var(--shadow-sm);color:var(--tx-sub);display:grid;place-items:center;cursor:pointer;transition:transform .3s var(--ease),box-shadow .2s}
+.icon-btn:hover{box-shadow:var(--shadow-md);transform:rotate(16deg)}
+.icon-btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.icon-btn .sun,[data-theme=dark] .icon-btn .moon{display:none}
+[data-theme=dark] .icon-btn .sun{display:block}
+
+.hero{position:relative;overflow:hidden;display:flex;justify-content:space-between;align-items:center;gap:24px;margin-bottom:22px;padding:32px 36px;border-radius:28px;color:#fff;background:linear-gradient(120deg,#0e3d37 0%,#0a2a28 58%,#0b2523 100%);box-shadow:0 30px 60px -30px rgba(7,25,24,.7)}
+.hero::after{content:'';position:absolute;right:-70px;top:-90px;width:380px;height:380px;border-radius:50%;background:radial-gradient(closest-side,rgba(242,181,59,.26),transparent);pointer-events:none}
+.hero>*{position:relative;z-index:1}
+.hero-date{color:var(--gold);font-size:13.5px;font-weight:500}
+.hero h1{color:#fff;font-size:clamp(28px,3.4vw,42px);line-height:1.1;margin:8px 0;letter-spacing:-.035em}
+.hero .sub{color:#a9c6bf;margin:0 0 20px}
+.hero .btn{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.18);color:#fff}
+.hero .btn:hover{background:rgba(255,255,255,.18)}
+.hero .btn.pri{background:#fff;border-color:#fff;color:#0b2523;box-shadow:none}
+.hero .btn.gold{background:var(--gold);border-color:var(--gold);color:#2b1e00}
+.ring{position:relative;width:152px;height:152px;flex:none}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:9;stroke-linecap:round}
+.ring .rb{stroke:rgba(255,255,255,.12)}
+.ring .rf{stroke:var(--gold)}
+.ring.go .rf{animation:ringin 1.3s var(--ease) .15s both}
+@keyframes ringin{from{stroke-dasharray:0 100}}
+.rt{position:absolute;inset:0;display:grid;place-content:center;text-align:center}
+.rt b{font:600 34px/1 var(--font-num);letter-spacing:-.03em}
+.rt small{margin-top:6px;font-size:11.5px;color:#a9c6bf}
+.stat b{font-family:var(--font-num);font-size:36px}
+.av{display:inline-grid;place-items:center;width:30px;height:30px;margin-right:10px;border-radius:50%;font-weight:600;font-size:13px;vertical-align:middle;background:hsl(var(--h) 70% 90%);color:hsl(var(--h) 60% 25%)}
+
+.scr .blk{background:linear-gradient(160deg,hsl(var(--h,210) 85% 96%),hsl(var(--h,210) 75% 91%))}
+.scr th.nowc{box-shadow:inset 0 -3px 0 var(--gold)}
+.scr td.nowc::before{content:'';position:absolute;inset:0;background:rgba(242,181,59,.08);pointer-events:none}
+.scr td.nowc.nowr{box-shadow:inset 0 0 0 2px rgba(242,181,59,.95)}
+
+#cmd{position:fixed;inset:0;z-index:120;display:none;place-items:start center;padding-top:14vh;background:rgba(7,25,24,.5);backdrop-filter:blur(8px)}
+#cmd.on{display:grid;animation:fadeIn .15s}
+#cmd .box{width:min(560px,92vw);overflow:hidden;border-radius:20px;background:var(--card);box-shadow:var(--shadow-xl);animation:pop .28s var(--ease)}
+#cmd input{width:100%;border:0;border-bottom:1px solid var(--line);border-radius:0;padding:18px 20px;font-size:16px;background:transparent;box-shadow:none!important}
+#cmd ul{list-style:none;margin:0;padding:8px;max-height:340px;overflow:auto}
+#cmd li{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;cursor:pointer;color:var(--tx)}
+#cmd li small{margin-left:auto;color:var(--tx-mut)}
+#cmd li.sel{background:var(--line)}
+#cmd li svg{width:18px;height:18px;fill:none;stroke:var(--primary);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+@media print{#cmd,body::before{display:none!important}}
+
+/* โหมดมืด (หน้าจอเท่านั้น; ตอนพิมพ์สลับกลับเป็นสว่างอัตโนมัติ) */
+:where([data-theme=dark]) .sheet{--tx:#10201e;--tx-sub:#41544f;--tx-mut:#6a7d78;--line:#e1e8e5;--card:#fff;--card-border:#dbe3e0;color:#10201e}
+[data-theme=dark]{color-scheme:dark;--bg:#06110f;--card:#0e1f1d;--card-border:#1b3531;--tx:#e6f1ee;--tx-sub:#b2c6c1;--tx-mut:#7e9892;--line:#1b3531;--mint-bg:#0f3a2f;--shadow-sm:0 0 0 1px rgba(255,255,255,.05);--shadow-md:0 0 0 1px rgba(255,255,255,.06),0 14px 34px -14px rgba(0,0,0,.8)}
+[data-theme=dark] body::before{background:radial-gradient(55% 45% at 88% -8%,rgba(22,163,127,.2),transparent 70%),radial-gradient(45% 40% at -5% 105%,rgba(242,181,59,.08),transparent 70%),radial-gradient(rgba(255,255,255,.05) 1px,transparent 1.3px) 0 0/22px 22px}
+[data-theme=dark] .btn{background:#12292a;border-color:#233f3b;color:var(--tx-sub)}
+[data-theme=dark] .btn:hover{background:#17332f;border-color:#2f524c;color:#fff}
+[data-theme=dark] .btn.pri{background:var(--primary);border-color:var(--primary);color:#fff}
+[data-theme=dark] .btn.gold{background:var(--gold);border-color:var(--gold);color:#2b1e00}
+[data-theme=dark] .btn.dng{background:#2a1716;border-color:#5a2a27;color:#f5a39d}
+[data-theme=dark] .hero .btn{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.18)}
+[data-theme=dark] .hero .btn.pri{background:#fff;color:#0b2523}
+[data-theme=dark] .hero .btn.gold{background:var(--gold);color:#2b1e00}
+[data-theme=dark] select,[data-theme=dark] input,[data-theme=dark] textarea{background-color:#0a1a18;border-color:#233f3b;color:var(--tx)}
+[data-theme=dark] .pal,[data-theme=dark] .theme-selector-bar{background:var(--card)}
+[data-theme=dark] .theme-btn{background:#12292a;border-color:#233f3b;color:var(--tx-sub)}
+[data-theme=dark] .theme-btn:hover{background:#17332f;color:#fff}
+[data-theme=dark] .theme-btn.on,[data-theme=dark] .tabs .btn.on{background:var(--gold);border-color:var(--gold);color:#2b1e00}
+[data-theme=dark] .scr .g thead th,[data-theme=dark] .scr .g tbody th{background:#0a1a18}
+[data-theme=dark] .scr .g tbody th.tod{background:var(--gold);color:#2b1e00}
+[data-theme=dark] .scr td.brk{background:repeating-linear-gradient(45deg,#0a1a18 0 8px,#0d211f 8px 16px)}
+[data-theme=dark] .scr td.empty:hover{background:#12302b}
+[data-theme=dark] .scr .blk{background:linear-gradient(160deg,hsl(var(--h,210) 42% 23%),hsl(var(--h,210) 42% 18%));border-left-color:hsl(var(--h,210) 70% 60%);color:hsl(var(--h,210) 80% 91%)}
+[data-theme=dark] .chip{background:hsl(var(--h,210) 40% 20%);border-color:hsl(var(--h,210) 40% 32%);color:hsl(var(--h,210) 80% 90%)}
+[data-theme=dark] td.ok{background:#0e3a2c!important}
+[data-theme=dark] td.warn{background:#3a3210!important}
+[data-theme=dark] td.bad{background:repeating-linear-gradient(135deg,#3a1816 0 8px,#2d1312 8px 16px)!important}
+[data-theme=dark] .t th{background:transparent}
+[data-theme=dark] .card .t tr:hover td{background:#0b1917}
+[data-theme=dark] .tag{background:#16302d;color:var(--tx-sub)}
+[data-theme=dark] .tag.ok{background:var(--mint-bg);color:#7ee0bf}
+[data-theme=dark] .tag.no{background:#3a1a19;color:#f5a39d}
+[data-theme=dark] .bargr{background:#1b3531}
+[data-theme=dark] #q{background-color:#0a1a18}
+[data-theme=dark] .scr .g thead th{border-bottom-color:#233f3b}
+
+@media(max-width:860px){
+  .shell{grid-template-columns:1fr}
+  .side{top:auto;inset:auto 10px 10px 10px;height:auto;margin:0;border-radius:22px}
+  .topbar{margin:-20px -16px 16px;padding:12px 16px}
+  .cmdk-btn{min-width:0;flex:1}
+  .tb-date{display:none}
+  .hero{flex-direction:column-reverse;align-items:flex-start;padding:24px}
+  .ring{width:112px;height:112px}
+  .rt b{font-size:26px}
+  .cmdk-btn kbd{display:none}
+  .nav b{display:none}
+  .nav.on{flex:2.4}
+  .nav.on b{display:block;font-size:11.5px;white-space:nowrap}
+}
 @media(prefers-reduced-motion:reduce){*,*::before{animation-duration:.01ms!important;animation-delay:0s!important;transition-duration:.01ms!important}}
 </style>
 </head>
@@ -1581,6 +1691,7 @@ details.man summary .ic,.man h3 .ic{color:var(--primary)}
 <div id="modal"></div>
 
 <script>
+try { document.documentElement.dataset.theme = localStorage.getItem('brt_ui') || 'light'; } catch (e) {}
 // Days of the week
 const D = ['จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์'];
 const $ = s => document.querySelector(s);
@@ -1907,12 +2018,13 @@ function render() {
             หน้าต้อนรับ
           </a>
           <div class="credit">
-            ระบบจัดตารางสอนอัจฉริยะ v4.1<br>
+            ระบบจัดตารางสอนอัจฉริยะ v5.0<br>
             โรงเรียนบ้านไร่ สพป.เชียงใหม่ เขต 5
           </div>
         </div>
       </aside>
       <main>
+        ${topbar()}
         ${V}
         <div class="cr noprint">
           BR Smart Timetable · โรงเรียนบ้านไร่ สพป.เชียงใหม่ เขต 5 · พัฒนาโดย ครูเฉลิมพล จันทร์แดง
@@ -2068,7 +2180,8 @@ function motion() {
   if (!m || !fresh) return;
   m.classList.remove('vin'); void m.offsetWidth; m.classList.add('vin');
   if (matchMedia('(prefers-reduced-motion:reduce)').matches) return;
-  m.querySelectorAll('.stat b').forEach(b => {
+  m.querySelectorAll('.ring').forEach(r => r.classList.add('go'));
+  m.querySelectorAll('.stat b, .ring b').forEach(b => {
     const t = b.textContent.trim(), n = parseInt(t, 10);
     if (isNaN(n) || n < 1) return;
     const suf = t.replace(/^\d+/, ''), t0 = performance.now();
@@ -2113,22 +2226,26 @@ function vDash() {
   const fillPct = Math.round(d.entries.length / totalSlots * 100);
 
   return `
-    <div class="page-head">
+    <section class="hero">
       <div>
+        <div class="hero-date">${new Date().toLocaleDateString('th-TH', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}</div>
         <h1>ภาพรวมตารางสอน</h1>
         <p class="sub">${term()} · ข้อมูลสถิติและภาระงานครู</p>
+        <div class="row">
+          <button class="btn pri" data-act="goto" data-v="tt">📅 จัดตารางสอน</button>
+          <button class="btn gold" data-act="goto" data-v="print">🖨️ พิมพ์ตาราง</button>
+        </div>
       </div>
-      <div class="row">
-        <button class="btn pri" data-act="goto" data-v="tt">📅 จัดตารางสอน</button>
-        <button class="btn gold" data-act="goto" data-v="print">🖨️ พิมพ์ตาราง</button>
+      <div class="ring" aria-label="ความครบถ้วนของตาราง ${fillPct}%">
+        <svg viewBox="0 0 120 120"><circle class="rb" cx="60" cy="60" r="52"/><circle class="rf" cx="60" cy="60" r="52" pathLength="100" style="stroke-dasharray:${fillPct} 100"/></svg>
+        <div class="rt"><b>${fillPct}%</b><small>ตารางครบถ้วน</small></div>
       </div>
-    </div>
-    
+    </section>
+
     <div class="stats">
       <div class="stat" style="--c:#3b82f6"><b>${d.teachers.length}</b><span>ครูผู้สอน</span></div>
       <div class="stat" style="--c:#10b981"><b>${d.classes.length}</b><span>ชั้นเรียน</span></div>
       <div class="stat" style="--c:#f59e0b"><b>${d.entries.length}</b><span>คาบที่จัดแล้ว</span></div>
-      <div class="stat" style="--c:#8b5cf6"><b>${fillPct}%</b><span>ความครบถ้วนของตาราง</span></div>
       <div class="stat" style="--c:#ec4899"><b>${today}</b><span>สอนแทนวันนี้</span></div>
       <div class="stat" style="--c:${cf.length ? '#ef4444' : '#10b981'}">
         <b>${cf.length}</b><span>${cf.length ? 'ข้อขัดแย้งที่ต้องแก้' : 'ไม่พบข้อขัดแย้ง ✓'}</span>
@@ -2149,7 +2266,7 @@ function vDash() {
             const isHi = t.load && c > t.load;
             return `
               <tr>
-                <td><b>${t.name}</b></td>
+                <td><span class="av" style="--h:${col(t.name)}">${t.name.replace(/^(ครู|นาย|นางสาว|นาง)\s*/, '').charAt(0)}</span><b>${t.name}</b></td>
                 <td><b style="color:${isHi?'var(--ruby)':isOk?'var(--mint)':'inherit'}">${c}</b> คาบ</td>
                 <td>${t.load || '-'} คาบ</td>
                 <td style="width:180px">
@@ -3434,6 +3551,83 @@ document.addEventListener('keydown', ev => {
     (ev.shiftKey ? A.redo : A.undo)();
   }
 });
+
+
+// ---- v5: Topbar · Command bar · โหมดมืด · เส้นเวลาปัจจุบัน ----
+function topbar() {
+  const d = new Date().toLocaleDateString('th-TH', { weekday: 'short', day: 'numeric', month: 'short' });
+  return `<div class="topbar noprint">
+    <button class="cmdk-btn" data-v5="cmd"><svg viewBox="0 0 24 24"><path d="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM21 21l-4.3-4.3"/></svg><span>ค้นหาหน้าหรือสั่งงาน</span><kbd>Ctrl K</kbd></button>
+    <div class="tb-r"><span class="tb-date">${d}</span>
+      <button class="icon-btn" data-v5="theme" title="สลับโหมดมืด/สว่าง" aria-label="สลับโหมดมืด/สว่าง">
+        <svg class="moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        <svg class="sun" viewBox="0 0 24 24"><path d="M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      </button></div></div>`;
+}
+function setTheme(t) {
+  document.documentElement.dataset.theme = t;
+  try { localStorage.setItem('brt_ui', t); } catch (e) {}
+}
+const toggleTheme = () => setTheme(document.documentElement.dataset.theme == 'dark' ? 'light' : 'dark');
+addEventListener('beforeprint', () => { document.documentElement.dataset.prevTheme = document.documentElement.dataset.theme; document.documentElement.dataset.theme = 'light'; });
+addEventListener('afterprint', () => { document.documentElement.dataset.theme = document.documentElement.dataset.prevTheme || 'light'; });
+
+const cmd = document.createElement('div');
+cmd.id = 'cmd';
+cmd.innerHTML = '<div class="box"><input placeholder="พิมพ์ชื่อหน้า หรือคำสั่ง" aria-label="ค้นหาคำสั่ง"><ul></ul></div>';
+document.body.append(cmd);
+let cmdI = 0, cmdL = [];
+function cmdItems() {
+  const it = [];
+  if (S.entered) {
+    NAV.forEach(([g, l]) => l.forEach(([k, t, s, i]) => it.push({ t, s, i: IC[i], run: () => document.querySelector(`.nav[data-v="${k}"]`)?.click() })));
+    it.push({ t: 'กลับหน้าต้อนรับ', s: '', i: 'M11 17l-5-5m0 0l5-5m-5 5h12', run: () => document.querySelector('[data-act="logout"]')?.click() });
+  }
+  it.push({ t: 'สลับโหมดมืด / สว่าง', s: '', i: 'M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z', run: toggleTheme });
+  return it;
+}
+function cmdDraw() {
+  const q = cmd.querySelector('input').value.trim().toLowerCase();
+  cmdL = cmdItems().filter(x => !q || (x.t + ' ' + x.s).toLowerCase().includes(q));
+  cmdI = Math.min(cmdI, Math.max(0, cmdL.length - 1));
+  cmd.querySelector('ul').innerHTML = cmdL.map((x, n) => `<li class="${n == cmdI ? 'sel' : ''}" data-n="${n}"><svg viewBox="0 0 24 24"><path d="${x.i}"/></svg><span>${x.t}</span><small>${x.s}</small></li>`).join('') || '<li>ไม่พบรายการ</li>';
+}
+function cmdOpen(on) {
+  cmd.classList.toggle('on', on);
+  if (on) { cmd.querySelector('input').value = ''; cmdI = 0; cmdDraw(); cmd.querySelector('input').focus(); }
+}
+cmd.addEventListener('click', e => {
+  const li = e.target.closest('li[data-n]');
+  if (li) { const x = cmdL[+li.dataset.n]; cmdOpen(false); x && x.run(); } else if (!e.target.closest('.box')) cmdOpen(false);
+});
+cmd.querySelector('input').addEventListener('input', () => { cmdI = 0; cmdDraw(); });
+document.addEventListener('keydown', e => {
+  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() == 'k') { e.preventDefault(); cmdOpen(!cmd.classList.contains('on')); return; }
+  if (!cmd.classList.contains('on')) return;
+  if (e.key == 'Escape') cmdOpen(false);
+  else if (e.key == 'ArrowDown' || e.key == 'ArrowUp') { e.preventDefault(); cmdI = (cmdI + (e.key == 'ArrowDown' ? 1 : -1) + cmdL.length) % Math.max(1, cmdL.length); cmdDraw(); }
+  else if (e.key == 'Enter') { const x = cmdL[cmdI]; cmdOpen(false); x && x.run(); }
+});
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-v5]');
+  if (!b) return;
+  if (b.dataset.v5 == 'cmd') cmdOpen(true); else if (b.dataset.v5 == 'theme') toggleTheme();
+});
+
+function nowMark() {
+  document.querySelectorAll('.scr table.g').forEach(t => {
+    t.querySelectorAll('.nowc,.nowr').forEach(x => x.classList.remove('nowc', 'nowr'));
+    const n = new Date(), mins = n.getHours() * 60 + n.getMinutes(), dow = n.getDay();
+    [...t.tHead.rows[0].cells].forEach((th, c) => {
+      const m = (th.querySelector('small')?.textContent || '').match(/(\d{1,2})[:.](\d{2})\s*[–-]\s*(\d{1,2})[:.](\d{2})/);
+      if (!m || mins < +m[1] * 60 + +m[2] || mins >= +m[3] * 60 + +m[4]) return;
+      th.classList.add('nowc');
+      [...t.tBodies[0].rows].forEach((r, i) => { const td = r.cells[c]; if (td) { td.classList.add('nowc'); if (dow == i + 1) td.classList.add('nowr'); } });
+    });
+  });
+}
+setInterval(nowMark, 60000);
+new MutationObserver(() => { clearTimeout(nowMark.t); nowMark.t = setTimeout(nowMark, 30); }).observe(document.getElementById('app'), { childList: true });
 
 // App Initialization
 (async () => {
