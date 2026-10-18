@@ -2,57 +2,70 @@
 <html lang="th"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>BR Smart Timetable · โรงเรียนบ้านไร่</title>
-<link rel="icon" href="logo.png"><link rel="manifest" href="manifest.json"><meta name="theme-color" content="#0f1b4d"><meta name="description" content="ระบบจัดตารางสอน โรงเรียนบ้านไร่">
-<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="logo.png"><link rel="manifest" href="manifest.json"><meta name="theme-color" content="#101d3f"><meta name="description" content="ระบบจัดตารางสอน โรงเรียนบ้านไร่">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#0f1b4d;--blue:#2f54eb;--sky:#e8eeff;--gold:#f5b301;--ruby:#d6283f;--mint:#12a37f;--bg:#f3f6fd;--line:#dbe3f5;--tx:#1b2347;--mut:#6b7599}
-*{box-sizing:border-box}body{margin:0;font-family:Prompt,system-ui,sans-serif;background:var(--bg);color:var(--tx);font-size:14px}
+:root{--ink:#101d3f;--ink2:#1b2c5c;--blue:#27409f;--sky:#eceff8;--gold:#e8a900;--ruby:#c2303f;--mint:#1f8a70;--bg:#f5f2ea;--card:#fffdf8;--line:#e4ddcf;--tx:#1d2336;--mut:#767a8c}
+*{box-sizing:border-box}
+body{margin:0;font-family:'IBM Plex Sans Thai',system-ui,sans-serif;background:var(--bg);color:var(--tx);font-size:14px;line-height:1.5;font-variant-numeric:tabular-nums}
 button,select,input,textarea{font:inherit;color:inherit}
-.shell{display:grid;grid-template-columns:240px 1fr;min-height:100vh}
-.side{background:linear-gradient(170deg,var(--ink),#1d33a8 70%,#2f54eb);color:#fff;padding:20px 14px;display:flex;flex-direction:column;gap:6px;position:sticky;top:0;height:100vh}
-.brand{display:flex;gap:10px;align-items:center;margin-bottom:14px}.brand img{width:46px}.brand b{font-size:15px;line-height:1.2}.brand small{display:block;opacity:.7;font-weight:400}
-.nav{display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:12px;border:0;background:none;color:#cfd8ff;cursor:pointer;text-align:left;width:100%}
-.nav:hover{background:#ffffff1a}.nav.on{background:#fff;color:var(--ink);font-weight:600;box-shadow:inset 4px 0 0 var(--gold)}
-.me{margin-top:auto;font-size:12px;opacity:.9}.me .credit{margin-top:10px;padding-top:10px;border-top:1px solid #ffffff33;opacity:.75;line-height:1.5}
-main{padding:24px 28px;min-width:0}h1{margin:0 0 4px;font-size:24px;color:var(--ink)}h2{font-size:17px;margin:0 0 12px}.sub{color:var(--mut);margin:0 0 18px}
-.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:16px}
+.shell{display:grid;grid-template-columns:264px 1fr;min-height:100vh}
+.side{background:var(--ink);color:#c5cce6;padding:18px 12px;display:flex;flex-direction:column;gap:2px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.brand{display:flex;gap:10px;align-items:center;padding:4px 8px 14px}.brand img{width:40px}.brand b{font-size:14px;line-height:1.25;color:#fff;font-weight:600}.brand small{display:block;color:#8e99c4;font-weight:400;font-size:12px}
+.term{margin:0 8px 8px;padding:7px 10px;border:1px solid #ffffff22;border-radius:8px;font-size:12px;color:#aab4dc}
+.grp{margin:14px 10px 4px;font-size:11px;letter-spacing:.08em;color:#7783b0;font-weight:500}
+.nav{display:flex;align-items:center;gap:11px;padding:8px 10px;border-radius:8px;border:0;background:none;color:inherit;cursor:pointer;text-align:left;width:100%;position:relative}
+.nav svg{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;opacity:.85}
+.nav span{display:grid;line-height:1.25}.nav small{font-size:11.5px;color:#7f8bb8;font-weight:400}
+.nav:hover{background:#ffffff12}.nav.on{background:var(--ink2);color:#fff}.nav.on small{color:#a9b4e0}
+.nav.on::before{content:'';position:absolute;left:-12px;top:8px;bottom:8px;width:3px;border-radius:0 3px 3px 0;background:var(--gold)}
+.badge{margin-left:auto;min-width:20px;padding:0 6px;border-radius:99px;background:var(--ruby);color:#fff;font-size:11px;font-weight:500;text-align:center;line-height:20px}.badge.n{background:var(--gold);color:#2b2000}
+.sub2{display:grid;margin:2px 0 6px 30px;border-left:1px solid #ffffff1f}.sub2 button{background:none;border:0;color:#9aa5cf;text-align:left;padding:5px 12px;cursor:pointer;font-size:13px}.sub2 button:hover{color:#fff}.sub2 button.on{color:var(--gold);font-weight:500}
+.me{margin-top:auto;font-size:12px;padding:10px 8px 0}.me a{color:#e8c25a;text-decoration:none}.me .credit{margin-top:10px;padding-top:10px;border-top:1px solid #ffffff22;opacity:.7;line-height:1.5}
+main{padding:28px 36px 40px;min-width:0;max-width:1500px}
+h1{margin:0 0 2px;font-size:26px;font-weight:600;letter-spacing:-.01em;color:var(--ink)}h2{font-size:16px;font-weight:600;margin:0 0 12px}.sub{color:var(--mut);margin:0 0 20px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;margin-bottom:16px}
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:16px}
-.stat{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;border-top:4px solid var(--c)}.stat b{font-size:30px;color:var(--ink);display:block}.stat span{color:var(--mut)}
-.btn{border:1px solid var(--line);background:#fff;border-radius:10px;padding:8px 14px;cursor:pointer}.btn:hover{border-color:var(--blue)}
-.btn.pri{background:var(--blue);border-color:var(--blue);color:#fff}.btn.dng{color:var(--ruby);border-color:#f3c2c9}.btn.gold{background:var(--gold);border-color:var(--gold);color:#3a2b00;font-weight:600}
-select,input,textarea{border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:#fff;max-width:100%}input:focus,select:focus,textarea:focus,.btn:focus-visible{outline:2px solid var(--blue);outline-offset:1px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}.stat b{font-size:30px;font-weight:600;color:var(--ink);display:block;line-height:1.2}.stat span{display:flex;align-items:center;gap:7px;color:var(--mut);font-size:13px;margin-top:2px}.stat span::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--c)}
+.btn{border:1px solid var(--line);background:var(--card);border-radius:8px;padding:7px 14px;cursor:pointer;transition:.15s}.btn:hover{border-color:var(--ink);background:#fff}
+.btn.pri{background:var(--ink);border-color:var(--ink);color:#fff}.btn.pri:hover{background:var(--ink2)}.btn.dng{color:var(--ruby);border-color:#ecc3c8}.btn.gold{background:var(--gold);border-color:var(--gold);color:#2b2000;font-weight:600}.btn.big{padding:13px 30px;font-size:16px;border-radius:10px}.btn:disabled{opacity:.4;cursor:not-allowed}
+select,input,textarea{border:1px solid var(--line);border-radius:8px;padding:7px 10px;background:#fff;max-width:100%}input:focus,select:focus,textarea:focus,.btn:focus-visible,.nav:focus-visible{outline:2px solid var(--blue);outline-offset:1px}
 .bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
-.pal{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:12px;color:var(--mut)}
-.chip{padding:6px 12px;border-radius:99px;cursor:grab;background:hsl(var(--h) 90% 93%);border:1.5px solid hsl(var(--h) 70% 55%);color:hsl(var(--h) 60% 25%);font-weight:500;user-select:none}
-.gridw{overflow-x:auto;background:#fff;border:1px solid var(--line);border-radius:16px}
-table.g{border-collapse:collapse;width:100%;min-width:860px;table-layout:fixed}
-.g th,.g td{border:1px solid var(--line);padding:4px;vertical-align:top;height:72px}
-.g thead th{height:auto;background:var(--sky);color:var(--ink);padding:8px 4px;font-size:13px}.g th small{display:block;font-weight:400;color:var(--mut);font-size:11px}
-.g tbody th{width:84px;background:var(--sky);color:var(--ink);vertical-align:middle}
-td.brk{background:repeating-linear-gradient(45deg,#f5f7fd,#f5f7fd 6px,#eaeefb 6px,#eaeefb 12px);text-align:center;vertical-align:middle;color:var(--mut);font-size:12px}
-td.empty:hover,td.over{background:#fff8e0;outline:2px dashed var(--gold);outline-offset:-3px}
-.blk{background:hsl(var(--h) 90% 93%);border-left:4px solid hsl(var(--h) 70% 50%);border-radius:8px;padding:6px 8px;height:100%;margin-bottom:2px;font-size:13px}
-.blk[data-act]{cursor:pointer}.blk[draggable=true]{cursor:grab}.blk b{display:block;color:hsl(var(--h) 60% 22%)}.blk small{color:hsl(var(--h) 25% 35%)}
-table.t{width:100%;border-collapse:collapse}.t th,.t td{padding:8px;border-bottom:1px solid var(--line);text-align:left}.t th{color:var(--mut);font-weight:500}.t input{width:100%}
-.bargr{height:8px;border-radius:9px;background:var(--sky);overflow:hidden;min-width:90px}.bargr i{display:block;height:100%;background:var(--blue)}.bargr i.ok{background:var(--mint)}.bargr i.hi{background:var(--ruby)}
-.tag{padding:2px 10px;border-radius:99px;font-size:12px;background:var(--sky);color:var(--ink)}.tag.ok{background:#d9f6ed;color:#0b6b52}.tag.no{background:#fde2e6;color:var(--ruby)}
+.pal{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin-bottom:6px;color:var(--mut)}
+.chip{padding:5px 11px;border-radius:8px;cursor:grab;background:hsl(var(--h) 80% 94%);border:1px solid hsl(var(--h) 45% 72%);border-left:4px solid hsl(var(--h) 60% 48%);color:hsl(var(--h) 50% 22%);font-weight:500;user-select:none;transition:.15s}.chip:hover{transform:translateY(-1px);box-shadow:0 3px 8px #101d3f22}.chip:active{cursor:grabbing}.chip em{font-style:normal;font-size:11.5px;opacity:.7;margin-left:7px}.chip.done{opacity:.5}
+.hint{color:var(--mut);font-size:12.5px;margin:0 0 12px}
+.gridw{overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:12px}
+table.g{border-collapse:separate;border-spacing:0;width:100%;min-width:900px;table-layout:fixed}
+.g th,.g td{border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:4px;vertical-align:top;height:78px}
+.g thead th{height:auto;background:#f0ebdf;color:var(--ink);padding:9px 4px;font-size:13px;font-weight:600;position:sticky;top:0;z-index:2}.g th small{display:block;font-weight:400;color:var(--mut);font-size:11px}
+.g tbody th{width:88px;background:#f0ebdf;color:var(--ink);vertical-align:middle;position:sticky;left:0;z-index:1}.g tbody th.tod{background:var(--ink);color:#fff}
+.g tr:last-child td,.g tr:last-child th{border-bottom:0}.g th:last-child,.g td:last-child{border-right:0}
+td.brk{background:repeating-linear-gradient(45deg,#f6f2e8,#f6f2e8 6px,#eee8d9 6px,#eee8d9 12px);text-align:center;vertical-align:middle;color:var(--mut);font-size:12px}
+td.empty{transition:background .12s}td.empty:hover{background:#fff6d8}
+td.ok{background:#eaf7f1}td.warn{background:#fff3cf}td.bad{background:repeating-linear-gradient(135deg,#fdeaec,#fdeaec 6px,#f9d3d8 6px,#f9d3d8 12px)}
+td.over{outline:2px solid var(--ink);outline-offset:-3px}td.bad.over{outline-color:var(--ruby);cursor:not-allowed}
+.ghost{font-size:10.5px;line-height:1.3;padding:1px 6px;margin:0 0 2px;border-radius:5px;border:1px dashed hsl(var(--h,220) 35% 62%);background:hsl(var(--h,220) 60% 95% / .7);color:hsl(var(--h,220) 30% 36%);opacity:.72;pointer-events:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ghost.same{border-style:solid;opacity:.92}.ghost.hit{border:1px solid var(--ruby);background:#fff;color:var(--ruby);opacity:1;font-weight:500}.ghost.more{border:0;background:none;opacity:.6}
+.legend{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;border-radius:99px;padding:9px 20px;font-size:12.5px;display:flex;gap:18px;z-index:60;pointer-events:none;white-space:nowrap;box-shadow:0 8px 24px #101d3f55}.legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:7px;vertical-align:-1px}
+.blk{background:hsl(var(--h) 80% 94%);border-left:4px solid hsl(var(--h) 60% 48%);border-radius:6px;padding:5px 8px;height:100%;margin-bottom:2px;font-size:13px}
+.blk[data-act]{cursor:pointer}.blk[draggable=true]{cursor:grab}.blk b{display:block;color:hsl(var(--h) 55% 20%);font-weight:600}.blk small{color:hsl(var(--h) 25% 35%)}
+table.t{width:100%;border-collapse:collapse}.t th,.t td{padding:9px 8px;border-bottom:1px solid var(--line);text-align:left}.t th{color:var(--mut);font-weight:500;font-size:13px}.t input{width:100%}
+.bargr{height:7px;border-radius:9px;background:#ece6d8;overflow:hidden;min-width:90px}.bargr i{display:block;height:100%;background:var(--blue)}.bargr i.ok{background:var(--mint)}.bargr i.hi{background:var(--ruby)}
+.tag{padding:2px 10px;border-radius:99px;font-size:12px;background:#ece6d8;color:var(--ink)}.tag.ok{background:#d9f0e7;color:#0b6b52}.tag.no{background:#fde2e6;color:var(--ruby)}
 .tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}.tabs .btn.on{background:var(--ink);color:#fff;border-color:var(--ink)}
-.mask{position:fixed;inset:0;background:#0f1b4d99;display:grid;place-items:center;z-index:50;padding:16px}
-.modal{background:#fff;border-radius:18px;padding:22px;width:min(440px,100%);max-height:90vh;overflow:auto;display:grid;gap:12px}.modal h3{margin:0}.modal label{display:grid;gap:4px;color:var(--mut)}.row{display:flex;gap:8px;flex-wrap:wrap}
-.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:12px 18px;border-radius:12px;z-index:99;max-width:90vw}.toast.bad{background:var(--ruby)}
-.login{min-height:100vh;display:grid;place-items:center;background:radial-gradient(circle at 20% 10%,#ffe9a8,transparent 40%),linear-gradient(160deg,var(--ink),#2f54eb);padding:16px}
-.login form{background:#fff;border-radius:24px;padding:32px;width:min(380px,100%);display:grid;gap:12px;text-align:center}.login img{width:120px;margin:0 auto}.login h1{font-size:22px}
-.sheet{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px;margin-bottom:16px}
+.mask{position:fixed;inset:0;background:#101d3f99;display:grid;place-items:center;z-index:50;padding:16px}
+.modal{background:var(--card);border-radius:14px;padding:22px;width:min(440px,100%);max-height:90vh;overflow:auto;display:grid;gap:12px}.modal h3{margin:0}.modal label{display:grid;gap:4px;color:var(--mut)}.row{display:flex;gap:8px;flex-wrap:wrap}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:12px 18px;border-radius:10px;z-index:99;max-width:90vw}.toast.bad{background:var(--ruby)}
+.sheet{background:#fff;border:1px solid var(--line);border-radius:10px;padding:18px;margin-bottom:16px}
 .sheet header{display:flex;gap:14px;align-items:center;margin-bottom:10px}.sheet header img{width:62px}.sheet header b{font-size:18px;color:var(--ink)}
 .sheet .g{min-width:0}.sheet .g th,.sheet .g td{height:56px}.sheet footer{display:flex;justify-content:space-between;align-items:end;margin-top:14px;gap:20px}
 .sig{text-align:center;min-width:200px}.sig i{display:block;border-bottom:1px dotted #333;height:34px;margin-bottom:4px}
-@media(max-width:820px){.shell{grid-template-columns:1fr}.side{position:static;height:auto;flex-direction:row;flex-wrap:wrap;padding:10px}.brand{width:100%;margin:0}.nav{width:auto;padding:8px 10px}.me{display:none}main{padding:16px 12px}}
-@media print{@page{size:A4 landscape;margin:10mm}body{background:#fff}.side,.noprint,.toast,.mask{display:none!important}.shell{display:block}main{padding:0}
-.sheet{border:0;padding:0;margin:0;break-after:page;page-break-after:always}.sheet:last-child{break-after:auto}.gridw{border:0;overflow:visible}.g th,.g td{border-color:#444!important;height:50px}.g thead th,.g tbody th{background:#eee!important;color:#000}.blk{background:#fff!important;border:0;border-left:3px solid #000}.blk b,.blk small{color:#000!important}table.g{min-width:0}}
-.wel{min-height:100vh;display:grid;place-items:center;padding:20px;background:radial-gradient(circle at 15% 15%,#ffd96655,transparent 35%),radial-gradient(circle at 85% 85%,#7c9cff66,transparent 40%),linear-gradient(160deg,#0f1b4d,#2340c8)}
-.wel-in{background:#ffffff14;backdrop-filter:blur(14px);border:1px solid #ffffff40;border-radius:28px;padding:40px 28px;text-align:center;color:#fff;max-width:660px;display:grid;gap:16px;justify-items:center}.wl{width:150px;filter:drop-shadow(0 10px 24px #0008)}
-.wel h1{color:#fff;font-size:clamp(28px,6vw,44px);margin:0}.wf{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}.wf span{padding:6px 14px;border-radius:99px;background:#ffffff22;font-size:13px}
-.btn.big{padding:14px 30px;font-size:17px;border-radius:14px}.wn b{color:var(--gold);font-size:22px}.cr{text-align:center;color:var(--mut);font-size:12px;padding:18px 0 4px}@media print{.sheet::after{content:'BR Smart Timetable · พัฒนาโดย ครูเฉลิมพล จันทร์แดง · โรงเรียนบ้านไร่';display:block;text-align:center;font-size:10px;color:#555;margin-top:8px}}.btn:disabled{opacity:.4;cursor:not-allowed}
+.wel{min-height:100vh;display:grid;place-items:center;padding:20px;background-color:var(--ink);background-image:linear-gradient(#ffffff09 1px,transparent 1px),linear-gradient(90deg,#ffffff09 1px,transparent 1px);background-size:44px 44px}
+.wel-in{text-align:center;color:#fff;max-width:640px;display:grid;gap:16px;justify-items:center}.wl{width:140px}
+.wel h1{color:#fff;font-size:clamp(28px,6vw,46px);margin:0}.wf{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}.wf span{padding:5px 13px;border-radius:6px;border:1px solid #ffffff33;font-size:13px}
+.wn b{color:var(--gold);font-size:22px}.cr{text-align:center;color:var(--mut);font-size:12px;padding:18px 0 4px}
+@media(max-width:820px){.shell{grid-template-columns:1fr}.side{position:fixed;inset:auto 0 0 0;height:auto;flex-direction:row;padding:6px 4px calc(6px + env(safe-area-inset-bottom));z-index:40;gap:0;overflow:visible;border-top:1px solid #ffffff22}.brand,.term,.grp,.sub2,.me,.nav small,.legend{display:none}.nav{flex-direction:column;gap:2px;padding:6px 2px;font-size:10.5px;text-align:center;flex:1}.nav.on::before{display:none}.badge{position:absolute;top:0;right:6px;margin:0}main{padding:18px 14px 96px}.toast{bottom:84px}}
+@media print{@page{size:A4 landscape;margin:10mm}body{background:#fff}.side,.noprint,.toast,.mask,.legend{display:none!important}.shell{display:block}main{padding:0;max-width:none}.sheet{border:0;padding:0;margin:0;break-after:page;page-break-after:always}.sheet:last-child{break-after:auto}.gridw{border:0;overflow:visible}table.g{border-collapse:collapse;min-width:0}.g th,.g td{border:1px solid #444!important;height:50px}.g thead th,.g tbody th{background:#eee!important;color:#000;position:static}.blk{background:#fff!important;border:0;border-left:3px solid #000}.blk b,.blk small{color:#000!important}.sheet::after{content:'BR Smart Timetable · พัฒนาโดย ครูเฉลิมพล จันทร์แดง · โรงเรียนบ้านไร่';display:block;text-align:center;font-size:10px;color:#555;margin-top:8px}}
 </style></head><body><div id="app"></div><div id="modal"></div>
 <script>
 const D=['จันทร์','อังคาร','พุธ','พฤหัสบดี','ศุกร์'],$=s=>document.querySelector(s);
@@ -69,11 +82,15 @@ const term=()=>`ปีการศึกษา ${S.d.settings.year||''} ภา�
 
 function welcomeH(){const d=S.d,h=new Date().getHours(),g=h<12?'สวัสดีตอนเช้า':h<17?'สวัสดีตอนบ่าย':'สวัสดีตอนเย็น';
  return `<div class="wel"><div class="wel-in"><img src="logo.png" alt="โลโก้โรงเรียนบ้านไร่" class="wl"><div style="opacity:.85">${g} · ยินดีต้อนรับสู่</div><h1>BR Smart Timetable</h1><p style="margin:0;opacity:.9">ระบบจัดตารางสอนอัจฉริยะ<br>โรงเรียนบ้านไร่ สพป.เชียงใหม่ เขต 5</p><div class="wf"><span>ลากวางจัดตาราง</span><span>ตรวจคาบชนอัตโนมัติ</span><span>จัดสอนแทน</span><span>พิมพ์ / PDF</span><span>ฉบับตาราง & สำรองข้อมูล</span></div><button class="btn gold big" data-act="enter">เข้าสู่ระบบจัดตารางสอน</button><div class="wn"><b>${d.teachers.length}</b> ครู · <b>${d.classes.length}</b> ชั้นเรียน · <b>${d.entries.length}</b> คาบ</div><small style="opacity:.75">${term()}<br>พัฒนาโดย ครูเฉลิมพล จันทร์แดง · โรงเรียนบ้านไร่</small></div></div>`}
+const IC={home:'M3 11l9-8 9 8M5 10v10h14V10',grid:'M3 4h18v16H3zM3 10h18M9 4v16',swap:'M7 7h13l-3-3M17 17H4l3 3',print:'M7 8V3h10v5M7 17H4v-6h16v6h-3M7 14h10v7H7z',db:'M4 6c0-1.7 3.6-3 8-3s8 1.3 8 3-3.6 3-8 3-8-1.3-8-3zM4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6',save:'M5 3h11l3 3v15H5zM8 3v5h7V3M8 21v-7h8v7'};
+const NAV=[['ภาพรวม',[['dash','แดชบอร์ด','สถิติและการแจ้งเตือน','home']]],['จัดตาราง',[['tt','จัดตารางสอน','ลากวางและตรวจคาบชน','grid'],['sub','สอนแทน','มอบหมายครูแทนรายวัน','swap']]],['เอกสาร',[['print','พิมพ์ตารางสอน','รายครู รายชั้น รายห้อง','print']]],['ระบบ',[['data','ข้อมูลพื้นฐาน','ครู วิชา ชั้น ห้อง เวลา','db'],['ver','ฉบับตาราง/สำรอง','ฉบับร่าง สำรอง ประวัติ','save']]]];
 function render(){
  if(!S.entered){$('#app').innerHTML=welcomeH();return}
- const N=[['dash','แดชบอร์ด','◧'],['tt','จัดตารางสอน','▦'],['print','พิมพ์ตารางสอน','⎙'],['sub','สอนแทน','⇄'],['data','ข้อมูลพื้นฐาน','☰'],['ver','ฉบับตาราง/สำรอง','◈']];
+ const cf=conflicts().length,un=(S.d.notifs||[]).filter(x=>!x.seen).length,bd={dash:un?`<b class="badge n">${un}</b>`:'',tt:cf?`<b class="badge">${cf}</b>`:''};
  const V={dash:vDash,tt:vTT,print:vPrint,sub:vSub,data:vData,ver:vVer}[S.view]();
- $('#app').innerHTML=`<div class="shell"><aside class="side"><div class="brand"><img src="logo.png" alt=""><b>BR Smart Timetable<small>โรงเรียนบ้านไร่</small></b></div>${N.map(n=>`<button class="nav ${S.view==n[0]?'on':''}" data-act="nav" data-v="${n[0]}"><span>${n[2]}</span>${n[1]}</button>`).join('')}<div class="me"><a href="#" data-act="logout" style="color:var(--gold)">← หน้าต้อนรับ</a><div class="credit">พัฒนาโดย<br>ครูเฉลิมพล จันทร์แดง<br>โรงเรียนบ้านไร่</div></div></aside><main>${V}<div class="cr noprint">BR Smart Timetable v1.0 · พัฒนาโดย ครูเฉลิมพล จันทร์แดง · โรงเรียนบ้านไร่ สพป.เชียงใหม่ เขต 5</div></main></div>`}
+ const sub=Object.keys(TN).filter(x=>x!='users').map(x=>`<button class="${S.tab==x?'on':''}" data-act="tab" data-v="${x}">${TN[x]}</button>`).join('');
+ const nav=NAV.map(([g,it])=>`<div class="grp">${g}</div>`+it.map(([k,t,s,i])=>`<button class="nav ${S.view==k?'on':''}" data-act="nav" data-v="${k}"><svg viewBox="0 0 24 24"><path d="${IC[i]}"/></svg><span>${t}<small>${s}</small></span>${bd[k]||''}</button>${k=='data'&&S.view=='data'?`<div class="sub2">${sub}</div>`:''}`).join('')).join('');
+ $('#app').innerHTML=`<div class="shell"><aside class="side"><div class="brand"><img src="logo.png" alt=""><b>BR Smart Timetable<small>โรงเรียนบ้านไร่</small></b></div><div class="term">${term()}</div>${nav}<div class="me"><a href="#" data-act="logout">← หน้าต้อนรับ</a><div class="credit">พัฒนาโดย<br>ครูเฉลิมพล จันทร์แดง<br>โรงเรียนบ้านไร่</div></div></aside><main>${V}<div class="cr noprint">BR Smart Timetable v2.0 · พัฒนาโดย ครูเฉลิมพล จันทร์แดง · โรงเรียนบ้านไร่ สพป.เชียงใหม่ เขต 5</div></main></div>`}
 
 function conflicts(){const o=[],seen={t:{},r:{},c:{}},nm={t:'ครูชนคาบ',r:'ห้องชนคาบ',c:'ชั้นเรียนซ้อนคาบ'};
  for(const e of S.d.entries)for(const [k,v] of [['t',e.teacher_id],['r',e.room_id],['c',e.class_id]]){if(!v)continue;const key=v+'|'+e.day+'|'+e.period;if(seen[k][key])o.push({e,msg:`${nm[k]} · ${by(S.d.classes,e.class_id)?.name} ${D[e.day-1]} คาบ ${by(S.d.periods,e.period)?.label}`});else seen[k][key]=1}
@@ -83,14 +100,18 @@ function vDash(){const d=S.d,cf=conflicts(),today=d.subs.filter(s=>s.date==new D
  return `<h1>ภาพรวมตารางสอน</h1><p class="sub">${term()}</p><div class="stats">${[['ครู',d.teachers.length,'#2f54eb'],['ชั้นเรียน',d.classes.length,'#12a37f'],['คาบที่จัดแล้ว',d.entries.length,'#f5b301'],['สอนแทนวันนี้',today,'#d6283f'],['เติมช่องแล้ว',Math.round(d.entries.length/Math.max(1,d.classes.length*d.periods.filter(p=>!+p.is_break).length*5)*100)+'%','#7c4dff'],['ข้อขัดแย้ง',cf.length,cf.length?'#d6283f':'#12a37f']].map(s=>`<div class="stat" style="--c:${s[2]}"><b>${s[1]}</b><span>${s[0]}</span></div>`).join('')}</div>
  <div class="card"><h2>ภาระงานครู (คาบ/สัปดาห์)</h2>${d.teachers.length?`<table class="t"><tr><th>ครู</th><th>จัดแล้ว</th><th>เป้าหมาย</th><th>สถานะ</th></tr>${d.teachers.map(t=>{const c=cnt(t.id),p=t.load?Math.min(100,c/t.load*100):0;return `<tr><td>${t.name}</td><td>${c}</td><td>${t.load||'-'}</td><td><div class="bargr"><i class="${t.load&&c==t.load?'ok':c>t.load?'hi':''}" style="width:${p}%"></i></div></td></tr>`}).join('')}</table>`:'<p class="sub">ยังไม่มีข้อมูลครู ไปที่ “ข้อมูลพื้นฐาน” เพื่อเพิ่มครูและรายวิชา</p>'}</div>${setupCard()}${notifCard()}`}
 
-function vTT(){const d=S.d,m=S.mode,l=m=='class'?d.classes:m=='room'?d.rooms:d.teachers;if(!by(l,S.sel))S.sel=l[0]?.id;
+function vTT(){const d=S.d,m=S.mode,pc=s=>d.entries.filter(e=>e.class_id==S.sel&&e.subject_id==s.id).length,l=m=='class'?d.classes:m=='room'?d.rooms:d.teachers;if(!by(l,S.sel))S.sel=l[0]?.id;
  return `<h1>จัดตารางสอน</h1><p class="sub">${canEdit()?'ลากวิชาไปวางในช่องว่าง หรือแตะช่องว่าง/คาบเพื่อแก้ไข':'โหมดอ่านอย่างเดียว'}</p><div class="bar noprint"><select data-ch="mode"><option value="class" ${m=='class'?'selected':''}>รายชั้นเรียน</option><option value="teacher" ${m=='teacher'?'selected':''}>รายครู</option><option value="room" ${m=='room'?'selected':''}>รายห้อง</option></select><select data-ch="sel">${opts(l,S.sel)}</select><input id="q" placeholder="ค้นหาวิชา/ครู/ห้อง" style="width:170px"><button class="btn" data-act="check">ตรวจตาราง</button><button class="btn" data-act="printcur">🖨 พิมพ์ตารางนี้</button><button class="btn" data-act="undo" ${S.un.length?'':'disabled'}>↶ Undo</button><button class="btn" data-act="redo" ${S.re.length?'':'disabled'}>↷ Redo</button>${S.clip?'<button class="btn gold" data-act="noclip">ยกเลิกคัดลอก</button>':''}</div>
- ${m=='class'&&canEdit()?`<div class="pal">วิชา:${d.subjects.length?d.subjects.map(s=>`<span class="chip" draggable="true" data-drag="S:${s.id}" style="--h:${col(s.name)}">${s.name}</span>`).join(''):' ยังไม่มีรายวิชา'}</div>`:''}${grid(m,S.sel,true)}`}
+ ${m=='class'&&canEdit()?`<div class="pal">วิชา:${d.subjects.length?d.subjects.map(s=>`<span class="chip ${s.periods&&pc(s)>=s.periods?'done':''}" draggable="true" data-drag="S:${s.id}" style="--h:${col(s.name)}">${s.name}<em>${pc(s)}${s.periods?'/'+s.periods:''}</em></span>`).join(''):' ยังไม่มีรายวิชา'}</div>`:''}${m=='class'&&canEdit()?'<p class="hint">ลากวิชาไปวางในช่องว่าง · ระหว่างลากจะเห็นเงาจางของคาบที่ชั้นอื่นใช้อยู่ ป้องกันครูหรือห้องซ้อนกัน</p>':''}${grid(m,S.sel,true)}`}
 function blk(e,m,ui){const s=by(S.d.subjects,e.subject_id),t=by(S.d.teachers,e.teacher_id),c=by(S.d.classes,e.class_id),r=by(S.d.rooms,e.room_id);
  return `<div class="blk" ${ui?`data-act="edit" data-id="${e.id}" ${m=='class'?`draggable="true" data-drag="E:${e.id}"`:''}`:''} style="--h:${col(s?.name)}"><b>${s?.name||'-'}</b><small>${m=='class'?t?.name||'':m=='room'?(c?.name||'')+' · '+(t?.name||''):c?.name||''}${r&&m!='room'?' · '+r.name:''}</small></div>`}
 function grid(m,id,ui){const P=S.d.periods,u=ui&&canEdit();
- return `<div class="gridw"><table class="g"><thead><tr><th>วัน</th>${P.map(p=>`<th>${p.is_break?p.label:'คาบ '+p.label}<small>${p.start||''}${p.end?'–'+p.end:''}</small></th>`).join('')}</tr></thead><tbody>${D.map((n,i)=>`<tr><th>${n}</th>${P.map(p=>{if(+p.is_break)return `<td class="brk">${p.label}</td>`;const es=S.d.entries.filter(e=>e.day==i+1&&e.period==p.id&&(m=='class'?e.class_id==id:m=='room'?e.room_id==id:e.teacher_id==id));return `<td class="${es.length?'':'empty'}" ${u&&m=='class'?`data-d="${i+1}" data-p="${p.id}"`:''}>${es.map(e=>blk(e,m,u)).join('')}</td>`}).join('')}</tr>`).join('')}</tbody></table></div>`}
-function entryModal(e){const d=S.d;S.ed=e;modal(`<h3>${e.id?'แก้ไขคาบ':'เพิ่มคาบ'} · ${D[e.day-1]} คาบ ${by(d.periods,e.period).label}</h3><label>วิชา<select id="f1">${opts(d.subjects,e.subject_id)}</select></label><label>ครู<select id="f2"><option value="">เลือกครู</option>${opts(d.teachers,e.teacher_id)}</select></label><label>ห้อง (ถ้ามี)<select id="f3"><option value="">-</option>${opts(d.rooms,e.room_id)}</select></label><div class="row"><button class="btn pri" data-act="saveE">บันทึก</button>${e.id?'<button class="btn" data-act="copyE">คัดลอก</button><button class="btn dng" data-act="delE">ลบคาบ</button>':''}<button class="btn" data-act="close">ยกเลิก</button></div>`)}
+ return `<div class="gridw"><table class="g"><thead><tr><th>วัน</th>${P.map(p=>`<th>${p.is_break?p.label:'คาบ '+p.label}<small>${p.start||''}${p.end?'–'+p.end:''}</small></th>`).join('')}</tr></thead><tbody>${D.map((n,i)=>`<tr><th class="${new Date().getDay()==i+1?'tod':''}">${n}</th>${P.map(p=>{if(+p.is_break)return `<td class="brk">${p.label}</td>`;const es=S.d.entries.filter(e=>e.day==i+1&&e.period==p.id&&(m=='class'?e.class_id==id:m=='room'?e.room_id==id:e.teacher_id==id));return `<td class="${es.length?'':'empty'}" ${u&&m=='class'?`data-d="${i+1}" data-p="${p.id}"`:''}>${es.map(e=>blk(e,m,u)).join('')}</td>`}).join('')}</tr>`).join('')}</tbody></table></div>`}
+function busyAt(day,per,ex){const t={},r={};for(const x of S.d.entries)if(x.day==day&&x.period==per&&x.id!=ex){const cn=by(S.d.classes,x.class_id)?.name||'';if(x.teacher_id)t[x.teacher_id]=cn;if(x.room_id)r[x.room_id]=cn}return{t,r}}
+function entryModal(e){const d=S.d,b=busyAt(e.day,e.period,e.id);S.ed=e;
+ if(!e.teacher_id){const c={};d.entries.filter(x=>x.subject_id==e.subject_id).forEach(x=>c[x.teacher_id]=(c[x.teacher_id]||0)+(x.class_id==e.class_id?5:1));const p=Object.keys(c).filter(k=>!b.t[k]).sort((a,z)=>c[z]-c[a])[0];if(p)e.teacher_id=+p}
+ const so=(l,m,s)=>l.map(x=>`<option value="${x.id}" ${x.id==s?'selected':''} ${m[x.id]?'disabled':''}>${x.name}${m[x.id]?' — ติดสอน '+m[x.id]:''}</option>`).join('');
+ modal(`<h3>${e.id?'แก้ไขคาบ':'เพิ่มคาบ'} · ${D[e.day-1]} คาบ ${by(d.periods,e.period).label}</h3><label>วิชา<select id="f1">${opts(d.subjects,e.subject_id)}</select></label><label>ครู (ครูที่ติดคาบนี้เลือกไม่ได้)<select id="f2"><option value="">เลือกครู</option>${so(d.teachers,b.t,e.teacher_id)}</select></label><label>ห้อง (ถ้ามี)<select id="f3"><option value="">-</option>${so(d.rooms,b.r,e.room_id)}</select></label><div class="row"><button class="btn pri" data-act="saveE">บันทึก</button>${e.id?'<button class="btn" data-act="copyE">คัดลอก</button><button class="btn dng" data-act="delE">ลบคาบ</button>':''}<button class="btn" data-act="close">ยกเลิก</button></div>`)}
 
 function vPrint(){if(S.pm=='report')return reportH();const d=S.d,pm=S.pm,one=pm.endsWith('1'),isT=pm.startsWith('teacher'),isR=pm.startsWith('room'),l=isT?d.teachers:isR?d.rooms:d.classes;if(!by(l,S.ps))S.ps=l[0]?.id;
  const sheet=x=>{const n=d.entries.filter(e=>isT?e.teacher_id==x.id:isR?e.room_id==x.id:e.class_id==x.id).length;return `<section class="sheet"><header><img src="logo.png" alt=""><div><b>โรงเรียนบ้านไร่</b> สพป.เชียงใหม่ เขต 5<br>${isT?'ตารางสอนครู':isR?'ตารางการใช้ห้อง':'ตารางเรียนชั้น'} <b>${x.name}</b> · ${term()}</div></header>${grid(isT?'teacher':isR?'room':'class',x.id,false)}<footer><div>รวม ${n} คาบ/สัปดาห์</div><div class="sig"><i></i>ผู้อำนวยการโรงเรียน</div><div class="sig"><i></i>ฝ่ายวิชาการ</div></footer></section>`};
@@ -161,10 +182,22 @@ document.addEventListener('change',ev=>{const t=ev.target,k=t.dataset.ch;
  if(k=='restore'){doRestore(t.files[0]);return}if(k){S[k=='sel'?(S.view=='print'?'ps':'sel'):k]=k=='mode'?t.value:k=='sd'||k=='pm'?t.value:+t.value;if(k=='mode')S.sel=null;if(k=='pm')S.ps=null;render();return}
  const tr=t.closest('tr[data-t]');if(tr&&tr.dataset.id)saveRow(tr)});
 document.addEventListener('submit',async ev=>{if(ev.target.id!='lf')return;ev.preventDefault();const f=ev.target;try{const r=await api('login','POST',{username:f.u.value.trim(),password:f.p.value});localStorage.setItem('brt',r.token);await load();render()}catch(e){toast(e.message,true)}});
-document.addEventListener('dragstart',ev=>{const t=ev.target.closest('[data-drag]');if(t)ev.dataTransfer.setData('text/plain',t.dataset.drag)});
-document.addEventListener('dragover',ev=>{const td=ev.target.closest('td.empty[data-d]');document.querySelectorAll('td.over').forEach(x=>x.classList.remove('over'));if(td){ev.preventDefault();td.classList.add('over')}});
-document.addEventListener('drop',ev=>{const td=ev.target.closest('td.empty[data-d]');if(!td)return;ev.preventDefault();td.classList.remove('over');const [k,id]=ev.dataTransfer.getData('text/plain').split(':'),day=+td.dataset.d,period=+td.dataset.p;
+function ghostCtx(k,id){const d=S.d;if(k=='S')return{k,sid:+id,t:new Set(d.entries.filter(e=>e.subject_id==id).map(e=>e.teacher_id)),r:null,ex:0};const e=by(d.entries,id);return e?{k,sid:e.subject_id,t:new Set([e.teacher_id]),r:e.room_id,ex:e.id}:null}
+function paintGhosts(c){document.querySelectorAll('td.empty[data-d]').forEach(td=>{
+ const es=S.d.entries.filter(e=>e.day==td.dataset.d&&e.period==td.dataset.p&&e.class_id!=S.sel&&e.id!=c.ex);
+ const hit=e=>c.t.has(e.teacher_id)||(c.r&&e.room_id==c.r),busy=new Set(es.map(e=>e.teacher_id));
+ const bad=c.k=='E'&&es.some(hit),warn=c.k=='S'&&c.t.size>0&&[...c.t].every(t=>busy.has(t));
+ td.classList.add(bad?'bad':warn?'warn':'ok');
+ const rank=e=>hit(e)?0:e.subject_id==c.sid?1:2,so=[...es].sort((a,b)=>rank(a)-rank(b));
+ td.insertAdjacentHTML('beforeend',so.slice(0,3).map(e=>{const sj=by(S.d.subjects,e.subject_id),tc=by(S.d.teachers,e.teacher_id);return `<div class="ghost ${hit(e)?'hit':e.subject_id==c.sid?'same':''}" style="--h:${col(sj?.name)}" title="${tc?.name||''}">${by(S.d.classes,e.class_id)?.name} · ${sj?.name}</div>`}).join('')+(so.length>3?`<div class="ghost more">+${so.length-3} ชั้นอื่น</div>`:''))})}
+function clearGhosts(){S.drag=null;document.querySelectorAll('.ghost').forEach(x=>x.remove());document.querySelectorAll('td.ok,td.warn,td.bad,td.over').forEach(x=>x.classList.remove('ok','warn','bad','over'));document.querySelector('.legend')?.remove()}
+document.addEventListener('dragstart',ev=>{const t=ev.target.closest('[data-drag]');if(!t)return;ev.dataTransfer.setData('text/plain',t.dataset.drag);ev.dataTransfer.effectAllowed='move';const [k,id]=t.dataset.drag.split(':'),c=ghostCtx(k,+id);if(!c)return;S.drag=c;
+ setTimeout(()=>{paintGhosts(c);document.body.insertAdjacentHTML('beforeend','<div class="legend"><span><i style="background:#fff;border:1px dashed #8a93b5"></i>เงา = ชั้นอื่นใช้คาบนี้อยู่</span><span><i style="background:#f3a6b0"></i>ครู/ห้องชน วางไม่ได้</span><span><i style="background:#ffd666"></i>ครูวิชานี้ติดทุกคน</span></div>')},0)});
+document.addEventListener('dragover',ev=>{const td=ev.target.closest('td.empty[data-d]');document.querySelectorAll('td.over').forEach(x=>x.classList.remove('over'));if(td){if(!(S.drag?.k=='E'&&td.classList.contains('bad'))){ev.preventDefault();ev.dataTransfer.dropEffect='move'}td.classList.add('over')}});
+document.addEventListener('drop',ev=>{const td=ev.target.closest('td.empty[data-d]');if(!td)return;ev.preventDefault();const bad=td.classList.contains('bad')&&S.drag?.k=='E',[k,id]=ev.dataTransfer.getData('text/plain').split(':'),day=+td.dataset.d,period=+td.dataset.p;clearGhosts();
+ if(bad)return toast('ครูหรือห้องนี้ติดคาบอื่นในช่วงเวลานั้น วางไม่ได้',true);
  if(k=='S')entryModal({class_id:S.sel,day,period,subject_id:+id});else if(k=='E'){const e=by(S.d.entries,id);snap();act(()=>api('entry','POST',{...e,day,period}),'ย้ายคาบแล้ว')}});
+document.addEventListener('dragend',clearGhosts);
 document.addEventListener('input',ev=>{if(ev.target.id!='q')return;const v=ev.target.value.trim();document.querySelectorAll('.blk,.chip').forEach(b=>b.style.opacity=!v||b.textContent.includes(v)?1:.18)});
 document.addEventListener('keydown',ev=>{if(ev.key=='Escape')modal('')});
 document.addEventListener('keydown',ev=>{if((ev.ctrlKey||ev.metaKey)&&ev.key=='z'&&S.view=='tt'&&!/INPUT|SELECT|TEXTAREA/.test(ev.target.tagName)){ev.preventDefault();(ev.shiftKey?A.redo:A.undo)()}});
