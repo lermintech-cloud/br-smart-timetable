@@ -4,8 +4,8 @@
  "lang": "th",
  "start_url": "/",
  "display": "standalone",
- "background_color": "#101d3f",
- "theme_color": "#101d3f",
+ "background_color": "#f6f7fb",
+ "theme_color": "#f6f7fb",
  "icons": [
   {
    "src": "logo.png",
