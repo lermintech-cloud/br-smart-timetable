@@ -9,13 +9,24 @@ CREATE TABLE IF NOT EXISTS entries(id INTEGER PRIMARY KEY, class_id INTEGER, sub
 CREATE INDEX IF NOT EXISTS ix_e_slot ON entries(day, period);
 CREATE TABLE IF NOT EXISTS subs(id INTEGER PRIMARY KEY, date TEXT, entry_id INTEGER, sub_teacher_id INTEGER, reason TEXT, status TEXT DEFAULT 'approved', by TEXT, created TEXT);
 CREATE TABLE IF NOT EXISTS audit_logs(id INTEGER PRIMARY KEY, user TEXT, action TEXT, detail TEXT, at TEXT);
-
-INSERT OR IGNORE INTO settings VALUES('year','2569'),('term','1');
-INSERT INTO periods(label,start,end,is_break) SELECT * FROM (
- SELECT '1','08:40','09:30',0 UNION ALL SELECT '2','09:30','10:20',0 UNION ALL SELECT 'พัก','10:20','10:40',1
- UNION ALL SELECT '3','10:40','11:30',0 UNION ALL SELECT '4','11:30','12:20',0 UNION ALL SELECT 'พักกลางวัน','12:20','13:10',1
- UNION ALL SELECT '5','13:10','14:00',0 UNION ALL SELECT '6','14:00','14:50',0 UNION ALL SELECT '7','14:50','15:40',0
-) WHERE NOT EXISTS(SELECT 1 FROM periods);
-INSERT INTO classes(name) SELECT * FROM (SELECT 'ป.1' UNION ALL SELECT 'ป.2' UNION ALL SELECT 'ป.3' UNION ALL SELECT 'ป.4' UNION ALL SELECT 'ป.5' UNION ALL SELECT 'ป.6') WHERE NOT EXISTS(SELECT 1 FROM classes);
 CREATE TABLE IF NOT EXISTS versions(id INTEGER PRIMARY KEY, name TEXT, status TEXT DEFAULT 'draft', snapshot TEXT, created TEXT);
 CREATE TABLE IF NOT EXISTS notifications(id INTEGER PRIMARY KEY, text TEXT, at TEXT, seen INTEGER DEFAULT 0);
+-- ข้อมูลเริ่มต้น (รันซ้ำได้ ไม่ซ้ำซ้อน) แยกทีละคำสั่งเพื่อให้ผ่านข้อจำกัดของ D1
+INSERT INTO periods(label,start,end,is_break) SELECT '1','08:40','09:30',0 WHERE NOT EXISTS(SELECT 1 FROM settings WHERE key='seeded');
+INSERT INTO periods(label,start,end,is_break) SELECT '2','09:30','10:20',0 WHERE NOT EXISTS(SELECT 1 FROM settings WHERE key='seeded');
+INSERT INTO periods(label,start,end,is_break) SELECT 'พัก','10:20','10:40',1 WHERE NOT EXISTS(SELECT 1 FROM settings WHERE key='seeded');
+INSERT INTO periods(label,start,end,is_break) SELECT '3','10:40','11:30',0 WHERE NOT EXISTS(SELECT 1 FROM settings WHERE key='seeded');
+INSERT INTO periods(label,start,end,is_break) SELECT '4','11:30','12:20',0 WHERE NOT EXISTS(SELECT 1 FROM settings WHERE key='seeded');
+INSERT INTO periods(label,start,end,is_break) SELECT 'พักกลางวัน','12:20','13:10',1 WHERE NOT EXISTS(SELECT 1 FROM settings WHERE key='seeded');
+INSERT INTO periods(label,start,end,is_break) SELECT '5','13:10','14:00',0 WHERE NOT EXISTS(SELECT 1 FROM settings WHERE key='seeded');
+INSERT INTO periods(label,start,end,is_break) SELECT '6','14:00','14:50',0 WHERE NOT EXISTS(SELECT 1 FROM settings WHERE key='seeded');
+INSERT INTO periods(label,start,end,is_break) SELECT '7','14:50','15:40',0 WHERE NOT EXISTS(SELECT 1 FROM settings WHERE key='seeded');
+INSERT INTO classes(name) SELECT 'ป.1' WHERE NOT EXISTS(SELECT 1 FROM settings WHERE key='seeded');
+INSERT INTO classes(name) SELECT 'ป.2' WHERE NOT EXISTS(SELECT 1 FROM settings WHERE key='seeded');
+INSERT INTO classes(name) SELECT 'ป.3' WHERE NOT EXISTS(SELECT 1 FROM settings WHERE key='seeded');
+INSERT INTO classes(name) SELECT 'ป.4' WHERE NOT EXISTS(SELECT 1 FROM settings WHERE key='seeded');
+INSERT INTO classes(name) SELECT 'ป.5' WHERE NOT EXISTS(SELECT 1 FROM settings WHERE key='seeded');
+INSERT INTO classes(name) SELECT 'ป.6' WHERE NOT EXISTS(SELECT 1 FROM settings WHERE key='seeded');
+INSERT OR IGNORE INTO settings VALUES('year','2569');
+INSERT OR IGNORE INTO settings VALUES('term','1');
+INSERT OR IGNORE INTO settings VALUES('seeded','1');
