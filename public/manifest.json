@@ -1,0 +1,17 @@
+{
+ "name": "BR Smart Timetable",
+ "short_name": "BR Timetable",
+ "lang": "th",
+ "start_url": "/",
+ "display": "standalone",
+ "background_color": "#0f1b4d",
+ "theme_color": "#0f1b4d",
+ "icons": [
+  {
+   "src": "logo.png",
+   "sizes": "any",
+   "type": "image/png",
+   "purpose": "any"
+  }
+ ]
+}
