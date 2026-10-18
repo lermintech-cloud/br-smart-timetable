@@ -29,3 +29,4 @@ INSERT INTO classes(name) SELECT 'ป.6' WHERE NOT EXISTS(SELECT 1 FROM settings
 INSERT OR IGNORE INTO settings VALUES('year','2569');
 INSERT OR IGNORE INTO settings VALUES('term','1');
 INSERT OR IGNORE INTO settings VALUES('seeded','1');
+CREATE TABLE IF NOT EXISTS assignments(id INTEGER PRIMARY KEY, class_id INTEGER, subject_id INTEGER, teacher_id INTEGER, room_id INTEGER, periods INTEGER DEFAULT 1);

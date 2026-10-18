@@ -10,7 +10,7 @@ async function saveUser(db,username,name,password,role){const salt=b64(crypto.ge
   await db.prepare('INSERT INTO users(username,name,role,salt,hash) VALUES(?,?,?,?,?) ON CONFLICT(username) DO UPDATE SET name=excluded.name,role=excluded.role,salt=excluded.salt,hash=excluded.hash').bind(username,name,role,salt,h).run()}
 
 const cl=s=>String(s??'').replace(/[<>"&]/g,'');
-const T={teachers:['name','load'],subjects:['code','name','periods'],classes:['name'],rooms:['name'],periods:['label','start','end','is_break']};
+const T={teachers:['name','load'],subjects:['code','name','periods'],classes:['name'],rooms:['name'],periods:['label','start','end','is_break'],assignments:['class_id','subject_id','teacher_id','room_id','periods']};
 const REF={teachers:'teacher_id',subjects:'subject_id',classes:'class_id',rooms:'room_id',periods:'period'};
 
 async function checkEntry(db,e){
@@ -46,7 +46,7 @@ export async function onRequest({request:req,env,params}){
     if(p0=='data'){
       const settings={};for(const s of await all('settings'))settings[s.key]=s.value;
       const o={user:{username:me.u,name:me.n,role:me.r},settings};
-      for(const t of [...Object.keys(T),'entries','subs'])o[t]=await all(t);
+      for(const t of [...Object.keys(T),'entries','subs'])o[t]=await all(t).catch(()=>[]);
       o.notifs=(await db.prepare('SELECT * FROM notifications ORDER BY id DESC LIMIT 30').all()).results;
       o.versions=(await db.prepare('SELECT id,name,status,created FROM versions ORDER BY id DESC').all()).results;
       o.audit=(await db.prepare('SELECT * FROM audit_logs ORDER BY id DESC LIMIT 60').all()).results;
@@ -57,7 +57,7 @@ export async function onRequest({request:req,env,params}){
     if(p0=='crud'&&T[path[1]]){
       const t=path[1],cols=T[t];
       if(m=='DELETE'){
-        if(await db.prepare(`SELECT 1 FROM entries WHERE ${REF[t]}=?`).bind(path[2]).first())return J({error:'ข้อมูลนี้ถูกใช้ในตารางสอนแล้ว ลบไม่ได้'},409);
+        if(REF[t]&&await db.prepare(`SELECT 1 FROM entries WHERE ${REF[t]}=?`).bind(path[2]).first())return J({error:'ข้อมูลนี้ถูกใช้ในตารางสอนแล้ว ลบไม่ได้'},409);
         await db.prepare(`DELETE FROM ${t} WHERE id=?`).bind(path[2]).run();await audit('delete '+t,{id:path[2]});return J({ok:1});
       }
       const v=cols.map(c=>typeof body[c]=='string'?cl(body[c]):body[c]??null);
@@ -91,9 +91,10 @@ export async function onRequest({request:req,env,params}){
       await audit('save user',{u:body.username,r:body.role});return J({ok:1});
     }
     const EC=['id','class_id','subject_id','teacher_id','room_id','day','period'];
-    const C={teachers:['id','name','load'],subjects:['id','code','name','periods'],classes:['id','name'],rooms:['id','name'],periods:['id','label','start','end','is_break'],entries:EC,subs:['id','date','entry_id','sub_teacher_id','reason','status','by','created']};
+    const C={teachers:['id','name','load'],subjects:['id','code','name','periods'],classes:['id','name'],rooms:['id','name'],periods:['id','label','start','end','is_break'],entries:EC,subs:['id','date','entry_id','sub_teacher_id','reason','status','by','created'],assignments:['id','class_id','subject_id','teacher_id','room_id','periods']};
     const put=(t,rows)=>[db.prepare(`DELETE FROM ${t}`),...(rows||[]).map(r=>db.prepare(`INSERT INTO ${t}(${C[t].join(',')}) VALUES(${C[t].map(()=>'?').join(',')})`).bind(...C[t].map(c=>typeof r[c]=='string'?cl(r[c]):r[c]??null)))];
     const dupes=rows=>{const s=new Set();for(const r of rows)for(const k of ['teacher_id','class_id','room_id']){if(!r[k])continue;const key=k+r[k]+'|'+r.day+'|'+r.period;if(s.has(key))return true;s.add(key)}return false};
+    if(p0=='assignments'&&path[1]=='replace'&&m=='POST'){await db.batch(put('assignments',body.rows));await audit('replace assignments',{n:(body.rows||[]).length});return J({ok:1})}
     if(p0=='entries'&&path[1]=='replace'&&m=='POST'){await db.batch(put('entries',body.rows));await audit('replace entries',{n:(body.rows||[]).length});return J({ok:1})}
     if(p0=='backup'&&m=='GET'){const o={app:'br-smart-timetable',at:new Date().toISOString()};for(const t of Object.keys(C))o[t]=await all(t);return J(o)}
     if(p0=='restore'&&m=='POST'){if(body.app!='br-smart-timetable')return J({error:'ไฟล์สำรองไม่ถูกต้อง'},400);await db.batch(Object.keys(C).flatMap(t=>put(t,body[t])));await audit('restore',{at:body.at});await note('กู้คืนข้อมูลจากไฟล์สำรอง');return J({ok:1})}
