@@ -11,7 +11,6 @@ CREATE TABLE IF NOT EXISTS subs(id INTEGER PRIMARY KEY, date TEXT, entry_id INTE
 CREATE TABLE IF NOT EXISTS audit_logs(id INTEGER PRIMARY KEY, user TEXT, action TEXT, detail TEXT, at TEXT);
 CREATE TABLE IF NOT EXISTS versions(id INTEGER PRIMARY KEY, name TEXT, status TEXT DEFAULT 'draft', snapshot TEXT, created TEXT);
 CREATE TABLE IF NOT EXISTS notifications(id INTEGER PRIMARY KEY, text TEXT, at TEXT, seen INTEGER DEFAULT 0);
--- ข้อมูลเริ่มต้น (รันซ้ำได้ ไม่ซ้ำซ้อน) แยกทีละคำสั่งเพื่อให้ผ่านข้อจำกัดของ D1
 INSERT INTO periods(label,start,end,is_break) SELECT '1','08:40','09:30',0 WHERE NOT EXISTS(SELECT 1 FROM settings WHERE key='seeded');
 INSERT INTO periods(label,start,end,is_break) SELECT '2','09:30','10:20',0 WHERE NOT EXISTS(SELECT 1 FROM settings WHERE key='seeded');
 INSERT INTO periods(label,start,end,is_break) SELECT 'พัก','10:20','10:40',1 WHERE NOT EXISTS(SELECT 1 FROM settings WHERE key='seeded');
