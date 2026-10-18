@@ -116,7 +116,7 @@ export async function onRequest({request:req,env,params}){
     if(p0=='settings'&&admin&&m=='POST'){
       const up=(k,v)=>db.prepare('INSERT INTO settings VALUES(?,?) ON CONFLICT(key) DO UPDATE SET value=excluded.value').bind(k,String(v)).run();
       for(const k of ['year','term'])if(body[k])await up(k,cl(body[k]).slice(0,40));
-      for(const k of ['school','office','director','academic'])if(typeof body[k]=='string')await up(k,cl(body[k]).trim().slice(0,120));
+      for(const k of ['school','office','director','academic','printtheme'])if(typeof body[k]=='string')await up(k,cl(body[k]).trim().slice(0,120));
       if(body.showcredit!==undefined)await up('showcredit',body.showcredit?'1':'0');
       if(body.cellopts&&typeof body.cellopts=='object'){let o={};try{o=JSON.parse((await db.prepare("SELECT value FROM settings WHERE key='cellopts'").first())?.value||'{}')||{}}catch(e){}for(const m of ['class','teacher','room'])if(body.cellopts[m]&&typeof body.cellopts[m]=='object'){o[m]=o[m]||{};for(const f of ['subject','code','teacher','class','room'])if(f in body.cellopts[m])o[m][f]=body.cellopts[m][f]?1:0}await up('cellopts',JSON.stringify(o))}
       if(body.homerooms&&typeof body.homerooms=='object'){const o={};for(const [c,a] of Object.entries(body.homerooms)){const ids=[].concat(a||[]).slice(0,2).map(x=>Number.isInteger(+x)&&+x>0?+x:null);if(+c>0)o[+c]=ids}await up('homerooms',JSON.stringify(o))}

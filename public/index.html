@@ -1,366 +1,3218 @@
 <!doctype html>
-<html lang="th"><head><meta charset="utf-8">
+<html lang="th">
+<head>
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>BR Smart Timetable · โรงเรียนบ้านไร่</title>
-<link rel="icon" href="logo.png"><link rel="manifest" href="manifest.json"><meta name="theme-color" content="#f6f7fb"><meta name="description" content="ระบบจัดตารางสอน โรงเรียนบ้านไร่">
-<link rel="preload" as="font" type="font/woff" href="fonts/THSarabunNew.woff" crossorigin><link rel="preload" as="font" type="font/woff" href="fonts/THSarabunNew-Bold.woff" crossorigin>
+<title>BR Smart Timetable · ระบบจัดตารางสอนอัจฉริยะ</title>
+<link rel="icon" href="logo.png"><link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0f172a">
+<meta name="description" content="ระบบจัดและพิมพ์ตารางสอนอัจฉริยะ โรงเรียนบ้านไร่ สพป.เชียงใหม่ เขต 5">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Prompt:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preload" as="font" type="font/woff" href="fonts/THSarabunNew.woff" crossorigin>
+<link rel="preload" as="font" type="font/woff" href="fonts/THSarabunNew-Bold.woff" crossorigin>
 <style>
 @font-face{font-family:'TH Sarabun New';font-weight:400;font-style:normal;font-display:swap;src:url(fonts/THSarabunNew.woff) format('woff')}
 @font-face{font-family:'TH Sarabun New';font-weight:700;font-style:normal;font-display:swap;src:url(fonts/THSarabunNew-Bold.woff) format('woff')}
-:root{--ink:#101d3f;--ink2:#1b2c5c;--blue:#27409f;--sky:#eceff8;--gold:#e8a900;--ruby:#c2303f;--mint:#1f8a70;--bg:#f5f2ea;--card:#fffdf8;--line:#e4ddcf;--tx:#1d2336;--mut:#767a8c}
-*{box-sizing:border-box}
-body{margin:0;font-family:'TH Sarabun New','Sarabun','Noto Sans Thai',system-ui,sans-serif;background:var(--bg);color:var(--tx);font-size:14px;line-height:1.5;font-variant-numeric:tabular-nums}
-button,select,input,textarea{font:inherit;color:inherit}
-.shell{display:grid;grid-template-columns:264px 1fr;min-height:100vh}
-.side{background:var(--ink);color:#c5cce6;padding:18px 12px;display:flex;flex-direction:column;gap:2px;position:sticky;top:0;height:100vh;overflow-y:auto}
-.brand{display:flex;gap:10px;align-items:center;padding:4px 8px 14px}.brand img{width:40px}.brand b{font-size:14px;line-height:1.25;color:#fff;font-weight:600}.brand small{display:block;color:#8e99c4;font-weight:400;font-size:12px}
-.term{margin:0 8px 8px;padding:7px 10px;border:1px solid #ffffff22;border-radius:8px;font-size:12px;color:#aab4dc}
-.grp{margin:14px 10px 4px;font-size:11px;letter-spacing:.08em;color:#7783b0;font-weight:500}
-.nav{display:flex;align-items:center;gap:11px;padding:8px 10px;border-radius:8px;border:0;background:none;color:inherit;cursor:pointer;text-align:left;width:100%;position:relative}
-.nav svg{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;opacity:.85}
-.nav span{display:grid;line-height:1.25}.nav small{font-size:11.5px;color:#7f8bb8;font-weight:400}
-.nav:hover{background:#ffffff12}.nav.on{background:var(--ink2);color:#fff}.nav.on small{color:#a9b4e0}
-.nav.on::before{content:'';position:absolute;left:-12px;top:8px;bottom:8px;width:3px;border-radius:0 3px 3px 0;background:var(--gold)}
-.badge{margin-left:auto;min-width:20px;padding:0 6px;border-radius:99px;background:var(--ruby);color:#fff;font-size:11px;font-weight:500;text-align:center;line-height:20px}.badge.n{background:var(--gold);color:#2b2000}
-.sub2{display:grid;margin:2px 0 6px 30px;border-left:1px solid #ffffff1f}.sub2 button{background:none;border:0;color:#9aa5cf;text-align:left;padding:5px 12px;cursor:pointer;font-size:13px}.sub2 button:hover{color:#fff}.sub2 button.on{color:var(--gold);font-weight:500}
-.me{margin-top:auto;font-size:12px;padding:10px 8px 0}.me a{color:#e8c25a;text-decoration:none}.me .credit{margin-top:10px;padding-top:10px;border-top:1px solid #ffffff22;opacity:.7;line-height:1.5}
-main{padding:28px 36px 40px;min-width:0;max-width:1500px}
-h1{margin:0 0 2px;font-size:26px;font-weight:600;letter-spacing:-.01em;color:var(--ink)}h2{font-size:16px;font-weight:600;margin:0 0 12px}.sub{color:var(--mut);margin:0 0 20px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;margin-bottom:16px}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:16px}
-.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}.stat b{font-size:30px;font-weight:600;color:var(--ink);display:block;line-height:1.2}.stat span{display:flex;align-items:center;gap:7px;color:var(--mut);font-size:13px;margin-top:2px}.stat span::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--c)}
-.btn{border:1px solid var(--line);background:var(--card);border-radius:8px;padding:7px 14px;cursor:pointer;transition:.15s}.btn:hover{border-color:var(--ink);background:#fff}
-.btn.pri{background:var(--ink);border-color:var(--ink);color:#fff}.btn.pri:hover{background:var(--ink2)}.btn.dng{color:var(--ruby);border-color:#ecc3c8}.btn.gold{background:var(--gold);border-color:var(--gold);color:#2b2000;font-weight:600}.btn.big{padding:13px 30px;font-size:16px;border-radius:10px}.btn:disabled{opacity:.4;cursor:not-allowed}
-select,input,textarea{border:1px solid var(--line);border-radius:8px;padding:7px 10px;background:#fff;max-width:100%}input:focus,select:focus,textarea:focus,.btn:focus-visible,.nav:focus-visible{outline:2px solid var(--blue);outline-offset:1px}
-.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
-.pal{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin-bottom:6px;color:var(--mut)}
-.chip{padding:5px 11px;border-radius:8px;cursor:grab;background:hsl(var(--h) 80% 94%);border:1px solid hsl(var(--h) 45% 72%);border-left:4px solid hsl(var(--h) 60% 48%);color:hsl(var(--h) 50% 22%);font-weight:500;user-select:none;transition:.15s}.chip:hover{transform:translateY(-1px);box-shadow:0 3px 8px #101d3f22}.chip:active{cursor:grabbing}.chip em{font-style:normal;font-size:11.5px;opacity:.7;margin-left:7px}.chip.done{opacity:.5}
-.hint{color:var(--mut);font-size:12.5px;margin:0 0 12px}
-.gridw{overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:12px}
-table.g{border-collapse:separate;border-spacing:0;width:100%;min-width:900px;table-layout:fixed}
-.g th,.g td{border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:4px;vertical-align:top;height:78px}
-.g thead th{height:auto;background:#f0ebdf;color:var(--ink);padding:9px 4px;font-size:13px;font-weight:600;position:sticky;top:0;z-index:2}.g th small{display:block;font-weight:400;color:var(--mut);font-size:11px}
-.g tbody th{width:88px;background:#f0ebdf;color:var(--ink);vertical-align:middle;position:sticky;left:0;z-index:1}.g tbody th.tod{background:var(--ink);color:#fff}
-.g tr:last-child td,.g tr:last-child th{border-bottom:0}.g th:last-child,.g td:last-child{border-right:0}
-td.brk{background:repeating-linear-gradient(45deg,#f6f2e8,#f6f2e8 6px,#eee8d9 6px,#eee8d9 12px);text-align:center;vertical-align:middle;color:var(--mut);font-size:12px}
-td.empty{transition:background .12s}td.empty:hover{background:#fff6d8}
-td.ok{background:#eaf7f1}td.warn{background:#fff3cf}td.bad{background:repeating-linear-gradient(135deg,#fdeaec,#fdeaec 6px,#f9d3d8 6px,#f9d3d8 12px)}
-td.over{outline:2px solid var(--ink);outline-offset:-3px}td.bad.over{outline-color:var(--ruby);cursor:not-allowed}
-.ghost{font-size:10.5px;line-height:1.3;padding:1px 6px;margin:0 0 2px;border-radius:5px;border:1px dashed hsl(var(--h,220) 35% 62%);background:hsl(var(--h,220) 60% 95% / .7);color:hsl(var(--h,220) 30% 36%);opacity:.72;pointer-events:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ghost.same{border-style:solid;opacity:.92}.ghost.hit{border:1px solid var(--ruby);background:#fff;color:var(--ruby);opacity:1;font-weight:500}.ghost.more{border:0;background:none;opacity:.6}
-.legend{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;border-radius:99px;padding:9px 20px;font-size:12.5px;display:flex;gap:18px;z-index:60;pointer-events:none;white-space:nowrap;box-shadow:0 8px 24px #101d3f55}.legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:7px;vertical-align:-1px}
-.blk{background:hsl(var(--h) 80% 94%);border-left:4px solid hsl(var(--h) 60% 48%);border-radius:6px;padding:5px 8px;height:100%;margin-bottom:2px;font-size:13px}
-.blk[data-act]{cursor:pointer}.blk[draggable=true]{cursor:grab}.blk b{display:block;color:hsl(var(--h) 55% 20%);font-weight:600}.blk small{color:hsl(var(--h) 25% 35%)}
-table.t{width:100%;border-collapse:collapse}.t th,.t td{padding:9px 8px;border-bottom:1px solid var(--line);text-align:left}.t th{color:var(--mut);font-weight:500;font-size:13px}.t input{width:100%}
-.bargr{height:7px;border-radius:9px;background:#ece6d8;overflow:hidden;min-width:90px}.bargr i{display:block;height:100%;background:var(--blue)}.bargr i.ok{background:var(--mint)}.bargr i.hi{background:var(--ruby)}
-.tag{padding:2px 10px;border-radius:99px;font-size:12px;background:#ece6d8;color:var(--ink)}.tag.ok{background:#d9f0e7;color:#0b6b52}.tag.no{background:#fde2e6;color:var(--ruby)}
-.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}.tabs .btn.on{background:var(--ink);color:#fff;border-color:var(--ink)}
-.mask{position:fixed;inset:0;background:#101d3f99;display:grid;place-items:center;z-index:50;padding:16px}
-.modal{background:var(--card);border-radius:14px;padding:22px;width:min(440px,100%);max-height:90vh;overflow:auto;display:grid;gap:12px}.modal h3{margin:0}.modal label{display:grid;gap:4px;color:var(--mut)}.row{display:flex;gap:8px;flex-wrap:wrap}
-.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:12px 18px;border-radius:10px;z-index:99;max-width:90vw}.toast.bad{background:var(--ruby)}
-.sheet{background:#fff;border:1px solid var(--line);border-radius:10px;padding:18px;margin-bottom:16px}
-.sheet header{display:flex;gap:14px;align-items:center;margin-bottom:10px}.sheet header img{width:62px}.sheet header b{font-size:18px;color:var(--ink)}
-.sheet .g{min-width:0}.sheet .g th,.sheet .g td{height:56px}.sheet footer{display:flex;justify-content:space-between;align-items:end;margin-top:14px;gap:20px}
-.sig{text-align:center;min-width:200px}.sig i{display:block;border-bottom:1px dotted #333;height:34px;margin-bottom:4px}
-.wel{min-height:100vh;display:grid;place-items:center;padding:20px;background-color:var(--ink);background-image:linear-gradient(#ffffff09 1px,transparent 1px),linear-gradient(90deg,#ffffff09 1px,transparent 1px);background-size:44px 44px}
-.wel-in{text-align:center;color:#fff;max-width:640px;display:grid;gap:16px;justify-items:center}.wl{width:140px}
-.wel h1{color:#fff;font-size:clamp(28px,6vw,46px);margin:0}.wf{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}.wf span{padding:5px 13px;border-radius:6px;border:1px solid #ffffff33;font-size:13px}
-.wn b{color:var(--gold);font-size:22px}.cr{text-align:center;color:var(--mut);font-size:12px;padding:18px 0 4px}
-@media(max-width:820px){.shell{grid-template-columns:1fr}.side{position:fixed;inset:auto 0 0 0;height:auto;flex-direction:row;padding:6px 4px calc(6px + env(safe-area-inset-bottom));z-index:40;gap:0;overflow:visible;border-top:1px solid #ffffff22}.brand,.term,.grp,.sub2,.me,.nav small,.legend{display:none}.nav{flex-direction:column;gap:2px;padding:6px 2px;font-size:10.5px;text-align:center;flex:1}.nav.on::before{display:none}.badge{position:absolute;top:0;right:6px;margin:0}main{padding:18px 14px 96px}.toast{bottom:84px}}
-@media print{body{background:#fff}.side,.noprint,.toast,.mask,.legend{display:none!important}.shell{display:block}main{padding:0;max-width:none}.gridw{border:0;overflow:visible}}
-/* v2.1 light premium */
-:root{--ink:#111827;--ink2:#1f2937;--blue:#3b5bfd;--gold:#f5a524;--ruby:#e5484d;--mint:#12a594;--bg:#f6f7fb;--card:#fff;--line:#e8eaf1;--tx:#111827;--mut:#6b7280;--r:18px}
-.side{background:#fff;color:#4b5563;border-right:1px solid var(--line);padding:20px 14px}
-.brand b{color:var(--ink)}.brand small{color:var(--mut)}
-.term{border:0;background:#eef1ff;color:#3447c8;border-radius:12px;font-weight:500}
-.grp{color:#9aa1b2}
-.nav{border-radius:14px;padding:7px 10px}
-.nav svg{width:34px;height:34px;padding:7px;border-radius:11px;background:#f1f3f9;stroke-width:1.8;opacity:1;color:var(--ink)}
-.nav small{color:#9aa1b2}.nav:hover{background:#f6f7fb}
-.nav.on{background:var(--ink);color:#fff;box-shadow:0 8px 20px #11182733}.nav.on svg{background:#ffffff24;color:#fff}.nav.on small{color:#c5cad6}.nav.on::before{display:none}
-.sub2{border-left:1px solid var(--line)}.sub2 button{color:#6b7280}.sub2 button:hover{color:var(--ink)}.sub2 button.on{color:var(--ink);font-weight:600}
-.me a{color:var(--blue)}.me .credit{border-top:1px solid var(--line);opacity:1;color:var(--mut)}
-h1{font-size:28px}
-.card,.sheet,.gridw{border-radius:var(--r);border-color:var(--line);box-shadow:0 1px 2px #1118270a,0 10px 28px #1118270a}
-.stat{border:0;border-radius:var(--r);background:color-mix(in srgb,var(--c) 14%,#fff);padding:18px}.stat b{font-size:34px}.stat span{color:#374151}
-.btn{border-radius:12px;padding:8px 16px;background:#fff}.btn:hover{border-color:var(--ink)}.btn.pri{background:var(--ink)}.btn.pri:hover{background:var(--ink2)}.btn.gold{background:var(--gold);border-color:var(--gold);color:#201400}
-select,input,textarea{border-radius:12px;padding:8px 12px}
-.chip{border-radius:12px;padding:6px 13px;background:hsl(var(--h) 85% 92%);border-color:hsl(var(--h) 60% 80%)}
-.g thead th,.g tbody th{background:#f3f4fa}.g tbody th.tod{background:var(--ink);color:#fff}
-td.brk{background:repeating-linear-gradient(45deg,#f8f9fc,#f8f9fc 6px,#f1f3f9 6px,#f1f3f9 12px)}
-td.empty:hover{background:#fff8e6}
-.blk{border-radius:10px;border-left-width:0;background:hsl(var(--h) 85% 92%);box-shadow:inset 0 0 0 1px hsl(var(--h) 60% 83%)}
-.modal{border-radius:22px;box-shadow:0 24px 60px #11182740}.mask{background:#11182866;backdrop-filter:blur(3px)}
-.tag{background:#eef0f6}.tabs .btn{border-radius:99px}.toast{border-radius:14px}.bargr{background:#eef0f6}
-.wel{background-color:#f6f7fb;background-image:radial-gradient(circle at 12% 18%,#dfe6ff,transparent 34%),radial-gradient(circle at 88% 82%,#ffe9c7,transparent 34%);background-size:auto}
-.wel-in{background:#fff;color:var(--ink);padding:44px 36px;border-radius:28px;box-shadow:0 24px 60px #11182718}.wel h1{color:var(--ink)}.wf span{border:0;background:#f1f3f9;border-radius:99px}.wn b{color:var(--blue)}
-@media(max-width:820px){.side{border-right:0;border-top:1px solid var(--line);background:#fff}.nav svg{width:26px;height:26px;padding:4px;background:none}.nav.on{box-shadow:none}.nav.on svg{background:none}}
-@media print{.sheet,.gridw{box-shadow:none}}
-details.man{background:var(--card);border:1px solid var(--line);border-radius:var(--r);margin-bottom:12px;padding:0 20px}details.man summary{cursor:pointer;padding:16px 0;font-weight:600;font-size:16px;color:var(--ink);list-style:none;display:flex;justify-content:space-between}details.man summary::after{content:'+';font-size:20px;color:var(--mut)}details.man[open] summary::after{content:'–'}details.man>div{padding:0 0 18px;line-height:1.75}details.man ul,details.man ol{margin:0;padding-left:22px}details.man li{margin-bottom:6px}
-@media print{details.man{border:0;break-inside:avoid}details.man summary::after{display:none}}
-/* v2.6 : ฟอนต์ฝัง TH Sarabun New · กระดาษพรีวิว · ช่องตารางปรับขนาดอัตโนมัติ */
-body{font-size:18px;line-height:1.35}
-.brand b{font-size:17px}.brand small{font-size:14px}.term{font-size:14px}.grp{font-size:13px}.nav small{font-size:14px}.badge{font-size:13px}.sub2 button{font-size:15px}.me{font-size:14px}
-h1{font-size:32px}h2{font-size:20px}.stat b{font-size:38px}.stat span{font-size:15px}.hint{font-size:15px}.chip em{font-size:14px}.t th{font-size:15px}.tag{font-size:14px}.legend{font-size:14px}.cr{font-size:14px}.wf span{font-size:15px}.btn.big{font-size:19px}
-.g thead th{font-size:16px}.g th small{font-size:13px}.ghost{font-size:13px}td.brk{font-size:14px}
-@media(max-width:820px){.nav{font-size:12.5px}}
-.g td{position:relative;padding:0}
-.cin{position:absolute;inset:3px;display:flex;flex-direction:column;gap:2px}
-.blk{flex:1;min-height:0;height:auto;margin:0;overflow:hidden;font-size:15px;line-height:1.2;padding:3px 7px;display:flex;flex-direction:column;justify-content:center;overflow-wrap:anywhere}
-.blk b{font-size:1em;line-height:1.15}.blk small{display:block;font-size:.88em;line-height:1.15}.blk .cd{font-style:normal;font-weight:400;font-size:.85em;opacity:.75}
-.copan{display:flex;gap:6px 14px;flex-wrap:wrap;align-items:center;padding:8px 0;border-bottom:1px dashed var(--line)}.copan>span{color:var(--mut)}.ck{display:inline-flex;align-items:center;gap:5px;cursor:pointer}.ck input{width:auto}
-.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-bottom:14px}.fgrid label{display:grid;gap:4px;color:var(--mut)}
-.pv{width:100%;overflow:hidden;margin:0 0 16px;position:relative}.pv.full{overflow:auto}
-.pv>.sheet{width:297mm;height:209mm;padding:8mm 10mm;margin:0;display:flex;flex-direction:column;background:#fff;overflow:hidden;border-radius:6px}
-.pv>.sheet header{flex:none;height:20mm;margin:0 0 2mm;gap:12px}.pv>.sheet header img{width:17mm;height:17mm;object-fit:contain}.pv>.sheet header>div{line-height:1.25}.pv>.sheet header b{font-size:21px}
-.pv>.sheet .gridw{flex:none;border:0;border-radius:0;box-shadow:none;overflow:hidden}
-.pv>.sheet table.g{min-width:0;width:100%}
-.pv>.sheet .blk{font-size:19px}
-.pv>.sheet .g thead th{height:10mm;padding:1mm 2px;font-size:15px;line-height:1.1}
-.pv>.sheet .g tbody th,.pv>.sheet .g tbody td{height:26mm}.pv>.sheet .g tbody th{width:20mm;font-size:16px}
-.pv>.sheet .g th,.pv>.sheet .g td{border-right:1px solid #444;border-bottom:1px solid #444}.pv>.sheet .g thead th{border-top:1px solid #444}.pv>.sheet .g th:first-child{border-left:1px solid #444}
-.pv>.sheet .g{border:0}
-.pv>.sheet footer{flex:none;height:24mm;margin:2mm 0 0;align-items:end}
-.pv>.sheet .credit{flex:none;text-align:center;font-size:12px;color:#666;margin-top:auto;padding-top:1mm}
-.sig{font-size:16px;line-height:1.25}
-@media print{
-@page{size:A4 landscape;margin:8mm 10mm}
-html,body{background:#fff}.cr{display:none!important}
-*{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-.pv{height:auto!important;overflow:visible;margin:0}.pv+.pv{break-before:page;page-break-before:always}
-.pv>.sheet{transform:none!important;width:277mm;height:193mm;padding:0;border:0;box-shadow:none;border-radius:0}
-.sheet{border:0;box-shadow:none;padding:0;margin:0}
-.rep .t th,.rep .t td{padding:2px 8px;font-size:15px}.rep header{margin-bottom:4px}.rep footer{margin-top:8px}
-table.g{border-collapse:collapse;min-width:0}.g th,.g td{border:1px solid #444!important}
-.g thead th,.g tbody th{background:#eee!important;color:#000;position:static}
-.blk{background:#fff!important;border:0;border-left:3px solid #000;box-shadow:none;border-radius:0}.blk b,.blk small,.blk .cd{color:#000!important}
+
+:root {
+  --font-ui: 'Prompt', 'Plus Jakarta Sans', 'Sarabun', system-ui, -apple-system, sans-serif;
+  --font-print-academic: 'TH Sarabun New', 'Sarabun', serif;
+  --font-print-modern: 'Prompt', 'Plus Jakarta Sans', 'Sarabun', sans-serif;
+  
+  --primary: #3b82f6;
+  --primary-hover: #2563eb;
+  --primary-glow: rgba(59, 130, 246, 0.25);
+  
+  --side-bg: #0b0f19;
+  --side-bg-hover: rgba(255, 255, 255, 0.06);
+  --side-active: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  --side-border: rgba(255, 255, 255, 0.08);
+  --side-tx: #94a3b8;
+  --side-tx-hi: #ffffff;
+  
+  --bg: #f8fafc;
+  --card: #ffffff;
+  --card-border: #e2e8f0;
+  --tx: #0f172a;
+  --tx-sub: #475569;
+  --tx-mut: #64748b;
+  --line: #e2e8f0;
+  --line-light: #f1f5f9;
+  
+  --gold: #f59e0b;
+  --gold-bg: #fef3c7;
+  --ruby: #ef4444;
+  --ruby-bg: #fee2e2;
+  --mint: #10b981;
+  --mint-bg: #d1fae5;
+  --violet: #8b5cf6;
+  --violet-bg: #ede9fe;
+  
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 22px;
+  --radius-pill: 9999px;
+  
+  --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.07), 0 2px 4px -2px rgba(15, 23, 42, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.07), 0 4px 6px -4px rgba(15, 23, 42, 0.04);
+  --shadow-xl: 0 20px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
 }
-</style></head><body><div id="app"></div><div id="modal"></div>
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: var(--font-ui);
+  background: var(--bg);
+  color: var(--tx);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button, select, input, textarea {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+/* Shell & Navigation */
+.shell { display: grid; grid-template-columns: 270px 1fr; min-height: 100vh; }
+.side {
+  background: var(--side-bg);
+  color: var(--side-tx);
+  padding: 20px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  border-right: 1px solid var(--side-border);
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.15);
+}
+
+.brand {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 6px 10px 18px;
+  border-bottom: 1px solid var(--side-border);
+  margin-bottom: 12px;
+}
+.brand img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  border-radius: 10px;
+  padding: 2px;
+  background: rgba(255,255,255,0.08);
+}
+.brand b {
+  font-size: 15px;
+  line-height: 1.25;
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.brand small {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #94a3b8;
+  font-weight: 400;
+  font-size: 12px;
+  margin-top: 2px;
+}
+.brand .status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 8px #10b981;
+}
+
+.term-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 6px 14px;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-md);
+  font-size: 12.5px;
+  color: #cbd5e1;
+  font-weight: 500;
+}
+.term-badge svg { width: 15px; height: 15px; color: var(--primary); flex: none; }
+
+.grp {
+  margin: 14px 10px 6px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 12px;
+  border-radius: var(--radius-md);
+  border: 0;
+  background: none;
+  color: var(--side-tx);
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  position: relative;
+  transition: all 0.16s ease;
+}
+.nav svg {
+  width: 20px;
+  height: 20px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  padding: 6px;
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #94a3b8;
+  transition: all 0.16s ease;
+  box-sizing: content-box;
+}
+.nav span { display: grid; line-height: 1.25; }
+.nav b { font-size: 13.5px; font-weight: 500; }
+.nav small { font-size: 11.5px; color: #64748b; font-weight: 400; margin-top: 1px; }
+
+.nav:hover {
+  background: var(--side-bg-hover);
+  color: #ffffff;
+}
+.nav:hover svg {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.nav.on {
+  background: var(--side-active);
+  color: #ffffff;
+  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.35);
+}
+.nav.on svg {
+  background: rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+}
+.nav.on small { color: #e0e7ff; }
+
+.badge {
+  margin-left: auto;
+  min-width: 20px;
+  padding: 1px 7px;
+  border-radius: var(--radius-pill);
+  background: var(--ruby);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  text-align: center;
+  line-height: 18px;
+  box-shadow: 0 2px 6px rgba(239, 68, 68, 0.4);
+}
+.badge.n {
+  background: var(--gold);
+  color: #451a03;
+  box-shadow: 0 2px 6px rgba(245, 158, 11, 0.4);
+}
+
+.sub2 {
+  display: grid;
+  margin: 3px 0 6px 36px;
+  padding-left: 8px;
+  border-left: 2px solid rgba(255, 255, 255, 0.1);
+  gap: 2px;
+}
+.sub2 button {
+  background: none;
+  border: 0;
+  color: #94a3b8;
+  text-align: left;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-size: 13px;
+  border-radius: var(--radius-sm);
+  transition: all 0.14s ease;
+}
+.sub2 button:hover { color: #fff; background: rgba(255,255,255,0.05); }
+.sub2 button.on { color: #60a5fa; font-weight: 600; background: rgba(59, 130, 246, 0.12); }
+
+.side .me {
+  margin-top: auto;
+  padding: 14px 10px 4px;
+  border-top: 1px solid var(--side-border);
+  font-size: 12.5px;
+}
+.side .me a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #60a5fa;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.15s;
+}
+.side .me a:hover { color: #93c5fd; text-decoration: underline; }
+.side .credit {
+  margin-top: 10px;
+  font-size: 11px;
+  line-height: 1.45;
+  color: #64748b;
+}
+
+/* Main Area */
+main {
+  padding: 32px 40px 60px;
+  min-width: 0;
+  max-width: 1540px;
+}
+
+.page-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+h1 {
+  margin: 0 0 4px;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--tx);
+}
+h2 {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--tx);
+  margin: 0 0 14px;
+}
+.sub {
+  color: var(--tx-mut);
+  margin: 0 0 20px;
+  font-size: 13.5px;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  padding: 22px 24px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s ease;
+}
+.card:hover { box-shadow: var(--shadow-md); }
+
+/* Stats Grid */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.stat {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  padding: 18px 20px;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.stat:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+.stat::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  bottom: 0;
+  background: var(--c, var(--primary));
+}
+.stat b {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--tx);
+  display: block;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  font-family: 'Plus Jakarta Sans', var(--font-ui);
+}
+.stat span {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--tx-sub);
+  font-size: 13.5px;
+  margin-top: 6px;
+  font-weight: 500;
+}
+.stat span::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--c, var(--primary));
+}
+
+/* Modern Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid var(--card-border);
+  background: #ffffff;
+  color: var(--tx-sub);
+  border-radius: var(--radius-md);
+  padding: 8px 16px;
+  font-size: 13.5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.16s ease;
+  box-shadow: var(--shadow-sm);
+  white-space: nowrap;
+}
+.btn:hover {
+  background: #f8fafc;
+  color: var(--tx);
+  border-color: #cbd5e1;
+  box-shadow: var(--shadow-md);
+}
+.btn:active { transform: translateY(1px); }
+
+.btn.pri {
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  border-color: #2563eb;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+}
+.btn.pri:hover {
+  background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+}
+
+.btn.gold {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  border-color: #d97706;
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+}
+.btn.gold:hover {
+  background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.4);
+}
+
+.btn.dng {
+  color: #dc2626;
+  border-color: #fecaca;
+  background: #fff;
+}
+.btn.dng:hover {
+  background: #fee2e2;
+  border-color: #fca5a5;
+  color: #b91c1c;
+}
+
+.btn.big {
+  padding: 13px 32px;
+  font-size: 16px;
+  border-radius: var(--radius-lg);
+  font-weight: 600;
+}
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+select, input, textarea {
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-md);
+  padding: 8px 12px;
+  background: #fff;
+  color: var(--tx);
+  font-size: 13.5px;
+  transition: border-color 0.16s ease, box-shadow 0.16s ease;
+}
+select:focus, input:focus, textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-glow);
+}
+
+.bar {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+/* Subject Palette Chips */
+.pal {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 12px;
+  padding: 10px 14px;
+  background: #ffffff;
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+.chip {
+  padding: 6px 13px;
+  border-radius: var(--radius-pill);
+  cursor: grab;
+  background: hsl(var(--h, 210) 90% 95%);
+  border: 1px solid hsl(var(--h, 210) 70% 82%);
+  color: hsl(var(--h, 210) 75% 25%);
+  font-weight: 500;
+  font-size: 13px;
+  user-select: none;
+  transition: all 0.16s ease;
+  display: inline-flex;
+  align-items: center;
+}
+.chip:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.1);
+  background: hsl(var(--h, 210) 90% 92%);
+}
+.chip:active { cursor: grabbing; transform: scale(0.98); }
+.chip em {
+  font-style: normal;
+  font-size: 11.5px;
+  font-weight: 600;
+  opacity: 0.8;
+  margin-left: 6px;
+  padding: 1px 6px;
+  border-radius: 99px;
+  background: rgba(0, 0, 0, 0.07);
+}
+.chip.done {
+  opacity: 0.45;
+  filter: grayscale(0.4);
+}
+
+.hint {
+  color: var(--tx-mut);
+  font-size: 13px;
+  margin: 0 0 14px;
+}
+
+/* Timetable Editor Grid */
+.gridw {
+  overflow: auto;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+table.g {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+  min-width: 950px;
+  table-layout: fixed;
+}
+.g th, .g td {
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 0;
+  vertical-align: top;
+  height: 84px;
+  position: relative;
+}
+.g thead th {
+  height: auto;
+  background: #f8fafc;
+  color: var(--tx);
+  padding: 10px 6px;
+  font-size: 13.5px;
+  font-weight: 600;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  text-align: center;
+}
+.g thead th small {
+  display: block;
+  font-weight: 400;
+  color: var(--tx-mut);
+  font-size: 11.5px;
+  margin-top: 2px;
+}
+.g tbody th {
+  width: 92px;
+  background: #f8fafc;
+  color: var(--tx);
+  vertical-align: middle;
+  text-align: center;
+  font-weight: 600;
+  font-size: 14px;
+  position: sticky;
+  left: 0;
+  z-index: 1;
+}
+
+/* Thai day colors in grid */
+.g tbody tr:nth-child(1) th { border-left: 4px solid #facc15; }
+.g tbody tr:nth-child(2) th { border-left: 4px solid #f472b6; }
+.g tbody tr:nth-child(3) th { border-left: 4px solid #4ade80; }
+.g tbody tr:nth-child(4) th { border-left: 4px solid #fb923c; }
+.g tbody tr:nth-child(5) th { border-left: 4px solid #38bdf8; }
+
+.g tbody th.tod {
+  background: var(--tx);
+  color: #fff;
+}
+.g tr:last-child td, .g tr:last-child th { border-bottom: 0; }
+.g th:last-child, .g td:last-child { border-right: 0; }
+
+td.brk {
+  background: repeating-linear-gradient(45deg, #f8fafc, #f8fafc 8px, #f1f5f9 8px, #f1f5f9 16px);
+  text-align: center;
+  vertical-align: middle;
+  color: var(--tx-mut);
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+td.empty {
+  transition: background 0.14s ease;
+  cursor: pointer;
+}
+td.empty:hover {
+  background: #f1f5f9;
+}
+td.empty:hover::after {
+  content: '+';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 22px;
+  color: #94a3b8;
+  font-weight: 300;
+  pointer-events: none;
+}
+
+td.ok { background: #ecfdf5 !important; }
+td.warn { background: #fefce8 !important; }
+td.bad {
+  background: repeating-linear-gradient(135deg, #fef2f2, #fef2f2 8px, #fee2e2 8px, #fee2e2 16px) !important;
+}
+td.over { outline: 2px solid var(--primary); outline-offset: -2px; }
+td.bad.over { outline-color: var(--ruby); cursor: not-allowed; }
+
+.cin {
+  position: absolute;
+  inset: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+/* Subject Block */
+.blk {
+  flex: 1;
+  min-height: 0;
+  height: auto;
+  margin: 0;
+  overflow: hidden;
+  font-size: 13.5px;
+  line-height: 1.25;
+  padding: 5px 9px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  background: hsl(var(--h, 210) 90% 95%);
+  border: 1px solid hsl(var(--h, 210) 75% 85%);
+  border-left: 4px solid hsl(var(--h, 210) 70% 50%);
+  color: hsl(var(--h, 210) 75% 20%);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  overflow-wrap: anywhere;
+}
+.blk[data-act="edit"] { cursor: pointer; }
+.blk[draggable="true"] { cursor: grab; }
+.blk:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(15, 23, 42, 0.1);
+}
+.blk b {
+  font-size: 1em;
+  font-weight: 600;
+  line-height: 1.2;
+}
+.blk small {
+  display: block;
+  font-size: 0.88em;
+  line-height: 1.2;
+  opacity: 0.88;
+  margin-top: 1px;
+}
+.blk .cd {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 0.88em;
+  opacity: 0.78;
+}
+
+/* Ghosts during drag */
+.ghost {
+  font-size: 11px;
+  line-height: 1.3;
+  padding: 2px 7px;
+  margin: 0 0 2px;
+  border-radius: 5px;
+  border: 1px dashed hsl(var(--h, 220) 40% 65%);
+  background: hsl(var(--h, 220) 70% 96% / 0.85);
+  color: hsl(var(--h, 220) 40% 30%);
+  opacity: 0.85;
+  pointer-events: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ghost.same { border-style: solid; opacity: 0.95; }
+.ghost.hit {
+  border: 1px solid var(--ruby);
+  background: #ffffff;
+  color: var(--ruby);
+  opacity: 1;
+  font-weight: 600;
+}
+.ghost.more { border: 0; background: none; opacity: 0.65; }
+
+.legend {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #0f172a;
+  color: #fff;
+  border-radius: var(--radius-pill);
+  padding: 10px 24px;
+  font-size: 13px;
+  display: flex;
+  gap: 20px;
+  z-index: 60;
+  pointer-events: none;
+  white-space: nowrap;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.4);
+}
+.legend span { display: flex; align-items: center; gap: 7px; }
+.legend i {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+}
+
+/* Tables */
+table.t { width: 100%; border-collapse: collapse; }
+.t th, .t td {
+  padding: 11px 12px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+}
+.t th {
+  color: var(--tx-mut);
+  font-weight: 600;
+  font-size: 13px;
+  background: #f8fafc;
+}
+.t input, .t select { width: 100%; }
+
+.bargr {
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background: #e2e8f0;
+  overflow: hidden;
+  min-width: 100px;
+}
+.bargr i { display: block; height: 100%; background: var(--primary); transition: width 0.3s ease; }
+.bargr i.ok { background: var(--mint); }
+.bargr i.hi { background: var(--ruby); }
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  font-size: 12.5px;
+  font-weight: 500;
+  background: #f1f5f9;
+  color: var(--tx-sub);
+}
+.tag.ok { background: var(--mint-bg); color: #065f46; }
+.tag.no { background: var(--ruby-bg); color: #991b1b; }
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.tabs .btn.on {
+  background: var(--tx);
+  color: #fff;
+  border-color: var(--tx);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Modals & Toasts */
+.mask {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(6px);
+  display: grid;
+  place-items: center;
+  z-index: 80;
+  padding: 20px;
+  animation: fadeIn 0.15s ease-out;
+}
+.modal {
+  background: var(--card);
+  border-radius: var(--radius-xl);
+  padding: 26px 28px;
+  width: min(500px, 100%);
+  max-height: 90vh;
+  overflow-y: auto;
+  display: grid;
+  gap: 14px;
+  box-shadow: var(--shadow-xl);
+  border: 1px solid var(--card-border);
+}
+.modal h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--tx);
+}
+.modal label {
+  display: grid;
+  gap: 6px;
+  color: var(--tx-sub);
+  font-size: 13.5px;
+  font-weight: 500;
+}
+.row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+
+.toast {
+  position: fixed;
+  bottom: 26px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #0f172a;
+  color: #fff;
+  padding: 12px 22px;
+  border-radius: var(--radius-pill);
+  z-index: 100;
+  max-width: 90vw;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.35);
+  font-weight: 500;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  animation: slideUp 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.toast.bad { background: var(--ruby); }
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { transform: translate(-50%, 16px); opacity: 0; } to { transform: translate(-50%, 0); opacity: 1; } }
+
+/* Details Accordion */
+details.man {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  margin-bottom: 14px;
+  padding: 0 20px;
+  box-shadow: var(--shadow-sm);
+}
+details.man summary {
+  cursor: pointer;
+  padding: 16px 0;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--tx);
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+details.man summary::-webkit-details-marker { display: none; }
+details.man summary::after {
+  content: '+';
+  font-size: 18px;
+  color: var(--tx-mut);
+  font-weight: 400;
+}
+details.man[open] summary::after { content: '–'; }
+details.man > div { padding: 0 0 20px; line-height: 1.7; color: var(--tx-sub); }
+details.man ul, details.man ol { margin: 0; padding-left: 22px; }
+details.man li { margin-bottom: 6px; }
+
+/* Welcome Screen */
+.wel {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 30px 20px;
+  background-color: #0b0f19;
+  background-image: 
+    radial-gradient(circle at 15% 20%, rgba(59, 130, 246, 0.18), transparent 40%),
+    radial-gradient(circle at 85% 80%, rgba(245, 158, 11, 0.14), transparent 40%);
+}
+.wel-in {
+  background: #ffffff;
+  color: var(--tx);
+  padding: 48px 42px;
+  border-radius: 28px;
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.4);
+  max-width: 660px;
+  width: 100%;
+  display: grid;
+  gap: 20px;
+  justify-items: center;
+  text-align: center;
+}
+.wl {
+  width: 110px;
+  height: 110px;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 16px rgba(0,0,0,0.1));
+}
+.wel h1 {
+  font-size: clamp(28px, 5vw, 38px);
+  margin: 0;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #0f172a;
+}
+.wf { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+.wf span {
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  background: #f1f5f9;
+  color: #334155;
+  font-size: 13px;
+  font-weight: 500;
+}
+.wn {
+  font-size: 14.5px;
+  color: #475569;
+}
+.wn b { color: var(--primary); font-size: 20px; font-weight: 700; }
+.cr { text-align: center; color: var(--tx-mut); font-size: 12.5px; padding: 24px 0 6px; }
+
+/* =========================================================
+   PRINT ENGINE & THEME SELECTOR
+   ========================================================= */
+
+.theme-selector-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: #ffffff;
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  padding: 14px 18px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-sm);
+}
+.theme-selector-bar .theme-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--tx);
+}
+.theme-options {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.theme-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--card-border);
+  background: #f8fafc;
+  color: var(--tx-sub);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.16s ease;
+}
+.theme-btn:hover {
+  background: #ffffff;
+  border-color: #cbd5e1;
+  color: var(--tx);
+  transform: translateY(-1px);
+}
+.theme-btn.on {
+  background: var(--tx);
+  border-color: var(--tx);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
+}
+.theme-btn .theme-chip-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* Paper Preview on Screen */
+.pv {
+  width: 100%;
+  overflow: hidden;
+  margin: 0 0 20px;
+  position: relative;
+  border-radius: var(--radius-lg);
+}
+.pv.full { overflow: auto; }
+
+.pv > .sheet {
+  width: 297mm;
+  height: 209mm;
+  padding: 7mm 9mm;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  overflow: hidden;
+  border-radius: 6px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.pv > .sheet header {
+  flex: none;
+  min-height: 19mm;
+  max-height: 22mm;
+  margin: 0 0 2mm;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.pv > .sheet header img {
+  width: 18mm;
+  height: 18mm;
+  object-fit: contain;
+  flex: none;
+}
+.pv > .sheet header > div { line-height: 1.25; }
+.pv > .sheet header b { font-size: 21px; font-weight: 700; }
+
+.pv > .sheet .gridw {
+  flex: none;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: hidden;
+}
+.pv > .sheet table.g { min-width: 0; width: 100%; }
+.pv > .sheet .g thead th {
+  height: 9.5mm;
+  padding: 1mm 2px;
+  font-size: 15px;
+  line-height: 1.1;
+}
+.pv > .sheet .g tbody th, .pv > .sheet .g tbody td {
+  height: 25.5mm;
+}
+.pv > .sheet .g tbody th {
+  width: 20mm;
+  font-size: 16px;
+  font-weight: 600;
+}
+.pv > .sheet .blk { font-size: 18px; }
+
+.pv > .sheet footer {
+  flex: none;
+  min-height: 20mm;
+  margin: 2mm 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px;
+}
+.pv > .sheet .credit {
+  flex: none;
+  text-align: center;
+  font-size: 11.5px;
+  color: #64748b;
+  margin-top: auto;
+  padding-top: 1mm;
+}
+
+.sig { text-align: center; min-width: 200px; font-size: 15px; line-height: 1.25; }
+.sig i { display: block; border-bottom: 1px dotted #475569; height: 32px; margin-bottom: 4px; }
+
+/* ---------------------------------------------------------
+   THEME 1: ทางวิชาการ (Academic Formal - TH Sarabun New)
+   --------------------------------------------------------- */
+.sheet.theme-academic {
+  font-family: var(--font-print-academic);
+  background: #ffffff;
+  color: #000000;
+}
+.sheet.theme-academic header b { font-size: 24px; color: #0f172a; }
+.sheet.theme-academic table.g { border-collapse: collapse; }
+.sheet.theme-academic .g th, .sheet.theme-academic .g td {
+  border: 1px solid #334155;
+}
+.sheet.theme-academic .g thead th, .sheet.theme-academic .g tbody th {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+.sheet.theme-academic .blk {
+  background: #ffffff;
+  border: 0;
+  border-left: 3.5px solid #1e3a8a;
+  border-radius: 0;
+  box-shadow: none;
+  color: #000000;
+  font-family: var(--font-print-academic);
+}
+.sheet.theme-academic .blk b { color: #000000; font-size: 1.05em; }
+.sheet.theme-academic .blk small { color: #1e293b; }
+.sheet.theme-academic .blk .cd { color: #334155; }
+.sheet.theme-academic td.brk {
+  background: repeating-linear-gradient(45deg, #f8fafc, #f8fafc 6px, #e2e8f0 6px, #e2e8f0 12px);
+  color: #475569;
+}
+
+/* ---------------------------------------------------------
+   THEME 2: พาสเทลละมุน (Soft Pastel Macaron)
+   --------------------------------------------------------- */
+.sheet.theme-pastel {
+  font-family: var(--font-print-modern);
+  background: #ffffff;
+  color: #1e293b;
+  border: 2px solid #e2e8f0;
+}
+.sheet.theme-pastel header {
+  border-bottom: 3px solid #fbcfe8;
+  padding-bottom: 2mm;
+}
+.sheet.theme-pastel header b {
+  font-size: 22px;
+  background: linear-gradient(90deg, #2563eb, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.sheet.theme-pastel table.g { border-collapse: separate; border-spacing: 0; }
+.sheet.theme-pastel .g th, .sheet.theme-pastel .g td {
+  border-right: 1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
+}
+.sheet.theme-pastel .g thead th {
+  background: #fdfaf6;
+  color: #475569;
+  border-top: 1px solid #e2e8f0;
+}
+.sheet.theme-pastel .g th:first-child { border-left: 1px solid #e2e8f0; }
+
+/* Day Pastel Colors */
+.sheet.theme-pastel .g tbody tr:nth-child(1) th {
+  background: #fef9c3 !important;
+  color: #854d0e !important;
+  border-left: 4px solid #facc15 !important;
+}
+.sheet.theme-pastel .g tbody tr:nth-child(2) th {
+  background: #fce7f3 !important;
+  color: #9d174d !important;
+  border-left: 4px solid #f472b6 !important;
+}
+.sheet.theme-pastel .g tbody tr:nth-child(3) th {
+  background: #dcfce7 !important;
+  color: #166534 !important;
+  border-left: 4px solid #4ade80 !important;
+}
+.sheet.theme-pastel .g tbody tr:nth-child(4) th {
+  background: #ffedd5 !important;
+  color: #9a3412 !important;
+  border-left: 4px solid #fb923c !important;
+}
+.sheet.theme-pastel .g tbody tr:nth-child(5) th {
+  background: #e0f2fe !important;
+  color: #0369a1 !important;
+  border-left: 4px solid #38bdf8 !important;
+}
+
+.sheet.theme-pastel .blk {
+  background: hsl(var(--h, 200) 85% 93%) !important;
+  border: 1px solid hsl(var(--h, 200) 65% 82%) !important;
+  border-left: 5px solid hsl(var(--h, 200) 70% 52%) !important;
+  border-radius: 6px !important;
+  color: hsl(var(--h, 200) 60% 20%) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+}
+.sheet.theme-pastel .blk b { color: hsl(var(--h, 200) 70% 16%) !important; }
+.sheet.theme-pastel .blk small { color: hsl(var(--h, 200) 45% 30%) !important; }
+.sheet.theme-pastel td.brk {
+  background: repeating-linear-gradient(45deg, #fdf8f4, #fdf8f4 6px, #f7efe6 6px, #f7efe6 12px) !important;
+  color: #a89f91 !important;
+}
+
+/* ---------------------------------------------------------
+   THEME 3: โมเดิร์นคลีน (Modern Clean & Indigo)
+   --------------------------------------------------------- */
+.sheet.theme-modern {
+  font-family: var(--font-print-modern);
+  background: #ffffff;
+  color: #0f172a;
+}
+.sheet.theme-modern header { border-bottom: 2px solid #0f172a; padding-bottom: 2mm; }
+.sheet.theme-modern header b { font-size: 22px; color: #0f172a; }
+.sheet.theme-modern table.g { border-collapse: separate; border-spacing: 0; }
+.sheet.theme-modern .g th, .sheet.theme-modern .g td {
+  border-right: 1px solid #cbd5e1;
+  border-bottom: 1px solid #cbd5e1;
+}
+.sheet.theme-modern .g thead th {
+  background: #0f172a;
+  color: #ffffff;
+  border-top: 1px solid #0f172a;
+}
+.sheet.theme-modern .g thead th small { color: #94a3b8; }
+.sheet.theme-modern .g tbody th {
+  background: #f8fafc;
+  color: #0f172a;
+  font-weight: 700;
+  border-left: 4px solid #2563eb;
+}
+.sheet.theme-modern .g th:first-child { border-left: 1px solid #cbd5e1; }
+.sheet.theme-modern .blk {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-left: 4px solid hsl(var(--h, 220) 70% 48%);
+  border-radius: 4px;
+  color: #0f172a;
+}
+.sheet.theme-modern .blk b { color: #0f172a; }
+.sheet.theme-modern .blk small { color: #475569; }
+.sheet.theme-modern td.brk {
+  background: repeating-linear-gradient(45deg, #f8fafc, #f8fafc 6px, #f1f5f9 6px, #f1f5f9 12px);
+  color: #64748b;
+}
+
+/* ---------------------------------------------------------
+   THEME 4: กรมท่าพรีเมี่ยม (Executive Navy & Gold)
+   --------------------------------------------------------- */
+.sheet.theme-navy {
+  font-family: var(--font-print-modern);
+  background: #ffffff;
+  color: #0f172a;
+}
+.sheet.theme-navy header {
+  background: #0f172a;
+  color: #ffffff;
+  padding: 3mm 6mm;
+  border-radius: 4px;
+  border-bottom: 3px solid #f59e0b;
+}
+.sheet.theme-navy header b { color: #ffffff; font-size: 21px; }
+.sheet.theme-navy header img { filter: brightness(1.05); }
+.sheet.theme-navy table.g { border-collapse: collapse; }
+.sheet.theme-navy .g th, .sheet.theme-navy .g td {
+  border: 1px solid #334155;
+}
+.sheet.theme-navy .g thead th {
+  background: #1e293b;
+  color: #ffffff;
+}
+.sheet.theme-navy .g thead th small { color: #cbd5e1; }
+.sheet.theme-navy .g tbody th {
+  background: #0f172a;
+  color: #f8fafc;
+  font-weight: 600;
+}
+.sheet.theme-navy .blk {
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  border-left: 4px solid #1d4ed8;
+  border-radius: 3px;
+  color: #0f172a;
+}
+.sheet.theme-navy .blk b { color: #0f172a; }
+.sheet.theme-navy td.brk {
+  background: repeating-linear-gradient(45deg, #f1f5f9, #f1f5f9 6px, #e2e8f0 6px, #e2e8f0 12px);
+  color: #475569;
+}
+
+/* ---------------------------------------------------------
+   THEME 5: คลาสสิก ขาวดำ ประหยัดหมึก (Monochrome Eco)
+   --------------------------------------------------------- */
+.sheet.theme-mono {
+  font-family: var(--font-print-academic);
+  background: #ffffff;
+  color: #000000;
+}
+.sheet.theme-mono header { border-bottom: 2px solid #000; padding-bottom: 2mm; }
+.sheet.theme-mono header b { font-size: 24px; color: #000000; }
+.sheet.theme-mono table.g { border-collapse: collapse; }
+.sheet.theme-mono .g th, .sheet.theme-mono .g td {
+  border: 1px solid #000000 !important;
+}
+.sheet.theme-mono .g thead th, .sheet.theme-mono .g tbody th {
+  background: #ffffff !important;
+  color: #000000 !important;
+  font-weight: 700;
+}
+.sheet.theme-mono .blk {
+  background: #ffffff !important;
+  border: 0 !important;
+  border-left: 3px solid #000000 !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  color: #000000 !important;
+}
+.sheet.theme-mono .blk b, .sheet.theme-mono .blk small, .sheet.theme-mono .blk .cd {
+  color: #000000 !important;
+}
+.sheet.theme-mono td.brk {
+  background: repeating-linear-gradient(45deg, #ffffff, #ffffff 5px, #000000 5px, #000000 6px) !important;
+  color: #000000 !important;
+  font-weight: 600;
+}
+
+/* Print Output Media Queries */
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 8mm 10mm;
+  }
+  html, body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  .noprint, .side, .toast, .mask, .legend, .cr { display: none !important; }
+  .shell { display: block !important; }
+  main { padding: 0 !important; max-width: none !important; }
+  
+  .pv {
+    height: auto !important;
+    overflow: visible !important;
+    margin: 0 !important;
+  }
+  .pv + .pv {
+    break-before: page;
+    page-break-before: always;
+  }
+  .pv > .sheet {
+    transform: none !important;
+    width: 277mm !important;
+    height: 193mm !important;
+    padding: 0 !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+  }
+  .sheet { border: 0 !important; box-shadow: none !important; padding: 0 !important; margin: 0 !important; }
+  
+  .rep .t th, .rep .t td { padding: 3px 8px; font-size: 14.5px; }
+  .rep header { margin-bottom: 4px; }
+  .rep footer { margin-top: 8px; }
+  
+  /* Preserve specific theme styles on paper */
+  .sheet.theme-academic table.g { border-collapse: collapse; }
+  .sheet.theme-academic .g th, .sheet.theme-academic .g td { border: 1px solid #334155 !important; }
+  .sheet.theme-academic .g thead th, .sheet.theme-academic .g tbody th { background: #f1f5f9 !important; color: #000 !important; }
+  
+  .sheet.theme-pastel .g thead th { background: #fdfaf6 !important; }
+  .sheet.theme-pastel .g tbody tr:nth-child(1) th { background: #fef9c3 !important; color: #854d0e !important; }
+  .sheet.theme-pastel .g tbody tr:nth-child(2) th { background: #fce7f3 !important; color: #9d174d !important; }
+  .sheet.theme-pastel .g tbody tr:nth-child(3) th { background: #dcfce7 !important; color: #166534 !important; }
+  .sheet.theme-pastel .g tbody tr:nth-child(4) th { background: #ffedd5 !important; color: #9a3412 !important; }
+  .sheet.theme-pastel .g tbody tr:nth-child(5) th { background: #e0f2fe !important; color: #0369a1 !important; }
+  .sheet.theme-pastel .blk {
+    background: hsl(var(--h, 200) 85% 93%) !important;
+    border: 1px solid hsl(var(--h, 200) 65% 82%) !important;
+    border-left: 5px solid hsl(var(--h, 200) 70% 52%) !important;
+    color: hsl(var(--h, 200) 60% 20%) !important;
+  }
+
+  .sheet.theme-modern .g thead th { background: #0f172a !important; color: #fff !important; }
+  .sheet.theme-modern .g tbody th { background: #f8fafc !important; color: #0f172a !important; }
+  
+  .sheet.theme-navy header { background: #0f172a !important; color: #ffffff !important; }
+  .sheet.theme-navy .g thead th { background: #1e293b !important; color: #fff !important; }
+  .sheet.theme-navy .g tbody th { background: #0f172a !important; color: #fff !important; }
+  
+  .sheet.theme-mono .g th, .sheet.theme-mono .g td { border: 1px solid #000 !important; }
+  .sheet.theme-mono .g thead th, .sheet.theme-mono .g tbody th { background: #fff !important; color: #000 !important; }
+  .sheet.theme-mono .blk { background: #fff !important; border: 0 !important; border-left: 3px solid #000 !important; color: #000 !important; }
+}
+
+/* Responsive & Mobile */
+@media(max-width: 860px) {
+  .shell { grid-template-columns: 1fr; }
+  .side {
+    position: fixed;
+    inset: auto 0 0 0;
+    height: auto;
+    flex-direction: row;
+    padding: 8px 6px calc(8px + env(safe-area-inset-bottom));
+    z-index: 40;
+    gap: 0;
+    overflow: visible;
+    border-top: 1px solid var(--side-border);
+    border-right: 0;
+    background: rgba(11, 15, 25, 0.95);
+    backdrop-filter: blur(12px);
+  }
+  .brand, .term-badge, .grp, .sub2, .side .me, .nav small, .legend { display: none; }
+  .nav {
+    flex-direction: column;
+    gap: 3px;
+    padding: 6px 2px;
+    font-size: 11px;
+    text-align: center;
+    flex: 1;
+    border-radius: 8px;
+  }
+  .nav svg { width: 22px; height: 22px; padding: 2px; background: none; }
+  .nav.on { box-shadow: none; }
+  .nav.on svg { background: none; }
+  .badge { position: absolute; top: 2px; right: 8px; margin: 0; }
+  main { padding: 20px 16px 100px; }
+  .toast { bottom: 84px; }
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="modal"></div>
+
 <script>
-const D=['จันทร์','อังคาร','พุธ','พฤหัสบดี','ศุกร์'],$=s=>document.querySelector(s);
-const S={view:'dash',mode:'class',sel:null,pm:'teacher1',ps:null,tab:'teachers',sd:new Date().toISOString().slice(0,10),d:{teachers:[],subjects:[],assignments:[],classes:[],rooms:[],periods:[],entries:[],subs:[],settings:{}},user:{name:'ผู้ใช้งาน',role:'admin'},entered:false,un:[],re:[],clip:null};
-const by=(a,id)=>a.find(x=>x.id==id),col=s=>{let h=0;for(const c of String(s||''))h=(h*37+c.charCodeAt(0))%360;return h};
-const canEdit=()=>S.user&&['admin','academic'].includes(S.user.role);
-const opts=(l,s)=>l.map(x=>`<option value="${x.id}" ${x.id==s?'selected':''}>${x.name}</option>`).join('');
-function toast(m,bad){const t=document.createElement('div');t.className='toast'+(bad?' bad':'');t.textContent=m;document.body.append(t);setTimeout(()=>t.remove(),3400)}
-async function api(p,m='GET',b){const t=localStorage.getItem('brt');const r=await fetch('/api/'+p,{method:m,headers:{'Content-Type':'application/json',...(t?{Authorization:'Bearer '+t}:{})},body:b?JSON.stringify(b):undefined});const j=await r.json().catch(()=>({}));if(r.status==401&&p!='login'){localStorage.removeItem('brt');S.user=null;render()}if(!r.ok)throw new Error(j.error||'เกิดข้อผิดพลาด');return j}
-async function load(){const d=await api('data');S.d=d;S.user=d.user}
-async function act(fn,msg){try{await fn();await load();render();if(msg)toast(msg)}catch(e){toast(e.message=='Failed to fetch'?'ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้ ตรวจสอบอินเทอร์เน็ต':e.message,true)}}
-const modal=h=>{$('#modal').innerHTML=h?`<div class="mask" data-act="maskclose"><div class="modal">${h}</div></div>`:''};
-const term=()=>`ปีการศึกษา ${S.d.settings.year||''} ภาคเรียนที่ ${S.d.settings.term||''}`;
+// Days of the week
+const D = ['จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์'];
+const $ = s => document.querySelector(s);
 
-function welcomeH(){const d=S.d,h=new Date().getHours(),g=h<12?'สวัสดีตอนเช้า':h<17?'สวัสดีตอนบ่าย':'สวัสดีตอนเย็น';
- return `<div class="wel"><div class="wel-in"><img src="logo.png" alt="โลโก้โรงเรียนบ้านไร่" class="wl"><div style="opacity:.85">${g} · ยินดีต้อนรับสู่</div><h1>BR Smart Timetable</h1><p style="margin:0;opacity:.9">ระบบจัดตารางสอนอัจฉริยะ<br>โรงเรียนบ้านไร่ สพป.เชียงใหม่ เขต 5</p><div class="wf"><span>ลากวางจัดตาราง</span><span>ตรวจคาบชนอัตโนมัติ</span><span>จัดสอนแทน</span><span>พิมพ์ / PDF</span><span>ฉบับตาราง & สำรองข้อมูล</span></div><button class="btn gold big" data-act="enter">เข้าสู่ระบบจัดตารางสอน</button><div class="wn"><b>${d.teachers.length}</b> ครู · <b>${d.classes.length}</b> ชั้นเรียน · <b>${d.entries.length}</b> คาบ</div><small style="opacity:.75">${term()}<br>พัฒนาโดย ครูเฉลิมพล จันทร์แดง · โรงเรียนบ้านไร่</small></div></div>`}
-const IC={home:'M3 11l9-8 9 8M5 10v10h14V10',grid:'M3 4h18v16H3zM3 10h18M9 4v16',swap:'M7 7h13l-3-3M17 17H4l3 3',print:'M7 8V3h10v5M7 17H4v-6h16v6h-3M7 14h10v7H7z',db:'M4 6c0-1.7 3.6-3 8-3s8 1.3 8 3-3.6 3-8 3-8-1.3-8-3zM4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6',save:'M5 3h11l3 3v15H5zM8 3v5h7V3M8 21v-7h8v7',book:'M4 4h12a3 3 0 013 3v13H7a3 3 0 01-3-3zM4 17a3 3 0 013-3h12',spark:'M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z'};
-const NAV=[['ภาพรวม',[['dash','แดชบอร์ด','สถิติและการแจ้งเตือน','home']]],['จัดตาราง',[['tt','จัดตารางสอน','ลากวางและตรวจคาบชน','grid'],['sub','สอนแทน','มอบหมายครูแทนรายวัน','swap'],['auto','จัดตารางอัตโนมัติ','ตั้งเงื่อนไข ดูตัวอย่างก่อนใช้','spark']]],['เอกสาร',[['print','พิมพ์ตารางสอน','รายครู รายชั้น รายห้อง','print']]],['ระบบ',[['data','ข้อมูลพื้นฐาน','ครู วิชา ชั้น ห้อง เวลา','db'],['ver','ฉบับตาราง/สำรอง','ฉบับร่าง สำรอง ประวัติ','save'],['help','คู่มือการใช้งาน','ขั้นตอน เคล็ดลับ แก้ปัญหา','book']]]];
-function render(){
- if(!S.entered){$('#app').innerHTML=welcomeH();return}
- const cf=conflicts().length,un=(S.d.notifs||[]).filter(x=>!x.seen).length,bd={dash:un?`<b class="badge n">${un}</b>`:'',tt:cf?`<b class="badge">${cf}</b>`:''};
- const V={dash:vDash,tt:vTT,print:vPrint,sub:vSub,data:vData,ver:vVer,help:vHelp,auto:vAuto}[S.view]();
- const sub=Object.keys(TN).filter(x=>x!='users').map(x=>`<button class="${S.tab==x?'on':''}" data-act="tab" data-v="${x}">${TN[x]}</button>`).join('');
- const nav=NAV.map(([g,it])=>`<div class="grp">${g}</div>`+it.map(([k,t,s,i])=>`<button class="nav ${S.view==k?'on':''}" data-act="nav" data-v="${k}"><svg viewBox="0 0 24 24"><path d="${IC[i]}"/></svg><span>${t}<small>${s}</small></span>${bd[k]||''}</button>${k=='data'&&S.view=='data'?`<div class="sub2">${sub}</div>`:''}`).join('')).join('');
- $('#app').innerHTML=`<div class="shell"><aside class="side"><div class="brand"><img src="logo.png" alt=""><b>BR Smart Timetable<small>โรงเรียนบ้านไร่</small></b></div><div class="term">${term()}</div>${nav}<div class="me"><a href="#" data-act="logout">← หน้าต้อนรับ</a><div class="credit">พัฒนาโดย<br>ครูเฉลิมพล จันทร์แดง<br>โรงเรียนบ้านไร่</div></div></aside><main>${V}<div class="cr noprint">BR Smart Timetable v2.6 · พัฒนาโดย ครูเฉลิมพล จันทร์แดง · โรงเรียนบ้านไร่ สพป.เชียงใหม่ เขต 5</div></main></div>`;afterRender()}
+// Themes Configuration
+const THEMES = [
+  { id: 'academic', name: '🎓 ทางวิชาการ', desc: 'ระเบียบราชการ ฟอนต์สารบรรณ คมชัดสุภาพ', dot: '#1e3a8a' },
+  { id: 'pastel', name: '🌸 พาสเทลละมุน', desc: 'โทนสีหวานสดใส แยกสีตามวัน น่ารักสบายตา', dot: '#f472b6' },
+  { id: 'modern', name: '✨ โมเดิร์นคลีน', desc: 'มินิมอลร่วมสมัย คมกริบ สไตล์สากล', dot: '#2563eb' },
+  { id: 'navy', name: '🏛️ กรมท่าพรีเมี่ยม', desc: 'หรูหรา ภูมิฐาน โทนผู้บริหาร ตัดเส้นทอง', dot: '#0f172a' },
+  { id: 'mono', name: '🖨️ ขาวดำประหยัดหมึก', desc: 'คมชัด 100% ประหยัดหมึกพิมพ์เลเซอร์', dot: '#000000' }
+];
 
-const esc=x=>String(x??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const SS=(k,d='')=>{const v=(S.d.settings||{})[k];return v==null||v===''?d:v};
-const schoolInfo=()=>({school:SS('school','โรงเรียนบ้านไร่'),office:SS('office','สพป.เชียงใหม่ เขต 5'),director:SS('director'),academic:SS('academic'),credit:SS('showcredit','1')!='0'});
-const CO0={class:{subject:1,code:0,teacher:1,class:0,room:0},teacher:{subject:1,code:0,teacher:0,class:1,room:1},room:{subject:1,code:0,teacher:1,class:1,room:0}};
-const COL=[['subject','วิชา'],['code','รหัสวิชา'],['teacher','ชื่อครู'],['class','ชั้น'],['room','ห้อง']],MODEN={class:'ตารางรายชั้น',teacher:'ตารางรายครู',room:'ตารางรายห้อง'};
-function getCO(){let u={};try{u=JSON.parse(SS('cellopts','{}'))||{}}catch(e){}return Object.fromEntries(Object.keys(CO0).map(m=>[m,{...CO0[m],...(u[m]||{})}]))}
-function getHR(){try{return JSON.parse(SS('homerooms','{}'))||{}}catch(e){return{}}}
-const hrNames=cid=>(getHR()[cid]||[]).filter(Boolean).map(i=>by(S.d.teachers,i)?.name).filter(Boolean).join(' และ ');
-const hrOf=tid=>S.d.classes.filter(c=>(getHR()[c.id]||[]).includes(+tid)).map(c=>c.name).join(', ');
-function coPanel(modes){const o=getCO();return modes.map(m=>`<div class="copan"><b>${MODEN[m]}</b><span>แสดงในช่อง:</span>${COL.map(([k,t])=>`<label class="ck"><input type="checkbox" data-co="${m}.${k}" ${o[m][k]?'checked':''} ${canEdit()?'':'disabled'}> ${t}</label>`).join('')}</div>`).join('')}
-function fitBlocks(){document.querySelectorAll('.blk').forEach(b=>{b.style.fontSize='';let fs=parseFloat(getComputedStyle(b).fontSize),g=0;while((b.scrollHeight>b.clientHeight+1||b.scrollWidth>b.clientWidth+1)&&fs>7&&g++<60){fs-=.5;b.style.fontSize=fs+'px'}})}
-function fitPaper(){document.querySelectorAll('.pv').forEach(pv=>{const sh=pv.firstElementChild;sh.style.transform='';pv.style.height='';const full=S.pz=='full',W=sh.offsetWidth,H=sh.offsetHeight,k=full?1:Math.min(1,pv.clientWidth/W);pv.classList.toggle('full',full);sh.style.transformOrigin='0 0';if(k<1)sh.style.transform=`scale(${k})`;pv.style.height=Math.ceil(H*k)+2+'px'})}
-function afterRender(){fitPaper();fitBlocks()}
-addEventListener('resize',()=>fitPaper());document.fonts?.addEventListener?.('loadingdone',()=>{fitBlocks();fitPaper()});
-function conflicts(){const o=[],seen={t:{},r:{},c:{}},nm={t:'ครูชนคาบ',r:'ห้องชนคาบ',c:'ชั้นเรียนซ้อนคาบ'};
- for(const e of S.d.entries)for(const [k,v] of [['t',e.teacher_id],['t',e.teacher2_id],['r',e.room_id],['c',e.class_id]]){if(!v)continue;const key=v+'|'+e.day+'|'+e.period;if(seen[k][key])o.push({e,msg:`${nm[k]} · ${by(S.d.classes,e.class_id)?.name} ${D[e.day-1]} คาบ ${by(S.d.periods,e.period)?.label}`});else seen[k][key]=1}
- return o}
-function vDash(){const d=S.d,cf=conflicts(),today=d.subs.filter(s=>s.date==new Date().toISOString().slice(0,10)&&s.status=='approved').length;
- const cnt=t=>d.entries.filter(e=>e.teacher_id==t||e.teacher2_id==t).length;
- return `<h1>ภาพรวมตารางสอน</h1><p class="sub">${term()}</p><div class="stats">${[['ครู',d.teachers.length,'#2f54eb'],['ชั้นเรียน',d.classes.length,'#12a37f'],['คาบที่จัดแล้ว',d.entries.length,'#f5b301'],['สอนแทนวันนี้',today,'#d6283f'],['เติมช่องแล้ว',Math.round(d.entries.length/Math.max(1,d.classes.length*d.periods.filter(p=>!+p.is_break).length*5)*100)+'%','#7c4dff'],['ข้อขัดแย้ง',cf.length,cf.length?'#d6283f':'#12a37f']].map(s=>`<div class="stat" style="--c:${s[2]}"><b>${s[1]}</b><span>${s[0]}</span></div>`).join('')}</div>
- <div class="card"><h2>ภาระงานครู (คาบ/สัปดาห์)</h2>${d.teachers.length?`<table class="t"><tr><th>ครู</th><th>จัดแล้ว</th><th>เป้าหมาย</th><th>สถานะ</th></tr>${d.teachers.map(t=>{const c=cnt(t.id),p=t.load?Math.min(100,c/t.load*100):0;return `<tr><td>${t.name}</td><td>${c}</td><td>${t.load||'-'}</td><td><div class="bargr"><i class="${t.load&&c==t.load?'ok':c>t.load?'hi':''}" style="width:${p}%"></i></div></td></tr>`}).join('')}</table>`:'<p class="sub">ยังไม่มีข้อมูลครู ไปที่ “ข้อมูลพื้นฐาน” เพื่อเพิ่มครูและรายวิชา</p>'}</div>${setupCard()}${notifCard()}`}
-
-function vTT(){const d=S.d,m=S.mode,pc=s=>d.entries.filter(e=>e.class_id==S.sel&&e.subject_id==s.id).length,l=m=='class'?d.classes:m=='room'?d.rooms:d.teachers;if(!by(l,S.sel))S.sel=l[0]?.id;
- return `<h1>จัดตารางสอน</h1><p class="sub">${canEdit()?'ลากวิชาไปวางในช่องว่าง หรือแตะช่องว่าง/คาบเพื่อแก้ไข':'โหมดอ่านอย่างเดียว'}</p><div class="bar noprint"><select data-ch="mode"><option value="class" ${m=='class'?'selected':''}>รายชั้นเรียน</option><option value="teacher" ${m=='teacher'?'selected':''}>รายครู</option><option value="room" ${m=='room'?'selected':''}>รายห้อง</option></select><select data-ch="sel">${opts(l,S.sel)}</select><input id="q" placeholder="ค้นหาวิชา/ครู/ห้อง" style="width:170px"><button class="btn" data-act="check">ตรวจตาราง</button><button class="btn" data-act="printcur">🖨 พิมพ์ตารางนี้</button><button class="btn" data-act="undo" ${S.un.length?'':'disabled'}>↶ Undo</button><button class="btn" data-act="redo" ${S.re.length?'':'disabled'}>↷ Redo</button>${S.clip?'<button class="btn gold" data-act="noclip">ยกเลิกคัดลอก</button>':''}</div>
- ${m=='class'&&canEdit()?`<div class="pal">วิชา:${d.subjects.length?d.subjects.map(s=>`<span class="chip ${s.periods&&pc(s)>=s.periods?'done':''}" draggable="true" data-drag="S:${s.id}" style="--h:${col(s.name)}">${s.name}<em>${pc(s)}${s.periods?'/'+s.periods:''}</em></span>`).join(''):' ยังไม่มีรายวิชา'}</div>`:''}${m=='class'&&canEdit()?'<p class="hint">ลากวิชาไปวางในช่องว่าง · ระหว่างลากจะเห็นเงาจางของคาบที่ชั้นอื่นใช้อยู่ ป้องกันครูหรือห้องซ้อนกัน</p>':''}${grid(m,S.sel,true)}`}
-const tnm=e=>[e.teacher_id,e.teacher2_id].filter(Boolean).map(i=>by(S.d.teachers,i)?.name).filter(Boolean).join(' / ');
-function blk(e,m,ui){const s=by(S.d.subjects,e.subject_id),c=by(S.d.classes,e.class_id),r=by(S.d.rooms,e.room_id),o=getCO()[m],L=[];
- if(o.subject||o.code)L.push(`<b>${o.subject?esc(s?.name||'-'):''}${o.code&&s?.code?`<i class="cd">${o.subject?' ':''}${esc(s.code)}</i>`:''}</b>`);
- const tn=o.teacher?tnm(e):'';if(tn)L.push(`<small>${esc(tn)}</small>`);
- const x=[o.class&&c?.name,o.room&&r?.name].filter(Boolean).join(' · ');if(x)L.push(`<small>${esc(x)}</small>`);
- if(!L.length)L.push('<b>-</b>');
- return `<div class="blk" ${ui?`data-act="edit" data-id="${e.id}" ${m=='class'?`draggable="true" data-drag="E:${e.id}"`:''}`:''} style="--h:${col(s?.name)}">${L.join('')}</div>`}
-function grid(m,id,ui){const P=S.d.periods,u=ui&&canEdit();
- return `<div class="gridw"><table class="g"><thead><tr><th>วัน</th>${P.map(p=>`<th>${p.is_break?p.label:'คาบ '+p.label}<small>${p.start||''}${p.end?'–'+p.end:''}</small></th>`).join('')}</tr></thead><tbody>${D.map((n,i)=>`<tr><th class="${new Date().getDay()==i+1?'tod':''}">${n}</th>${P.map(p=>{if(+p.is_break)return `<td class="brk">${p.label}</td>`;const es=S.d.entries.filter(e=>e.day==i+1&&e.period==p.id&&(m=='class'?e.class_id==id:m=='room'?e.room_id==id:(e.teacher_id==id||e.teacher2_id==id)));return `<td class="${es.length?'':'empty'}" ${u&&m=='class'?`data-d="${i+1}" data-p="${p.id}"`:''}>${es.length?`<div class="cin">${es.map(e=>blk(e,m,u)).join('')}</div>`:''}</td>`}).join('')}</tr>`).join('')}</tbody></table></div>`}
-function busyAt(day,per,ex){const t={},r={};for(const x of S.d.entries)if(x.day==day&&x.period==per&&x.id!=ex){const cn=by(S.d.classes,x.class_id)?.name||'';if(x.teacher_id)t[x.teacher_id]=cn;if(x.teacher2_id)t[x.teacher2_id]=cn;if(x.room_id)r[x.room_id]=cn}return{t,r}}
-function entryModal(e){const d=S.d,b=busyAt(e.day,e.period,e.id);S.ed=e;
- if(!e.teacher_id){const c={};d.entries.filter(x=>x.subject_id==e.subject_id).forEach(x=>c[x.teacher_id]=(c[x.teacher_id]||0)+(x.class_id==e.class_id?5:1));const p=Object.keys(c).filter(k=>!b.t[k]).sort((a,z)=>c[z]-c[a])[0];if(p)e.teacher_id=+p}
- const so=(l,m,s)=>l.map(x=>`<option value="${x.id}" ${x.id==s?'selected':''} ${m[x.id]?'disabled':''}>${x.name}${m[x.id]?' — ติดสอน '+m[x.id]:''}</option>`).join('');
- modal(`<h3>${e.id?'แก้ไขคาบ':'เพิ่มคาบ'} · ${D[e.day-1]} คาบ ${by(d.periods,e.period).label}</h3><label>วิชา<select id="f1">${opts(d.subjects,e.subject_id)}</select></label><label>ครู (ครูที่ติดคาบนี้เลือกไม่ได้)<select id="f2"><option value="">เลือกครู</option>${so(d.teachers,b.t,e.teacher_id)}</select></label><label>ครูคนที่ 2 (ถ้ามี เช่น ชั้นที่มีครูประจำชั้น 2 คน)<select id="f4"><option value="">-</option>${so(d.teachers,b.t,e.teacher2_id)}</select></label><label>ห้อง (ถ้ามี)<select id="f3"><option value="">-</option>${so(d.rooms,b.r,e.room_id)}</select></label><div class="row"><button class="btn pri" data-act="saveE">บันทึก</button>${e.id?'<button class="btn" data-act="copyE">คัดลอก</button><button class="btn dng" data-act="delE">ลบคาบ</button>':''}<button class="btn" data-act="close">ยกเลิก</button></div>`)}
-
-function vPrint(){if(S.pm=='report')return reportH();const d=S.d,pm=S.pm,one=pm.endsWith('1'),isT=pm.startsWith('teacher'),isR=pm.startsWith('room'),mode=isT?'teacher':isR?'room':'class',l=isT?d.teachers:isR?d.rooms:d.classes,si=schoolInfo();if(!by(l,S.ps))S.ps=l[0]?.id;
- const sig=(n,t)=>`<div class="sig"><i></i>${n?`(${esc(n)})<br>`:''}${t}</div>`;
- const sheet=x=>{const n=d.entries.filter(e=>isT?(e.teacher_id==x.id||e.teacher2_id==x.id):isR?e.room_id==x.id:e.class_id==x.id).length,hr=isT?(hrOf(x.id)?'ครูประจำชั้น '+hrOf(x.id):''):isR?'':(hrNames(x.id)?'ครูประจำชั้น: '+hrNames(x.id):'');
-  return `<div class="pv"><section class="sheet"><header><img src="logo.png" alt=""><div><b>${esc(si.school)}</b> ${esc(si.office)}<br>${isT?'ตารางสอนครู':isR?'ตารางการใช้ห้อง':'ตารางเรียนชั้น'} <b>${esc(x.name)}</b> · ${term()}${hr?`<br>${esc(hr)}`:''}</div></header>${grid(mode,x.id,false)}<footer><div>รวม ${n} คาบ/สัปดาห์</div>${sig(si.director,'ผู้อำนวยการโรงเรียน')}${sig(si.academic,'ฝ่ายวิชาการ')}</footer>${si.credit?'<div class="credit">BR Smart Timetable · พัฒนาโดย ครูเฉลิมพล จันทร์แดง · โรงเรียนบ้านไร่</div>':''}</section></div>`};
- return `<div class="noprint"><h1>พิมพ์ตารางสอน</h1><p class="sub">ตัวอย่างตรงกับกระดาษ A4 แนวนอน · ขึ้นหน้าใหม่ทุกรายการ · บันทึกเป็น PDF ได้จากหน้าต่างพิมพ์</p><div class="bar"><select data-ch="pm">${PM.map(o=>`<option value="${o[0]}" ${pm==o[0]?'selected':''}>${o[1]}</option>`).join('')}</select>${one?`<select data-ch="ps">${opts(l,S.ps)}</select>`:''}<button class="btn" data-act="pzoom">${S.pz=='full'?'🔍 ย่อให้พอดีจอ':'🔍 ดูขนาดจริง'}</button><button class="btn gold" data-act="print">🖨 พิมพ์ / บันทึก PDF</button></div><details class="man" style="padding:0 16px"><summary style="font-size:16px;padding:10px 0">ปรับข้อมูลที่แสดงในช่องตาราง (${MODEN[mode]})</summary><div>${coPanel([mode])}<p class="hint" style="margin:8px 0 0">ตัวอักษรจะย่อให้พอดีช่องอัตโนมัติ · ตั้งค่าทุกประเภทได้ที่ ข้อมูลพื้นฐาน → ตั้งค่าโรงเรียน</p></div></details></div>${(one?l.filter(x=>x.id==S.ps):l).map(sheet).join('')||'<p class="sub">ยังไม่มีข้อมูล</p>'}`}
-
-function vSub(){const d=S.d,dow=new Date(S.sd+'T00:00:00Z').getUTCDay(),pi=id=>d.periods.findIndex(p=>p.id==id);
- const es=d.entries.filter(e=>e.day==dow).sort((a,b)=>pi(a.period)-pi(b.period)),act=(e)=>d.subs.find(s=>s.entry_id==e.id&&s.date==S.sd&&s.status=='approved');
- return `<h1>สอนแทน</h1><p class="sub">ไม่แก้ตารางประจำ · เก็บประวัติเมื่อยกเลิก</p><div class="card"><div class="bar"><label>วันที่ <input type="date" data-ch="sd" value="${S.sd}"></label></div>${dow<1||dow>5?'<p class="sub">วันหยุดสุดสัปดาห์ ไม่มีคาบสอน</p>':es.length?`<table class="t"><tr><th>คาบ</th><th>ชั้น</th><th>วิชา</th><th>ครูเจ้าของคาบ</th><th>ครูสอนแทน</th></tr>${es.map(e=>{const a=act(e);return `<tr><td>${by(d.periods,e.period).label}</td><td>${by(d.classes,e.class_id)?.name}</td><td>${by(d.subjects,e.subject_id)?.name}</td><td>${tnm(e)}</td><td>${a?`<span class="tag ok">${by(d.teachers,a.sub_teacher_id)?.name}</span>`:canEdit()?`<button class="btn" data-act="subnew" data-id="${e.id}">จัดสอนแทน</button>`:'-'}</td></tr>`}).join('')}</table>`:'<p class="sub">วันนี้ไม่มีคาบสอนในตาราง</p>'}</div>
- <div class="card"><h2>ประวัติสอนแทน</h2><table class="t"><tr><th>วันที่</th><th>ชั้น/วิชา</th><th>ครูเดิม → ครูแทน</th><th>เหตุผล</th><th>สถานะ</th><th></th></tr>${[...d.subs].reverse().map(s=>{const e=by(d.entries,s.entry_id);return `<tr><td>${s.date}</td><td>${e?by(d.classes,e.class_id)?.name+' '+by(d.subjects,e.subject_id)?.name:'(คาบถูกลบ)'}</td><td>${e?tnm(e):'-'} → ${by(d.teachers,s.sub_teacher_id)?.name}</td><td>${s.reason||'-'}<br><small style="color:var(--mut)">โดย ${s.by||''}</small></td><td><span class="tag ${s.status=='approved'?'ok':'no'}">${s.status=='approved'?'อนุมัติ':'ยกเลิก'}</span></td><td>${s.status=='approved'&&canEdit()?`<button class="btn dng" data-act="subcancel" data-id="${s.id}">ยกเลิก</button>`:''}</td></tr>`}).join('')||'<tr><td colspan="6">ยังไม่มีรายการ</td></tr>'}</table></div>`}
-function subModal(id){const d=S.d,e=by(d.entries,id),busy=new Set(d.entries.filter(x=>x.day==e.day&&x.period==e.period).flatMap(x=>[x.teacher_id,x.teacher2_id].filter(Boolean)));
- d.subs.filter(s=>s.status=='approved'&&s.date==S.sd).forEach(s=>{const x=by(d.entries,s.entry_id);if(x&&x.period==e.period)busy.add(s.sub_teacher_id)});
- const free=d.teachers.filter(t=>!busy.has(t.id));S.se=id;
- modal(`<h3>จัดสอนแทน · ${by(d.classes,e.class_id)?.name} ${by(d.subjects,e.subject_id)?.name}</h3><label>ครูที่ว่างในคาบนี้<select id="f1">${opts(free)}</select></label><label>เหตุผล<textarea id="f2" rows="2" placeholder="เช่น ลาป่วย / ไปราชการ"></textarea></label><div class="row"><button class="btn pri" data-act="subsave" ${free.length?'':'disabled'}>บันทึก</button><button class="btn" data-act="close">ยกเลิก</button></div>${free.length?'':'<small>ไม่มีครูว่างในคาบนี้</small>'}`)}
-
-const F={teachers:[['name','ชื่อครู'],['load','ภาระงาน (คาบ)','number']],subjects:[['code','รหัสวิชา'],['name','ชื่อวิชา'],['periods','คาบ/สัปดาห์','number']],classes:[['name','ชั้นเรียน']],rooms:[['name','ห้อง']],periods:[['label','ชื่อคาบ'],['start','เริ่ม','time'],['end','สิ้นสุด','time'],['is_break','พัก (1=ใช่)','number']]};
-const TN={teachers:'ครู',subjects:'รายวิชา',assignments:'การมอบหมายสอน',classes:'ชั้นเรียน',rooms:'ห้อง',periods:'คาบ/เวลา',users:'บัญชีผู้ใช้',settings:'ตั้งค่าโรงเรียน'};
-function setH(){const d=S.d,si=schoolInfo(),on=canEdit(),dis=on?'':'disabled',tsel=(cid,i)=>`<select data-hr="${cid}.${i}" ${dis}><option value="">-</option>${opts(d.teachers,(getHR()[cid]||[])[i])}</select>`;
- return `<h2>ปีการศึกษาและข้อมูลโรงเรียน</h2><div class="fgrid"><label>ปีการศึกษา<input id="yr" value="${esc(d.settings.year||'')}" ${dis}></label><label>ภาคเรียน<input id="tm" value="${esc(d.settings.term||'')}" ${dis}></label><label>ชื่อโรงเรียน<input id="sc" value="${esc(si.school)}" ${dis}></label><label>สังกัด<input id="of" value="${esc(si.office)}" ${dis}></label><label>ชื่อผู้อำนวยการ (พิมพ์ใต้ลายเซ็น)<input id="dr" value="${esc(si.director)}" placeholder="เช่น นายสมชาย ใจดี" ${dis}></label><label>ชื่อฝ่ายวิชาการ (พิมพ์ใต้ลายเซ็น)<input id="ac" value="${esc(si.academic)}" placeholder="เช่น นางสาวสมหญิง รักเรียน" ${dis}></label></div><label class="ck"><input type="checkbox" id="scr" ${si.credit?'checked':''} ${dis}> แสดงเครดิตผู้พัฒนาท้ายตารางที่พิมพ์</label>
- <h2 style="margin-top:22px">ครูประจำชั้น</h2><table class="t"><tr><th>ชั้น</th><th>ครูประจำชั้นคนที่ 1</th><th>ครูประจำชั้นคนที่ 2 (ถ้ามี)</th></tr>${d.classes.map(c=>`<tr><td>${esc(c.name)}</td><td>${tsel(c.id,0)}</td><td>${tsel(c.id,1)}</td></tr>`).join('')||'<tr><td colspan="3">ยังไม่มีชั้นเรียน</td></tr>'}</table>
- <h2 style="margin-top:22px">ข้อมูลที่แสดงในช่องตารางสอน</h2><p class="hint">เลือกได้แยกตามประเภทตาราง ใช้ทั้งหน้าจอและตอนพิมพ์ ตัวอักษรย่อให้พอดีช่องอัตโนมัติ</p>${coPanel(['class','teacher','room'])}
- ${on?'<div class="bar" style="margin-top:16px"><button class="btn pri" data-act="saveset">บันทึกการตั้งค่า</button></div>':''}`}
-function vData(){const t=S.tab,tabs=Object.keys(TN).filter(k=>k!='users');if(!tabs.includes(t))S.tab=t=tabs[0];let body='';
- if(F[t]){const f=F[t],row=(r)=>`<tr data-t="${t}" data-id="${r.id||''}">${f.map(c=>`<td><input data-k="${c[0]}" type="${c[2]||'text'}" value="${r[c[0]]??''}" ${canEdit()?'':'disabled'}></td>`).join('')}<td>${canEdit()?(r.id?`<button class="btn dng" data-act="del" data-t="${t}" data-id="${r.id}">ลบ</button>`:`<button class="btn pri" data-act="add">เพิ่ม</button>`):''}</td></tr>`;
-  body=`<table class="t"><tr>${f.map(c=>`<th>${c[1]}</th>`).join('')}<th></th></tr>${S.d[t].map(row).join('')}${canEdit()?row({}):''}</table><p class="sub">แก้ไขช่องแล้วระบบบันทึกอัตโนมัติ</p>`}
- else if(t=='assignments')body=asgH();
- else if(t=='settings')body=setH();
- else body=`<table class="t"><tr><th>ชื่อผู้ใช้</th><th>ชื่อ</th><th>บทบาท</th></tr>${S.d.users.map(u=>`<tr><td>${u.username}</td><td>${u.name}</td><td>${u.role}</td></tr>`).join('')}</table><h2 style="margin-top:18px">เพิ่ม/รีเซ็ตรหัสผ่านผู้ใช้</h2><div class="bar"><input id="u1" placeholder="ชื่อผู้ใช้"><input id="u2" placeholder="ชื่อ-สกุล"><input id="u3" type="password" placeholder="รหัสผ่าน (≥6)"><select id="u4"><option value="academic">ฝ่ายวิชาการ</option><option value="teacher">ครู</option><option value="viewer">ผู้บริหาร</option><option value="admin">ผู้ดูแลระบบ</option></select><button class="btn pri" data-act="saveuser">บันทึก</button></div>`;
- return `<h1>ข้อมูลพื้นฐาน</h1><p class="sub">ข้อมูลกลางเก็บบน Cloudflare D1 ใช้ร่วมกันทุกอุปกรณ์</p><div class="tabs">${tabs.map(k=>`<button class="btn ${k==t?'on':''}" data-act="tab" data-v="${k}">${TN[k]}</button>`).join('')}</div><div class="card" style="overflow-x:auto">${body}</div>`}
-
-const PM=[['teacher1','ตารางครูรายบุคคล'],['teacherN','ครูทุกคน (แยกหน้า)'],['class1','ตารางรายชั้น'],['classN','ทุกชั้น (แยกหน้า)'],['room1','ตารางห้อง (รายห้อง)'],['roomN','ทุกห้อง (แยกหน้า)'],['report','รายงานฝ่ายวิชาการ']];
-function snap(){S.un.push(JSON.stringify(S.d.entries));if(S.un.length>30)S.un.shift();S.re=[]}
-function reportH(){const d=S.d,slots=d.periods.filter(p=>!+p.is_break).length*5,cf=conflicts().length,pub=d.versions.find(v=>v.status=='published'),sb=d.subs.filter(s=>s.status=='approved').length;
- return `<div class="noprint"><h1>พิมพ์ตารางสอน</h1><p class="sub">รายงานฝ่ายวิชาการ · A4 แนวนอน</p><div class="bar"><select data-ch="pm">${PM.map(o=>`<option value="${o[0]}" ${S.pm==o[0]?'selected':''}>${o[1]}</option>`).join('')}</select><button class="btn gold" data-act="print">🖨 พิมพ์ / บันทึก PDF</button></div></div><section class="sheet rep"><header><img src="logo.png" alt=""><div><b>รายงานฝ่ายวิชาการ</b><br>${esc(schoolInfo().school)} ${esc(schoolInfo().office)} · ${term()}<br>ฉบับเผยแพร่: ${pub?pub.name:'ยังไม่มี'} · ข้อขัดแย้ง ${cf} · สอนแทน (อนุมัติ) ${sb} ครั้ง</div></header><table class="t"><tr><th>ครู</th><th>เป้าหมาย (คาบ)</th><th>จัดแล้ว</th><th>ส่วนต่าง</th></tr>${d.teachers.map(t=>{const c=d.entries.filter(e=>e.teacher_id==t.id||e.teacher2_id==t.id).length;return `<tr><td>${t.name}</td><td>${t.load||'-'}</td><td>${c}</td><td>${t.load?c-t.load:'-'}</td></tr>`}).join('')}</table><br><table class="t"><tr><th>ชั้นเรียน</th><th>คาบที่จัด</th><th>ช่องทั้งหมด</th><th>ว่าง</th></tr>${d.classes.map(c=>{const n=d.entries.filter(e=>e.class_id==c.id).length;return `<tr><td>${c.name}</td><td>${n}</td><td>${slots}</td><td>${slots-n}</td></tr>`}).join('')}</table><footer><div></div><div class="sig"><i></i>${schoolInfo().academic?`(${esc(schoolInfo().academic)})<br>`:''}ฝ่ายวิชาการ</div><div class="sig"><i></i>${schoolInfo().director?`(${esc(schoolInfo().director)})<br>`:''}ผู้อำนวยการโรงเรียน</div></footer></section>`}
-function setupCard(){const d=S.d,st=[['เพิ่มรายชื่อครู',d.teachers.length,'data','teachers'],['เพิ่มรายวิชา',d.subjects.length,'data','subjects'],['จัดคาบแรกในตารางสอน',d.entries.length,'tt']];if(st.every(x=>x[1]))return '';
- return `<div class="card" style="border-color:var(--gold)"><h2>เริ่มต้นใช้งาน</h2>${st.map(x=>`<div class="row" style="align-items:center;padding:6px 0"><span class="tag ${x[1]?'ok':''}">${x[1]?'✓':'○'}</span> ${x[0]} ${x[1]?'':`<button class="btn" data-act="goto" data-v="${x[2]}" data-t="${x[3]||''}">ไปที่หน้านี้</button>`}</div>`).join('')}</div>`}
-const fdt=x=>String(x||'').slice(0,16).replace('T',' ');
-function notifCard(){const n=S.d.notifs||[],u=n.filter(x=>!x.seen).length;return `<div class="card"><h2>การแจ้งเตือน ${u?`<span class="tag no">${u} ใหม่</span>`:''}</h2>${n.length?n.slice(0,8).map(x=>`<div style="padding:7px 0;border-bottom:1px solid var(--line)">${x.seen?'':'● '}${x.text}<br><small style="color:var(--mut)">${fdt(x.at)}</small></div>`).join(''):'<p class="sub">ยังไม่มีการแจ้งเตือน</p>'}${u?'<br><button class="btn" data-act="nread">ทำเครื่องหมายว่าอ่านแล้ว</button>':''}</div>`}
-function vVer(){const d=S.d,ST={draft:'ฉบับร่าง (Draft)',checked:'ตรวจแล้ว (Checked)',published:'เผยแพร่ (Published)',archived:'ฉบับเก่า (Archived)'},NX={draft:'ตรวจแล้ว',checked:'เผยแพร่',published:'เก็บถาวร'};
- return `<h1>ฉบับตาราง · สำรองข้อมูล</h1><p class="sub">Draft → Checked → Published → Archived</p><div class="card" style="overflow-x:auto"><h2>ฉบับตารางสอน</h2><div class="bar"><input id="vn" placeholder="ชื่อฉบับ เช่น ฉบับร่าง 1/2569"><button class="btn pri" data-act="vsave">บันทึกฉบับใหม่จากตารางปัจจุบัน</button></div><table class="t"><tr><th>ชื่อ</th><th>สถานะ</th><th>บันทึกเมื่อ</th><th></th></tr>${d.versions.map(v=>`<tr><td>${v.name}</td><td><span class="tag ${v.status=='published'?'ok':''}">${ST[v.status]}</span></td><td>${fdt(v.created)}</td><td><div class="row">${NX[v.status]?`<button class="btn" data-act="vnext" data-id="${v.id}">→ ${NX[v.status]}</button>`:''}<button class="btn" data-act="vrest" data-id="${v.id}">กู้คืนเป็นตารางปัจจุบัน</button><button class="btn dng" data-act="vdel" data-id="${v.id}">ลบ</button></div></td></tr>`).join('')||'<tr><td colspan="4">ยังไม่มีฉบับ</td></tr>'}</table></div>
- <div class="card"><h2>สำรอง / กู้คืนข้อมูลทั้งระบบ</h2><div class="bar"><button class="btn gold" data-act="backup">⬇ ดาวน์โหลดไฟล์สำรอง</button><label class="btn" style="cursor:pointer">⬆ กู้คืนจากไฟล์สำรอง<input type="file" accept=".json" data-ch="restore" hidden></label></div></div>${notifCard()}
- <div class="card" style="overflow-x:auto"><h2>ประวัติการแก้ไข</h2><table class="t"><tr><th>เวลา</th><th>การกระทำ</th><th>รายละเอียด</th></tr>${(d.audit||[]).map(a=>`<tr><td>${fdt(a.at)}</td><td>${a.action}</td><td><small>${String(a.detail||'').slice(0,90)}</small></td></tr>`).join('')||'<tr><td colspan="3">ยังไม่มีประวัติ</td></tr>'}</table></div>`}
-async function doRestore(f){if(!f||!confirm('กู้คืนจะแทนที่ข้อมูลทั้งหมดในระบบ ดำเนินการต่อ?'))return;try{const j=JSON.parse(await f.text());act(()=>api('restore','POST',j),'กู้คืนข้อมูลแล้ว')}catch(e){toast('ไฟล์ไม่ถูกต้อง',true)}}
-function autoSched(o){const d=S.d,P=d.periods.filter(p=>!+p.is_break).map(p=>p.id),days=[1,2,3,4,5],L=d.assignments||[];
- const base=o.keep?d.entries.map(e=>({...e})):[],need=[];
- for(const a of L){const have=base.filter(e=>e.class_id==a.class_id&&e.subject_id==a.subject_id).length;for(let i=have;i<(a.periods||0);i++)need.push(a)}
- const load={};need.forEach(a=>load[a.teacher_id]=(load[a.teacher_id]||0)+1);let best=null;
- for(let it=0;it<150;it++){
-  const T={},C={},R={},TD={},CS={},rows=base.map(e=>({...e})),un=[];let sc=0;
-  const mark=e=>{const k=(x,y)=>x+'|'+e.day+(y?'|'+e.period:'');T[k(e.teacher_id,1)]=1;if(e.teacher2_id)T[k(e.teacher2_id,1)]=1;C[k(e.class_id,1)]=1;if(e.room_id)R[k(e.room_id,1)]=1;TD[k(e.teacher_id)]=(TD[k(e.teacher_id)]||0)+1;const cs=e.class_id+'|'+e.subject_id+'|'+e.day;CS[cs]=(CS[cs]||0)+1};
-  rows.forEach(mark);
-  const order=need.map(a=>({a,k:(load[a.teacher_id]||0)+Math.random()*6+(a.room_id?4:0)})).sort((x,y)=>y.k-x.k).map(x=>x.a);
-  for(const a of order){const cd=by(d.subjects,a.subject_id)?.code||'';let pick=null,ps=-1e9;
-   for(const day of days)for(let i=0;i<P.length;i++){const p=P[i];
-    if(T[a.teacher_id+'|'+day+'|'+p]||(a.teacher2_id&&T[a.teacher2_id+'|'+day+'|'+p])||C[a.class_id+'|'+day+'|'+p]||(a.room_id&&R[a.room_id+'|'+day+'|'+p])||(TD[a.teacher_id+'|'+day]||0)>=o.tmax)continue;
-    let s=Math.random()*5-(TD[a.teacher_id+'|'+day]||0)*1.5;
-    if(o.spread)s-=(CS[a.class_id+'|'+a.subject_id+'|'+day]||0)*50;
-    if(o.core&&cd&&'ทคว'.includes(cd))s+=i<4?8:-8;
-    if(o.light&&cd&&'พศง'.includes(cd))s+=i>=4?8:-8;
-    if(s>ps){ps=s;pick={day,p}}}
-   if(!pick){un.push(a);continue}
-   const e={id:null,class_id:a.class_id,subject_id:a.subject_id,teacher_id:a.teacher_id,teacher2_id:a.teacher2_id||null,room_id:a.room_id||null,day:pick.day,period:pick.p};rows.push(e);mark(e);sc+=ps}
-  if(!best||un.length<best.un.length||(un.length==best.un.length&&sc>best.sc))best={rows,un,sc,T,C};
-  if(!un.length&&!o.spread&&!o.core&&!o.light)break}
- const rep=[],gu={};best.un.forEach(a=>{const k=a.class_id+'|'+a.subject_id;(gu[k]=gu[k]||{a,n:0}).n++});
- for(const {a,n} of Object.values(gu).slice(0,8)){let cf=0,tf=0;for(const day of days)for(const p of P)if(!best.C[a.class_id+'|'+day+'|'+p]){cf++;if(!best.T[a.teacher_id+'|'+day+'|'+p])tf++}
-  rep.push([`${by(d.classes,a.class_id)?.name} · ${by(d.subjects,a.subject_id)?.name} ขาด ${n} คาบ — ${!cf?'ชั้นนี้เต็มทุกคาบแล้ว':!tf?'ครู'+(by(d.teachers,a.teacher_id)?.name||'')+'ไม่ว่างในคาบที่ชั้นนี้ว่าง':'ติดเงื่อนไข ลองปิดบางข้อหรือเพิ่มจำนวนคาบสูงสุดต่อวันของครู'}`,1])}
- const cs={};let v=0;best.rows.forEach(e=>{const k=e.class_id+'|'+e.subject_id+'|'+e.day;cs[k]=(cs[k]||0)+1;if(cs[k]>1)v++});
- if(o.spread&&v)rep.push([`วิชาซ้ำวันเดียวกัน ${v} ครั้ง (ที่ว่างไม่พอจึงจำเป็นต้องซ้ำ)`,1]);
- if(!best.un.length)rep.push(['จัดครบทุกรายการ ไม่มีครู ห้อง หรือชั้นชนคาบ',0]);
- return{rows:best.rows,un:best.un,placed:best.rows.length-base.length,rep}}
-function asgH(){const d=S.d,L=d.assignments||[],on=canEdit(),sl=(l,v,k,ph)=>`<select data-ak="${k}" ${on?'':'disabled'}><option value="">${ph}</option>${opts(l,v)}</select>`;
- const row=a=>`<tr data-as="${a.id||''}">${[[d.classes,'class_id','ชั้น'],[d.subjects,'subject_id','วิชา'],[d.teachers,'teacher_id','ครู'],[d.teachers,'teacher2_id','ครูคนที่ 2'],[d.rooms,'room_id','ห้อง (ถ้ามี)']].map(x=>`<td>${sl(x[0],a[x[1]],x[1],x[2])}</td>`).join('')}<td><input data-ak="periods" type="number" min="1" value="${a.periods||''}" style="width:70px" ${on?'':'disabled'}></td><td>${on?(a.id?`<button class="btn dng" data-act="asgdel" data-id="${a.id}">ลบ</button>`:'<button class="btn pri" data-act="asgadd">เพิ่ม</button>'):''}</td></tr>`;
- return `<div class="bar"><button class="btn gold" data-act="autoopen">จัดตารางอัตโนมัติ</button><button class="btn" data-act="asgimp">นำเข้าจากตารางปัจจุบัน</button></div><table class="t"><tr><th>ชั้น</th><th>วิชา</th><th>ครู</th><th>ครูคนที่ 2</th><th>ห้อง</th><th>คาบ/สัปดาห์</th><th></th></tr>${L.map(row).join('')}${on?row({}):''}</table><p class="sub">กำหนดว่าชั้นไหนเรียนวิชาอะไร ใครสอน กี่คาบ แล้วระบบจะนำไปจัดตารางให้</p>`}
-function readAs(tr){const b={id:tr.dataset.as||undefined};tr.querySelectorAll('[data-ak]').forEach(i=>b[i.dataset.ak]=i.value?+i.value:null);return b}
-function autoModal(){if(!(S.d.assignments||[]).length)return modal('<h3>จัดตารางอัตโนมัติ</h3><p class="sub" style="margin:0">ต้องกำหนด “การมอบหมายสอน” (ชั้น · วิชา · ครู · คาบ) ก่อน</p><div class="row"><button class="btn gold" data-act="asgimp">นำเข้าจากตารางปัจจุบัน</button><button class="btn" data-act="agoto">ไปกรอกเอง</button><button class="btn" data-act="close">ปิด</button></div>');
- modal(`<h3>จัดตารางอัตโนมัติ</h3><p class="sub" style="margin:0">${S.d.assignments.length} รายการมอบหมาย · แสดงตัวอย่างก่อน ยังไม่บันทึกจนกว่าจะยืนยัน</p><label>รูปแบบ<select id="ao-m"><option value="1">คงคาบที่จัดไว้ เติมเฉพาะช่องว่าง</option><option value="0">จัดใหม่ทั้งหมด (คาบนอกรายการมอบหมายจะหายไป)</option></select></label><label><span><input type="checkbox" id="ao-s" checked> วิชาเดียวกันไม่ซ้ำวันเดียวกัน</span></label><label><span><input type="checkbox" id="ao-c" checked> วิชาหลัก (ท ค ว) ไว้ช่วงเช้า</span></label><label><span><input type="checkbox" id="ao-l"> วิชาพละ ศิลปะ การงาน (พ ศ ง) ไว้ช่วงบ่าย</span></label><label>ครูสอนไม่เกินกี่คาบต่อวัน<input id="ao-t" type="number" min="1" value="6"></label><div class="row"><button class="btn pri" data-act="autorun">ประมวลผลตัวอย่าง</button><button class="btn" data-act="close">ปิด</button></div>`)}
-const AX={
- autoopen:()=>autoModal(),agoto:()=>{modal('');S.view='data';S.tab='assignments';render()},
- autorun:()=>{const r=autoSched({keep:$('#ao-m').value=='1',spread:$('#ao-s').checked,core:$('#ao-c').checked,light:$('#ao-l').checked,tmax:+$('#ao-t').value||6});S.auto=r;const m=r.un.length;
-  modal(`<h3>ผลตัวอย่าง</h3><div class="stats" style="margin:0"><div class="stat" style="--c:#12a594"><b>${r.placed}</b><span>คาบที่จัดเพิ่มได้</span></div><div class="stat" style="--c:${m?'#e5484d':'#12a594'}"><b>${m}</b><span>จัดไม่ได้</span></div></div>${r.rep.map(x=>`<div class="tag ${x[1]?'no':'ok'}" style="padding:8px">${x[0]}</div>`).join('')}<div class="row"><button class="btn pri" data-act="autoapply">ใช้ผลลัพธ์นี้</button><button class="btn" data-act="autoopen">ปรับเงื่อนไข</button><button class="btn" data-act="close">ยกเลิก</button></div>`)},
- autoapply:()=>{const r=S.auto;if(!r)return;modal('');snap();act(async()=>{await api('version','POST',{name:'ก่อนจัดอัตโนมัติ '+new Date().toISOString().slice(0,16).replace('T',' ')});await api('entries/replace','POST',{rows:r.rows})},'จัดตารางอัตโนมัติแล้ว (บันทึกฉบับก่อนหน้าไว้ในเมนูฉบับตาราง)')},
- asgadd:e=>{const b=readAs(e.closest('tr'));if(!(b.class_id&&b.subject_id&&b.teacher_id))return toast('เลือกชั้น วิชา และครูให้ครบ',true);if(!b.periods)b.periods=by(S.d.subjects,b.subject_id)?.periods||1;act(()=>api('crud/assignments','POST',b),'เพิ่มแล้ว')},
- asgdel:e=>{if(confirm('ลบรายการนี้?'))act(()=>api('crud/assignments/'+e.dataset.id,'DELETE'),'ลบแล้ว')},
- asgimp:()=>{const g={};S.d.entries.forEach(e=>{const k=[e.class_id,e.subject_id,e.teacher_id,e.teacher2_id||'',e.room_id||''].join('|');(g[k]=g[k]||{id:null,class_id:e.class_id,subject_id:e.subject_id,teacher_id:e.teacher_id,teacher2_id:e.teacher2_id||null,room_id:e.room_id||null,periods:0}).periods++});const rows=Object.values(g);if(!rows.length)return toast('ยังไม่มีตารางสอนให้นำเข้า',true);if(!confirm(`นำเข้า ${rows.length} รายการ (แทนที่รายการมอบหมายเดิมทั้งหมด)?`))return;modal('');act(()=>api('assignments/replace','POST',{rows}),'นำเข้าแล้ว')}};
-document.addEventListener('change',ev=>{const tr=ev.target.closest('tr[data-as]');if(!tr||!tr.dataset.as)return;const b=readAs(tr);if(b.class_id&&b.subject_id&&b.teacher_id)act(()=>api('crud/assignments','POST',b),'บันทึกแล้ว')});
-function vHelp(){const sec=(t,b,o)=>`<details class="man" ${o?'open':''}><summary>${t}</summary><div>${b}</div></details>`,li=a=>'<ul>'+a.map(x=>`<li>${x}</li>`).join('')+'</ul>',ol=a=>'<ol>'+a.map(x=>`<li>${x}</li>`).join('')+'</ol>';
- return `<div class="bar noprint" style="justify-content:space-between"><div><h1>คู่มือการใช้งาน</h1><p class="sub" style="margin:0">BR Smart Timetable สำหรับครูและฝ่ายวิชาการ</p></div><div class="row"><button class="btn" data-act="helpall">เปิด/ปิดทั้งหมด</button><button class="btn gold" data-act="print">พิมพ์คู่มือ</button></div></div><br>`+
- sec('เริ่มต้นใน 6 ขั้นตอน',ol(['<b>ตั้งปีการศึกษา</b> ที่ ข้อมูลพื้นฐาน → ปีการศึกษา แล้วกดบันทึก','<b>กรอกข้อมูลพื้นฐาน</b> ครู ชั้นเรียน รายวิชา (ใส่จำนวนคาบ/สัปดาห์) ห้องพิเศษ และคาบ/เวลา (ช่องพัก ให้ใส่ 1 ในคอลัมน์ “พัก”)','<b>จัดตาราง</b> ด้วยมือในหน้า จัดตารางสอน หรือให้ระบบจัดอัตโนมัติ','<b>ตรวจตาราง</b> กดปุ่ม “ตรวจตาราง” ดูข้อขัดแย้งและคำเตือนจำนวนคาบ','<b>บันทึกฉบับ</b> ที่ ฉบับตาราง/สำรอง แล้วเลื่อนสถานะเป็น เผยแพร่','<b>พิมพ์</b> ที่ พิมพ์ตารางสอน (รายครู รายชั้น รายห้อง หรือทุกคน)']),1)+
- sec('จัดตารางด้วยมือ',li(['เลือกโหมด รายชั้นเรียน / รายครู / รายห้อง ที่แถบด้านบน (การจัดวางทำได้ในโหมดรายชั้นเรียน)','<b>คอมพิวเตอร์:</b> ลากชื่อวิชาจากแถบวิชาไปวางในช่องว่าง ระหว่างลากจะเห็น <b>เงาจาง</b> ของวิชาที่ชั้นอื่นใช้คาบนั้นอยู่ ช่องสีเขียว = วางได้, สีเหลือง = ครูวิชานี้ติดสอนทุกคน, สีแดงลายเฉียง = ครูหรือห้องชน วางไม่ได้','<b>มือถือ/แท็บเล็ต:</b> แตะช่องว่าง แล้วเลือกวิชา ครู ห้อง (ครูหรือห้องที่ติดคาบนั้นจะเลือกไม่ได้ และบอกว่าติดชั้นไหน)','ตัวเลขบนชิปวิชา เช่น 3/4 คือจัดแล้ว 3 จาก 4 คาบ','แตะคาบที่วางแล้วเพื่อแก้ไข คัดลอก หรือลบ — หลัง “คัดลอก” ให้แตะช่องว่างเพื่อวาง','ย้ายคาบ: ลากคาบเดิมไปช่องว่างใหม่ (คอมพิวเตอร์)','ย้อนกลับ/ทำซ้ำ: ปุ่ม Undo/Redo หรือ Ctrl+Z / Ctrl+Shift+Z','ช่อง “ค้นหา” ทำให้วิชา/ครู/ห้องที่ไม่ตรงจางลง']))+
- sec('จัดตารางอัตโนมัติ',ol(['ไปที่ ข้อมูลพื้นฐาน → <b>การมอบหมายสอน</b> เพิ่มรายการ ชั้น · วิชา · ครู · (ห้อง) · คาบ/สัปดาห์ หรือกด “นำเข้าจากตารางปัจจุบัน” ถ้าเคยจัดไว้แล้ว','ไปที่เมนู <b>จัดตารางอัตโนมัติ</b> (แถบด้านข้าง) เลือกรูปแบบ (คงคาบเดิม/จัดใหม่ทั้งหมด) และเงื่อนไข','กด “ประมวลผลตัวอย่าง” อ่านสรุปว่าจัดได้กี่คาบ และรายการที่จัดไม่ได้พร้อมเหตุผล','พอใจแล้วกด “ใช้ผลลัพธ์นี้” ระบบเก็บฉบับก่อนหน้าไว้ให้กู้คืน หรือกด Undo ได้','ถ้ายังไม่ลงตัว ให้ปรับเงื่อนไข ลองใหม่ หรือแก้ส่วนที่เหลือด้วยมือ'])+'<p class="hint">เงื่อนไข ท ค ว / พ ศ ง อ้างอิงจาก “รหัสวิชา” ของแต่ละวิชา ช่วงเช้า = 4 คาบแรกของวัน</p>')+
- sec('สอนแทน',li(['เลือกวันที่ ระบบแสดงคาบสอนของวันนั้น กด “จัดสอนแทน” แล้วเลือกครูที่ว่างในคาบนั้นพร้อมใส่เหตุผล','ตารางประจำไม่เปลี่ยน เพราะเก็บเป็นรายการแยก','ยกเลิกได้จากตาราง “ประวัติสอนแทน” ประวัติยังคงอยู่']))+
- sec('พิมพ์ตารางสอน',li(['เลือกประเภท (รายครู รายชั้น รายห้อง ทุกคน หรือรายงานฝ่ายวิชาการ) แล้วกด “พิมพ์ / บันทึก PDF”','กระดาษ A4 แนวนอน ขึ้นหน้าใหม่ทุกรายการ แนะนำใช้ Chrome หรือ Edge บนคอมพิวเตอร์','ในหน้าต่างพิมพ์ เลือกปลายทาง “บันทึกเป็น PDF” ถ้าต้องการไฟล์']))+
- sec('ฉบับตารางและการสำรองข้อมูล',li(['<b>ฉบับตาราง:</b> บันทึกภาพรวมตารางปัจจุบันไว้เป็นฉบับ ไล่สถานะ ฉบับร่าง → ตรวจแล้ว → เผยแพร่ → เก่า (ฉบับที่ยังมีข้อขัดแย้งจะเลื่อนเป็น “ตรวจแล้ว” ไม่ได้)','“กู้คืนเป็นตารางปัจจุบัน” จะแทนที่ตารางตอนนี้ด้วยฉบับที่เลือก','<b>ไฟล์สำรอง:</b> ดาวน์โหลดเป็นประจำ (เช่นก่อนเปิดเทอม หลังแก้ใหญ่) และก่อนกู้คืนทุกครั้งให้สำรองของปัจจุบันไว้ก่อน','การกู้คืนจากไฟล์สำรองจะ <b>แทนที่ข้อมูลทั้งระบบ</b>']))+
- sec('ข้อมูลพื้นฐาน',li(['แก้ไขในช่องแล้วระบบบันทึกอัตโนมัติ แถวสุดท้ายคือแถวเพิ่มใหม่ ต้องกด “เพิ่ม”','ครู วิชา ชั้น ห้อง ที่ถูกใช้ในตารางสอนแล้วจะลบไม่ได้ ต้องเอาออกจากตารางก่อน','ภาระงานครู (คาบ) ใช้เปรียบเทียบกับจำนวนคาบที่จัดจริงในแดชบอร์ดและรายงาน']))+
- sec('แก้ปัญหาที่พบบ่อย',li(['<b>วางคาบไม่ได้:</b> ครู ห้อง หรือชั้นมีคาบซ้อน หรือเป็นช่วงพัก ดูข้อความแจ้งที่ขึ้นด้านล่างจอ','<b>จัดอัตโนมัติได้ไม่ครบ:</b> ภาระครูแน่น หรือเงื่อนไขเข้มเกิน ลองปิดบางข้อ หรือเพิ่ม “ไม่เกินกี่คาบต่อวัน”','<b>หน้าเว็บยังเป็นแบบเก่าหลังอัปเดต:</b> กด Ctrl+Shift+R','<b>ขึ้น “เซิร์ฟเวอร์ผิดพลาด” ตอนบันทึกการมอบหมายสอน:</b> ยังไม่ได้สร้างตาราง assignments ในฐานข้อมูล แจ้งผู้ดูแลระบบ','<b>เปิดจากเครื่องอื่นไม่เห็นข้อมูลล่าสุด:</b> รีเฟรชหน้า ข้อมูลเก็บที่เซิร์ฟเวอร์กลางเดียวกันทุกเครื่อง']))+
- sec('ความปลอดภัย',li(['ตอนนี้ระบบไม่มีล็อกอิน ใครมีลิงก์ก็แก้ข้อมูลได้ ควรเปิด Cloudflare Access ครอบโดเมนไว้','อย่าแชร์ลิงก์ในที่สาธารณะ และดาวน์โหลดไฟล์สำรองเก็บไว้เสมอ']))}
-AX.helpall=()=>{const a=[...document.querySelectorAll('details.man')],o=a.some(x=>!x.open);a.forEach(x=>x.open=o)};
-function vAuto(){const L=S.d.assignments||[],o=S.ao||{keep:1,spread:1,core:1,light:0,tmax:6},r=S.auto,ck=(id,k,t)=>`<label style="display:flex;gap:8px;align-items:center;color:var(--tx)"><input type="checkbox" id="${id}" ${o[k]?'checked':''}> ${t}</label>`,
- head='<h1>จัดตารางอัตโนมัติ</h1><p class="sub">ตั้งเงื่อนไข ดูตัวอย่างก่อน ยังไม่บันทึกจนกว่าจะกดยืนยัน</p>';
- if(!L.length)return head+'<div class="card"><p style="margin-top:0">ต้องกำหนด “การมอบหมายสอน” (ชั้น · วิชา · ครู · คาบ) ก่อน</p><div class="row"><button class="btn gold" data-act="asgimp">นำเข้าจากตารางปัจจุบัน</button><button class="btn" data-act="agoto">ไปกรอกเอง</button></div></div>';
- const m=r?r.un.length:0;
- return head+`<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;align-items:start"><div class="card" style="display:grid;gap:12px"><h2 style="margin:0">เงื่อนไข</h2><div class="row" style="align-items:center;color:var(--mut)">${L.length} รายการมอบหมายสอน <button class="btn" data-act="agoto">แก้ไขรายการ</button></div><label style="display:grid;gap:4px;color:var(--mut)">รูปแบบ<select id="ao-m"><option value="1" ${o.keep?'selected':''}>คงคาบที่จัดไว้ เติมเฉพาะช่องว่าง</option><option value="0" ${o.keep?'':'selected'}>จัดใหม่ทั้งหมด (คาบนอกรายการมอบหมายจะหายไป)</option></select></label>${ck('ao-s','spread','วิชาเดียวกันไม่ซ้ำวันเดียวกัน')}${ck('ao-c','core','วิชาหลัก (ท ค ว) ไว้ช่วงเช้า')}${ck('ao-l','light','วิชา พ ศ ง ไว้ช่วงบ่าย')}<label style="display:grid;gap:4px;color:var(--mut)">ครูสอนไม่เกินกี่คาบต่อวัน<input id="ao-t" type="number" min="1" value="${o.tmax}"></label><button class="btn pri" data-act="autorun" ${canEdit()?'':'disabled'}>ประมวลผลตัวอย่าง</button></div><div class="card" style="display:grid;gap:10px"><h2 style="margin:0">ผลตัวอย่าง</h2>${r?`<div class="stats" style="margin:0"><div class="stat" style="--c:#12a594"><b>${r.placed}</b><span>คาบที่จัดเพิ่มได้</span></div><div class="stat" style="--c:${m?'#e5484d':'#12a594'}"><b>${m}</b><span>จัดไม่ได้</span></div></div>${r.rep.map(x=>`<div class="tag ${x[1]?'no':'ok'}" style="padding:8px">${x[0]}</div>`).join('')}<button class="btn gold" data-act="autoapply">ใช้ผลลัพธ์นี้ (เก็บฉบับเดิมไว้ให้กู้คืน)</button>`:'<p class="sub" style="margin:0">ตั้งเงื่อนไขทางซ้าย แล้วกด “ประมวลผลตัวอย่าง”</p>'}</div></div>`}
-AX.autoopen=()=>{modal('');S.view='auto';render()};
-AX.autorun=()=>{S.ao={keep:$('#ao-m').value=='1'?1:0,spread:$('#ao-s').checked,core:$('#ao-c').checked,light:$('#ao-l').checked,tmax:+$('#ao-t').value||6};S.auto=autoSched(S.ao);render()};
-AX.autoapply=()=>{const r=S.auto;if(!r)return;S.auto=null;snap();act(async()=>{await api('version','POST',{name:'ก่อนจัดอัตโนมัติ '+new Date().toISOString().slice(0,16).replace('T',' ')});await api('entries/replace','POST',{rows:r.rows})},'จัดตารางอัตโนมัติแล้ว (ฉบับก่อนหน้าอยู่ในเมนูฉบับตาราง/สำรอง)')};
-const A={
- ...AX, nav:e=>{S.view=e.dataset.v;render()},tab:e=>{S.tab=e.dataset.v;render()},logout:()=>{S.entered=false;render()},print:()=>print(),
- close:()=>modal(''),maskclose:(e,ev)=>{if(ev.target==e)modal('')},
- check:()=>{const c=conflicts();modal(`<h3>ผลตรวจตาราง</h3>${c.length?c.map(x=>`<div class="tag no" style="padding:8px">${x.msg}</div>`).join(''):'<div class="tag ok" style="padding:10px">ไม่พบข้อขัดแย้ง ✓</div>'}${S.d.classes.flatMap(c=>S.d.subjects.map(sj=>[c,sj,S.d.entries.filter(e=>e.class_id==c.id&&e.subject_id==sj.id).length])).filter(x=>x[2]&&x[1].periods&&x[2]!=x[1].periods).map(x=>`<div class="tag" style="padding:8px">คำเตือน: ${x[0].name} วิชา${x[1].name} จัด ${x[2]}/${x[1].periods} คาบ</div>`).join('')}${S.d.teachers.filter(t=>t.load&&S.d.entries.filter(e=>e.teacher_id==t.id||e.teacher2_id==t.id).length!=t.load).map(t=>`<div class="tag" style="padding:8px">คำเตือน: ภาระงาน ${t.name} จัด ${S.d.entries.filter(e=>e.teacher_id==t.id||e.teacher2_id==t.id).length}/${t.load} คาบ</div>`).join('')}<button class="btn" data-act="close">ปิด</button>`)},
- edit:e=>entryModal({...by(S.d.entries,e.dataset.id)}),
- saveE:()=>{const b={...S.ed,subject_id:$('#f1').value,teacher_id:$('#f2').value,teacher2_id:$('#f4').value||null,room_id:$('#f3').value||null};modal('');snap();S.clip=null;act(()=>api('entry','POST',b),'บันทึกคาบแล้ว')},
- delE:()=>{if(confirm('ลบคาบนี้?')){const id=S.ed.id;modal('');snap();act(()=>api('entry/'+id,'DELETE'),'ลบคาบแล้ว')}},
- subnew:e=>subModal(+e.dataset.id),
- enter:()=>{S.entered=true;render()},
- goto:e=>{if(e.dataset.t)S.tab=e.dataset.t;S.view=e.dataset.v;render()},
- printcur:()=>{S.pm=S.mode+'1';S.ps=S.sel;S.view='print';render()},
- undo:()=>{if(!S.un.length)return;S.re.push(JSON.stringify(S.d.entries));const r=JSON.parse(S.un.pop());act(()=>api('entries/replace','POST',{rows:r}),'ย้อนกลับแล้ว')},
- redo:()=>{if(!S.re.length)return;S.un.push(JSON.stringify(S.d.entries));const r=JSON.parse(S.re.pop());act(()=>api('entries/replace','POST',{rows:r}),'ทำซ้ำแล้ว')},
- copyE:()=>{S.clip={...S.ed};modal('');render();toast('คัดลอกแล้ว แตะช่องว่างเพื่อวาง')},noclip:()=>{S.clip=null;render()},
- vsave:()=>act(()=>api('version','POST',{name:$('#vn').value}),'บันทึกฉบับแล้ว'),
- vnext:e=>act(()=>api(`version/${e.dataset.id}/status`,'POST'),'เปลี่ยนสถานะแล้ว'),
- vrest:e=>{if(confirm('กู้คืนฉบับนี้เป็นตารางปัจจุบัน?')){snap();act(()=>api(`version/${e.dataset.id}/restore`,'POST'),'กู้คืนตารางแล้ว')}},
- vdel:e=>{if(confirm('ลบฉบับนี้?'))act(()=>api('version/'+e.dataset.id,'DELETE'),'ลบแล้ว')},
- nread:()=>act(()=>api('notif','POST')),
- backup:async()=>{try{const j=await api('backup'),a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(j)],{type:'application/json'}));a.download='br-timetable-backup-'+new Date().toISOString().slice(0,10)+'.json';a.click()}catch(x){toast(x.message,true)}},
- subsave:()=>{const b={date:S.sd,entry_id:S.se,sub_teacher_id:+$('#f1').value,reason:$('#f2').value};modal('');act(()=>api('sub','POST',b),'บันทึกสอนแทนแล้ว')},
- subcancel:e=>{if(confirm('ยกเลิกรายการสอนแทน?'))act(()=>api('sub/'+e.dataset.id,'DELETE'),'ยกเลิกแล้ว')},
- del:e=>{if(confirm('ลบรายการนี้?'))act(()=>api(`crud/${e.dataset.t}/${e.dataset.id}`,'DELETE'),'ลบแล้ว')},
- add:e=>saveRow(e.closest('tr')),
- saveset:()=>{const hr={};document.querySelectorAll('[data-hr]').forEach(x=>{const [c,i]=x.dataset.hr.split('.');(hr[c]=hr[c]||[null,null])[+i]=x.value?+x.value:null});act(()=>api('settings','POST',{year:$('#yr').value,term:$('#tm').value,school:$('#sc').value,office:$('#of').value,director:$('#dr').value,academic:$('#ac').value,showcredit:$('#scr').checked,homerooms:hr}),'บันทึกแล้ว')},
- pzoom:()=>{S.pz=S.pz=='full'?'fit':'full';render()},
- saveuser:()=>act(()=>api('users','POST',{username:$('#u1').value,name:$('#u2').value,password:$('#u3').value,role:$('#u4').value}),'บันทึกผู้ใช้แล้ว')
+// Rich Fallback Sample Data (for instant demo or offline preview)
+const SAMPLE_DATA = {
+  periods: [
+    {id:1,label:'1',start:'08:40',end:'09:30',is_break:0},
+    {id:2,label:'2',start:'09:30',end:'10:20',is_break:0},
+    {id:3,label:'พัก',start:'10:20',end:'10:40',is_break:1},
+    {id:4,label:'3',start:'10:40',end:'11:30',is_break:0},
+    {id:5,label:'4',start:'11:30',end:'12:20',is_break:0},
+    {id:6,label:'พักกลางวัน',start:'12:20',end:'13:10',is_break:1},
+    {id:7,label:'5',start:'13:10',end:'14:00',is_break:0},
+    {id:8,label:'6',start:'14:00',end:'14:50',is_break:0},
+    {id:9,label:'7',start:'14:50',end:'15:40',is_break:0}
+  ],
+  classes: [
+    {id:1,name:'อนุบาล 2'},{id:2,name:'อนุบาล 3'},{id:3,name:'ป.1'},
+    {id:4,name:'ป.2'},{id:5,name:'ป.3'},{id:6,name:'ป.4'},{id:7,name:'ป.5'},{id:8,name:'ป.6'}
+  ],
+  rooms: [
+    {id:1,name:'ห้องคอมพิวเตอร์'},{id:2,name:'ห้องวิทยาศาสตร์'}
+  ],
+  subjects: [
+    {id:1,code:'ท',name:'ภาษาไทย',periods:5},
+    {id:2,code:'ค',name:'คณิตศาสตร์',periods:4},
+    {id:3,code:'ว',name:'วิทยาศาสตร์และเทคโนโลยี',periods:3},
+    {id:4,code:'ส',name:'สังคมศึกษา',periods:2},
+    {id:5,code:'อ',name:'ภาษาอังกฤษ',periods:2},
+    {id:6,code:'พ',name:'สุขศึกษาและพลศึกษา',periods:1},
+    {id:7,code:'ศ',name:'ศิลปะ',periods:1},
+    {id:8,code:'ง',name:'การงานอาชีพ',periods:1},
+    {id:9,code:'คอม',name:'คอมพิวเตอร์',periods:1},
+    {id:10,code:'ปฐม',name:'กิจกรรมปฐมวัย',periods:20}
+  ],
+  teachers: [
+    {id:1,name:'นางเพชรรัตน์ หาญจวณิช',load:15},
+    {id:2,name:'นางสาววราภรณ์ สุขหยอม',load:25},
+    {id:3,name:'นายสิทธิกร ใจปา',load:23},
+    {id:4,name:'นางพิมพ์พิไล โปธิ',load:20},
+    {id:5,name:'นางสาววันวิสา ศิริลำปาง',load:23},
+    {id:6,name:'นางสาวเรไร จาเดือน',load:17},
+    {id:7,name:'นางสาวสายพิณ ตุ่นแก้ว',load:20},
+    {id:8,name:'นายเฉลิมพล จันทร์แดง',load:17}
+  ],
+  entries: [
+    {id:1,class_id:3,subject_id:4,teacher_id:5,room_id:null,day:1,period:1},
+    {id:2,class_id:3,subject_id:1,teacher_id:6,room_id:null,day:1,period:2},
+    {id:3,class_id:3,subject_id:2,teacher_id:6,room_id:null,day:1,period:4},
+    {id:4,class_id:3,subject_id:3,teacher_id:6,room_id:null,day:2,period:1},
+    {id:5,class_id:3,subject_id:2,teacher_id:6,room_id:null,day:2,period:2},
+    {id:6,class_id:3,subject_id:1,teacher_id:6,room_id:null,day:2,period:4},
+    {id:7,class_id:3,subject_id:6,teacher_id:6,room_id:null,day:2,period:5},
+    {id:8,class_id:3,subject_id:2,teacher_id:6,room_id:null,day:3,period:1},
+    {id:9,class_id:3,subject_id:4,teacher_id:5,room_id:null,day:3,period:2},
+    {id:10,class_id:3,subject_id:7,teacher_id:6,room_id:null,day:3,period:4},
+    {id:11,class_id:3,subject_id:1,teacher_id:6,room_id:null,day:3,period:5},
+    {id:12,class_id:3,subject_id:5,teacher_id:2,room_id:null,day:4,period:1},
+    {id:13,class_id:3,subject_id:3,teacher_id:6,room_id:null,day:4,period:2},
+    {id:14,class_id:3,subject_id:1,teacher_id:6,room_id:null,day:4,period:4},
+    {id:15,class_id:3,subject_id:2,teacher_id:6,room_id:null,day:4,period:5},
+    {id:16,class_id:3,subject_id:3,teacher_id:6,room_id:null,day:5,period:1},
+    {id:17,class_id:3,subject_id:9,teacher_id:8,room_id:1,day:5,period:2},
+    {id:18,class_id:3,subject_id:8,teacher_id:6,room_id:null,day:5,period:4},
+    {id:19,class_id:3,subject_id:1,teacher_id:6,room_id:null,day:5,period:5},
+    {id:20,class_id:3,subject_id:5,teacher_id:2,room_id:null,day:5,period:7},
+    {id:21,class_id:4,subject_id:1,teacher_id:2,room_id:null,day:1,period:2},
+    {id:22,class_id:4,subject_id:4,teacher_id:5,room_id:null,day:1,period:4},
+    {id:23,class_id:4,subject_id:2,teacher_id:2,room_id:null,day:1,period:5},
+    {id:24,class_id:4,subject_id:5,teacher_id:2,room_id:null,day:1,period:7},
+    {id:25,class_id:4,subject_id:9,teacher_id:8,room_id:1,day:2,period:1},
+    {id:26,class_id:4,subject_id:2,teacher_id:2,room_id:null,day:2,period:2},
+    {id:27,class_id:4,subject_id:1,teacher_id:2,room_id:null,day:2,period:4},
+    {id:28,class_id:4,subject_id:3,teacher_id:2,room_id:null,day:2,period:7},
+    {id:29,class_id:4,subject_id:5,teacher_id:2,room_id:null,day:3,period:1},
+    {id:30,class_id:4,subject_id:4,teacher_id:5,room_id:null,day:3,period:4},
+    {id:31,class_id:4,subject_id:2,teacher_id:2,room_id:null,day:3,period:5},
+    {id:32,class_id:4,subject_id:1,teacher_id:2,room_id:null,day:3,period:7},
+    {id:33,class_id:4,subject_id:8,teacher_id:6,room_id:null,day:4,period:1},
+    {id:34,class_id:4,subject_id:3,teacher_id:2,room_id:null,day:4,period:2},
+    {id:35,class_id:4,subject_id:2,teacher_id:2,room_id:null,day:4,period:4},
+    {id:36,class_id:4,subject_id:1,teacher_id:2,room_id:null,day:4,period:7},
+    {id:37,class_id:4,subject_id:1,teacher_id:2,room_id:null,day:5,period:1},
+    {id:38,class_id:4,subject_id:7,teacher_id:6,room_id:null,day:5,period:2},
+    {id:39,class_id:4,subject_id:6,teacher_id:2,room_id:null,day:5,period:4},
+    {id:40,class_id:4,subject_id:3,teacher_id:2,room_id:null,day:5,period:5}
+  ],
+  assignments: [],
+  subs: [],
+  versions: [
+    {id:1,name:'ฉบับเริ่มต้น 1/2569',status:'published',created:new Date().toISOString()}
+  ],
+  audit: [],
+  settings: {
+    year: '2569',
+    term: '1',
+    school: 'โรงเรียนบ้านไร่',
+    office: 'สพป.เชียงใหม่ เขต 5',
+    director: 'นายสมพงษ์ มั่นคง',
+    academic: 'นางสาวสายพิณ ตุ่นแก้ว',
+    showcredit: '1',
+    printtheme: 'academic'
+  }
 };
-function saveRow(tr){const b={id:tr.dataset.id||undefined};tr.querySelectorAll('input').forEach(i=>b[i.dataset.k]=i.type=='number'?+i.value:i.value);if(!(b.name||b.label))return toast('กรุณากรอกชื่อ',true);act(()=>api('crud/'+tr.dataset.t,'POST',b),'บันทึกแล้ว')}
-document.addEventListener('click',ev=>{const e=ev.target.closest('[data-act]');if(e){if(e.dataset.act=='logout')ev.preventDefault();return A[e.dataset.act]?.(e,ev)}
- const td=ev.target.closest('td.empty[data-d]');if(td&&canEdit()&&S.mode=='class')entryModal(S.clip?{...S.clip,id:0,class_id:S.sel,day:+td.dataset.d,period:+td.dataset.p}:{class_id:S.sel,day:+td.dataset.d,period:+td.dataset.p,subject_id:S.d.subjects[0]?.id})});
-document.addEventListener('change',ev=>{const t=ev.target,k=t.dataset.ch;
- if(t.dataset.co){const [m,f]=t.dataset.co.split('.'),o=getCO();o[m][f]=t.checked?1:0;S.d.settings.cellopts=JSON.stringify(o);render();api('settings','POST',{cellopts:o}).catch(e=>toast(e.message,true));return}
- if(k=='restore'){doRestore(t.files[0]);return}if(k){S[k=='sel'?(S.view=='print'?'ps':'sel'):k]=k=='mode'?t.value:k=='sd'||k=='pm'?t.value:+t.value;if(k=='mode')S.sel=null;if(k=='pm')S.ps=null;render();return}
- const tr=t.closest('tr[data-t]');if(tr&&tr.dataset.id)saveRow(tr)});
-document.addEventListener('submit',async ev=>{if(ev.target.id!='lf')return;ev.preventDefault();const f=ev.target;try{const r=await api('login','POST',{username:f.u.value.trim(),password:f.p.value});localStorage.setItem('brt',r.token);await load();render()}catch(e){toast(e.message,true)}});
-function ghostCtx(k,id){const d=S.d;if(k=='S')return{k,sid:+id,t:new Set(d.entries.filter(e=>e.subject_id==id).flatMap(e=>[e.teacher_id,e.teacher2_id].filter(Boolean))),r:null,ex:0};const e=by(d.entries,id);return e?{k,sid:e.subject_id,t:new Set([e.teacher_id,e.teacher2_id].filter(Boolean)),r:e.room_id,ex:e.id}:null}
-function paintGhosts(c){document.querySelectorAll('td.empty[data-d]').forEach(td=>{
- const es=S.d.entries.filter(e=>e.day==td.dataset.d&&e.period==td.dataset.p&&e.class_id!=S.sel&&e.id!=c.ex);
- const hit=e=>c.t.has(e.teacher_id)||(e.teacher2_id&&c.t.has(e.teacher2_id))||(c.r&&e.room_id==c.r),busy=new Set(es.flatMap(e=>[e.teacher_id,e.teacher2_id].filter(Boolean)));
- const bad=c.k=='E'&&es.some(hit),warn=c.k=='S'&&c.t.size>0&&[...c.t].every(t=>busy.has(t));
- td.classList.add(bad?'bad':warn?'warn':'ok');
- const rank=e=>hit(e)?0:e.subject_id==c.sid?1:2,so=[...es].sort((a,b)=>rank(a)-rank(b));
- td.insertAdjacentHTML('beforeend',so.slice(0,3).map(e=>{const sj=by(S.d.subjects,e.subject_id),tc={name:tnm(e)};return `<div class="ghost ${hit(e)?'hit':e.subject_id==c.sid?'same':''}" style="--h:${col(sj?.name)}" title="${tc?.name||''}">${by(S.d.classes,e.class_id)?.name} · ${sj?.name}</div>`}).join('')+(so.length>3?`<div class="ghost more">+${so.length-3} ชั้นอื่น</div>`:''))})}
-function clearGhosts(){S.drag=null;document.querySelectorAll('.ghost').forEach(x=>x.remove());document.querySelectorAll('td.ok,td.warn,td.bad,td.over').forEach(x=>x.classList.remove('ok','warn','bad','over'));document.querySelector('.legend')?.remove()}
-document.addEventListener('dragstart',ev=>{const t=ev.target.closest('[data-drag]');if(!t)return;ev.dataTransfer.setData('text/plain',t.dataset.drag);ev.dataTransfer.effectAllowed='move';const [k,id]=t.dataset.drag.split(':'),c=ghostCtx(k,+id);if(!c)return;S.drag=c;
- setTimeout(()=>{paintGhosts(c);document.body.insertAdjacentHTML('beforeend','<div class="legend"><span><i style="background:#fff;border:1px dashed #8a93b5"></i>เงา = ชั้นอื่นใช้คาบนี้อยู่</span><span><i style="background:#f3a6b0"></i>ครู/ห้องชน วางไม่ได้</span><span><i style="background:#ffd666"></i>ครูวิชานี้ติดทุกคน</span></div>')},0)});
-document.addEventListener('dragover',ev=>{const td=ev.target.closest('td.empty[data-d]');document.querySelectorAll('td.over').forEach(x=>x.classList.remove('over'));if(td){if(!(S.drag?.k=='E'&&td.classList.contains('bad'))){ev.preventDefault();ev.dataTransfer.dropEffect='move'}td.classList.add('over')}});
-document.addEventListener('drop',ev=>{const td=ev.target.closest('td.empty[data-d]');if(!td)return;ev.preventDefault();const bad=td.classList.contains('bad')&&S.drag?.k=='E',[k,id]=ev.dataTransfer.getData('text/plain').split(':'),day=+td.dataset.d,period=+td.dataset.p;clearGhosts();
- if(bad)return toast('ครูหรือห้องนี้ติดคาบอื่นในช่วงเวลานั้น วางไม่ได้',true);
- if(k=='S')entryModal({class_id:S.sel,day,period,subject_id:+id});else if(k=='E'){const e=by(S.d.entries,id);snap();act(()=>api('entry','POST',{...e,day,period}),'ย้ายคาบแล้ว')}});
-document.addEventListener('dragend',clearGhosts);
-document.addEventListener('input',ev=>{if(ev.target.id!='q')return;const v=ev.target.value.trim();document.querySelectorAll('.blk,.chip').forEach(b=>b.style.opacity=!v||b.textContent.includes(v)?1:.18)});
-document.addEventListener('keydown',ev=>{if(ev.key=='Escape')modal('')});
-document.addEventListener('keydown',ev=>{if((ev.ctrlKey||ev.metaKey)&&ev.key=='z'&&S.view=='tt'&&!/INPUT|SELECT|TEXTAREA/.test(ev.target.tagName)){ev.preventDefault();(ev.shiftKey?A.redo:A.undo)()}});
-(async()=>{render();try{await load()}catch(e){toast(e.message,true)}render()})();
-</script></body></html>
+
+// Global App State
+const S = {
+  view: 'dash',
+  mode: 'class',
+  sel: null,
+  pm: 'class1',
+  ps: null,
+  pz: 'fit',
+  tab: 'teachers',
+  sd: new Date().toISOString().slice(0, 10),
+  printTheme: localStorage.getItem('brt_printtheme') || 'academic',
+  d: JSON.parse(JSON.stringify(SAMPLE_DATA)),
+  user: { name: 'ผู้ดูแลระบบ', role: 'admin' },
+  entered: false,
+  un: [],
+  re: [],
+  clip: null
+};
+
+const by = (a, id) => a.find(x => x.id == id);
+const col = s => {
+  let h = 0;
+  for (const c of String(s || '')) h = (h * 37 + c.charCodeAt(0)) % 360;
+  return h;
+};
+const canEdit = () => S.user && ['admin', 'academic'].includes(S.user.role);
+const opts = (l, s) => l.map(x => `<option value="${x.id}" ${x.id == s ? 'selected' : ''}>${x.name}</option>`).join('');
+
+function toast(m, bad) {
+  const t = document.createElement('div');
+  t.className = 'toast' + (bad ? ' bad' : '');
+  t.innerHTML = `${bad ? '⚠️' : '✓'} <span>${m}</span>`;
+  document.body.append(t);
+  setTimeout(() => t.remove(), 3400);
+}
+
+async function api(p, m = 'GET', b) {
+  const t = localStorage.getItem('brt');
+  const r = await fetch('/api/' + p, {
+    method: m,
+    headers: {
+      'Content-Type': 'application/json',
+      ...(t ? { Authorization: 'Bearer ' + t } : {})
+    },
+    body: b ? JSON.stringify(b) : undefined
+  });
+  const j = await r.json().catch(() => ({}));
+  if (r.status == 401 && p != 'login') {
+    localStorage.removeItem('brt');
+    S.user = null;
+    render();
+  }
+  if (!r.ok) throw new Error(j.error || 'เกิดข้อผิดพลาด');
+  return j;
+}
+
+async function load() {
+  try {
+    const d = await api('data');
+    if (d && d.teachers) {
+      S.d = d;
+      S.user = d.user || S.user;
+      if (d.settings && d.settings.printtheme) {
+        S.printTheme = d.settings.printtheme;
+        localStorage.setItem('brt_printtheme', d.settings.printtheme);
+      }
+    }
+  } catch (e) {
+    console.warn('API unreachable, using active local dataset:', e.message);
+  }
+}
+
+async function act(fn, msg) {
+  try {
+    await fn();
+    await load();
+    render();
+    if (msg) toast(msg);
+  } catch (e) {
+    toast(e.message == 'Failed to fetch' ? 'เชื่อมต่อเซิร์ฟเวอร์ไม่ได้ · ข้อมูลบันทึกในเครื่อง' : e.message, true);
+  }
+}
+
+const modal = h => {
+  $('#modal').innerHTML = h ? `<div class="mask" data-act="maskclose"><div class="modal">${h}</div></div>` : '';
+};
+const term = () => `ปีการศึกษา ${S.d.settings.year || '2569'} ภาคเรียนที่ ${S.d.settings.term || '1'}`;
+
+const IC = {
+  home: 'M3 11l9-8 9 8M5 10v10h14V10',
+  grid: 'M3 4h18v16H3zM3 10h18M9 4v16',
+  swap: 'M7 7h13l-3-3M17 17H4l3 3',
+  print: 'M7 8V3h10v5M7 17H4v-6h16v6h-3M7 14h10v7H7z',
+  db: 'M4 6c0-1.7 3.6-3 8-3s8 1.3 8 3-3.6 3-8 3-8-1.3-8-3zM4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6',
+  save: 'M5 3h11l3 3v15H5zM8 3v5h7V3M8 21v-7h8v7',
+  book: 'M4 4h12a3 3 0 013 3v13H7a3 3 0 01-3-3zM4 17a3 3 0 013-3h12',
+  spark: 'M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z'
+};
+
+const NAV = [
+  ['ภาพรวม', [['dash', 'แดชบอร์ด', 'สถิติและข้อมูลภาพรวม', 'home']]],
+  ['จัดตาราง', [
+    ['tt', 'จัดตารางสอน', 'ลากวางและตรวจคาบชน', 'grid'],
+    ['sub', 'สอนแทน', 'มอบหมายครูแทนรายวัน', 'swap'],
+    ['auto', 'จัดตารางอัตโนมัติ', 'ระบบช่วยจัดตารางอัจฉริยะ', 'spark']
+  ]],
+  ['เอกสาร & สั่งพิมพ์', [
+    ['print', 'พิมพ์ตารางสอน', 'เลือกธีมวิชาการ/พาสเทล', 'print']
+  ]],
+  ['ระบบ', [
+    ['data', 'ข้อมูลพื้นฐาน', 'ครู วิชา ชั้น ห้อง เวลา', 'db'],
+    ['ver', 'ฉบับตาราง/สำรอง', 'ฉบับร่าง สำรอง กู้คืน', 'save'],
+    ['help', 'คู่มือการใช้งาน', 'ขั้นตอนและเคล็ดลับ', 'book']
+  ]]
+];
+
+function welcomeH() {
+  const d = S.d, h = new Date().getHours();
+  const g = h < 12 ? 'สวัสดีตอนเช้า' : h < 17 ? 'สวัสดีตอนบ่าย' : 'สวัสดีตอนเย็น';
+  return `
+  <div class="wel">
+    <div class="wel-in">
+      <img src="logo.png" alt="โลโก้โรงเรียนบ้านไร่" class="wl">
+      <div style="font-size:14px;color:#64748b;font-weight:500">${g} · ยินดีต้อนรับสู่</div>
+      <h1>BR Smart Timetable</h1>
+      <p style="margin:0;color:#475569;font-size:15px;line-height:1.6">
+        ระบบจัดตารางสอนออนไลน์อัจฉริยะ<br>
+        <b>โรงเรียนบ้านไร่</b> สพป.เชียงใหม่ เขต 5
+      </p>
+      <div class="wf">
+        <span>✨ ลากวางจัดตาราง</span>
+        <span>🛡️ ตรวจคาบชนอัตโนมัติ</span>
+        <span>🎨 เลือกธีมพิมพ์ได้หลายสไตล์</span>
+        <span>📑 ส่งออก PDF / A4 พอดี 1 หน้า</span>
+        <span>🔄 จัดสอนแทนรายวัน</span>
+      </div>
+      <button class="btn gold big" data-act="enter" style="margin-top:6px">
+        🚀 เข้าสู่ระบบจัดตารางสอน
+      </button>
+      <div class="wn">
+        <b>${d.teachers.length}</b> ครู · <b>${d.classes.length}</b> ชั้นเรียน · <b>${d.entries.length}</b> คาบที่จัดแล้ว
+      </div>
+      <small style="color:#94a3b8;font-size:12.5px">
+        ${term()}<br>พัฒนาโดย ครูเฉลิมพล จันทร์แดง · โรงเรียนบ้านไร่
+      </small>
+    </div>
+  </div>`;
+}
+
+function render() {
+  if (!S.entered) {
+    $('#app').innerHTML = welcomeH();
+    return;
+  }
+  const cf = conflicts().length;
+  const un = (S.d.notifs || []).filter(x => !x.seen).length;
+  const bd = {
+    dash: un ? `<b class="badge n">${un}</b>` : '',
+    tt: cf ? `<b class="badge">${cf}</b>` : ''
+  };
+
+  const V = {
+    dash: vDash,
+    tt: vTT,
+    print: vPrint,
+    sub: vSub,
+    data: vData,
+    ver: vVer,
+    help: vHelp,
+    auto: vAuto
+  }[S.view]();
+
+  const sub = Object.keys(TN).filter(x => x != 'users').map(x =>
+    `<button class="${S.tab == x ? 'on' : ''}" data-act="tab" data-v="${x}">${TN[x]}</button>`
+  ).join('');
+
+  const nav = NAV.map(([g, it]) =>
+    `<div class="grp">${g}</div>` +
+    it.map(([k, t, s, i]) => `
+      <button class="nav ${S.view == k ? 'on' : ''}" data-act="nav" data-v="${k}">
+        <svg viewBox="0 0 24 24"><path d="${IC[i]}"/></svg>
+        <span><b>${t}</b><small>${s}</small></span>
+        ${bd[k] || ''}
+      </button>
+      ${k == 'data' && S.view == 'data' ? `<div class="sub2">${sub}</div>` : ''}
+    `).join('')
+  ).join('');
+
+  $('#app').innerHTML = `
+    <div class="shell">
+      <aside class="side">
+        <div class="brand">
+          <img src="logo.png" alt="">
+          <div>
+            <b>BR Timetable</b>
+            <small><span class="status-dot"></span> ออนไลน์พร้อมใช้</small>
+          </div>
+        </div>
+        <div class="term-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          <span>${term()}</span>
+        </div>
+        ${nav}
+        <div class="me">
+          <a href="#" data-act="logout">
+            <svg style="width:14px;height:14px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 17l-5-5m0 0l5-5m-5 5h12"/></svg>
+            หน้าต้อนรับ
+          </a>
+          <div class="credit">
+            ระบบจัดตารางสอนอัจฉริยะ v3.0<br>
+            โรงเรียนบ้านไร่ สพป.เชียงใหม่ เขต 5
+          </div>
+        </div>
+      </aside>
+      <main>
+        ${V}
+        <div class="cr noprint">
+          BR Smart Timetable · โรงเรียนบ้านไร่ สพป.เชียงใหม่ เขต 5 · พัฒนาโดย ครูเฉลิมพล จันทร์แดง
+        </div>
+      </main>
+    </div>
+  `;
+  afterRender();
+}
+
+const esc = x => String(x ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const SS = (k, d = '') => {
+  const v = (S.d.settings || {})[k];
+  return v == null || v === '' ? d : v;
+};
+const schoolInfo = () => ({
+  school: SS('school', 'โรงเรียนบ้านไร่'),
+  office: SS('office', 'สพป.เชียงใหม่ เขต 5'),
+  director: SS('director', 'นายสมพงษ์ มั่นคง'),
+  academic: SS('academic', 'นางสาวสายพิณ ตุ่นแก้ว'),
+  credit: SS('showcredit', '1') != '0',
+  printtheme: SS('printtheme', 'academic')
+});
+
+const CO0 = {
+  class: { subject: 1, code: 0, teacher: 1, class: 0, room: 0 },
+  teacher: { subject: 1, code: 0, teacher: 0, class: 1, room: 1 },
+  room: { subject: 1, code: 0, teacher: 1, class: 1, room: 0 }
+};
+const COL = [
+  ['subject', 'วิชา'],
+  ['code', 'รหัสวิชา'],
+  ['teacher', 'ชื่อครู'],
+  ['class', 'ชั้น'],
+  ['room', 'ห้อง']
+];
+const MODEN = { class: 'ตารางรายชั้น', teacher: 'ตารางรายครู', room: 'ตารางรายห้อง' };
+
+function getCO() {
+  let u = {};
+  try { u = JSON.parse(SS('cellopts', '{}')) || {}; } catch (e) {}
+  return Object.fromEntries(Object.keys(CO0).map(m => [m, { ...CO0[m], ...(u[m] || {}) }]));
+}
+
+function getHR() {
+  try { return JSON.parse(SS('homerooms', '{}')) || {}; } catch (e) { return {}; }
+}
+const hrNames = cid => (getHR()[cid] || []).filter(Boolean).map(i => by(S.d.teachers, i)?.name).filter(Boolean).join(' และ ');
+const hrOf = tid => S.d.classes.filter(c => (getHR()[c.id] || []).includes(+tid)).map(c => c.name).join(', ');
+
+function coPanel(modes) {
+  const o = getCO();
+  return modes.map(m => `
+    <div style="display:flex;gap:8px 14px;flex-wrap:wrap;align-items:center;padding:10px 0;border-bottom:1px dashed var(--line)">
+      <b>${MODEN[m]}</b>
+      <span style="color:var(--tx-mut)">แสดงในช่อง:</span>
+      ${COL.map(([k, t]) => `
+        <label style="display:inline-flex;align-items:center;gap:5px;cursor:pointer">
+          <input type="checkbox" data-co="${m}.${k}" ${o[m][k] ? 'checked' : ''} ${canEdit() ? '' : 'disabled'}> ${t}
+        </label>
+      `).join('')}
+    </div>
+  `).join('');
+}
+
+function fitBlocks() {
+  document.querySelectorAll('.blk').forEach(b => {
+    b.style.fontSize = '';
+    let fs = parseFloat(getComputedStyle(b).fontSize), g = 0;
+    while ((b.scrollHeight > b.clientHeight + 1 || b.scrollWidth > b.clientWidth + 1) && fs > 7 && g++ < 60) {
+      fs -= 0.5;
+      b.style.fontSize = fs + 'px';
+    }
+  });
+}
+
+function fitPaper() {
+  document.querySelectorAll('.pv').forEach(pv => {
+    const sh = pv.firstElementChild;
+    if (!sh) return;
+    sh.style.transform = '';
+    pv.style.height = '';
+    const full = S.pz == 'full', W = sh.offsetWidth, H = sh.offsetHeight;
+    const k = full ? 1 : Math.min(1, pv.clientWidth / W);
+    pv.classList.toggle('full', full);
+    sh.style.transformOrigin = '0 0';
+    if (k < 1) sh.style.transform = `scale(${k})`;
+    pv.style.height = Math.ceil(H * k) + 2 + 'px';
+  });
+}
+
+function afterRender() {
+  fitPaper();
+  fitBlocks();
+}
+addEventListener('resize', () => fitPaper());
+document.fonts?.addEventListener?.('loadingdone', () => { fitBlocks(); fitPaper(); });
+
+function conflicts() {
+  const o = [], seen = { t: {}, r: {}, c: {} }, nm = { t: 'ครูชนคาบ', r: 'ห้องชนคาบ', c: 'ชั้นเรียนซ้อนคาบ' };
+  for (const e of S.d.entries) {
+    for (const [k, v] of [['t', e.teacher_id], ['t', e.teacher2_id], ['r', e.room_id], ['c', e.class_id]]) {
+      if (!v) continue;
+      const key = v + '|' + e.day + '|' + e.period;
+      if (seen[k][key]) {
+        o.push({ e, msg: `${nm[k]} · ${by(S.d.classes, e.class_id)?.name} ${D[e.day - 1]} คาบ ${by(S.d.periods, e.period)?.label}` });
+      } else seen[k][key] = 1;
+    }
+  }
+  return o;
+}
+
+function vDash() {
+  const d = S.d, cf = conflicts();
+  const today = d.subs.filter(s => s.date == new Date().toISOString().slice(0, 10) && s.status == 'approved').length;
+  const cnt = t => d.entries.filter(e => e.teacher_id == t || e.teacher2_id == t).length;
+  const totalSlots = Math.max(1, d.classes.length * d.periods.filter(p => !+p.is_break).length * 5);
+  const fillPct = Math.round(d.entries.length / totalSlots * 100);
+
+  return `
+    <div class="page-head">
+      <div>
+        <h1>ภาพรวมตารางสอน</h1>
+        <p class="sub">${term()} · ข้อมูลสถิติและภาระงานครู</p>
+      </div>
+      <div class="row">
+        <button class="btn pri" data-act="goto" data-v="tt">📅 จัดตารางสอน</button>
+        <button class="btn gold" data-act="goto" data-v="print">🖨️ พิมพ์ตาราง</button>
+      </div>
+    </div>
+    
+    <div class="stats">
+      <div class="stat" style="--c:#3b82f6"><b>${d.teachers.length}</b><span>ครูผู้สอน</span></div>
+      <div class="stat" style="--c:#10b981"><b>${d.classes.length}</b><span>ชั้นเรียน</span></div>
+      <div class="stat" style="--c:#f59e0b"><b>${d.entries.length}</b><span>คาบที่จัดแล้ว</span></div>
+      <div class="stat" style="--c:#8b5cf6"><b>${fillPct}%</b><span>ความครบถ้วนของตาราง</span></div>
+      <div class="stat" style="--c:#ec4899"><b>${today}</b><span>สอนแทนวันนี้</span></div>
+      <div class="stat" style="--c:${cf.length ? '#ef4444' : '#10b981'}">
+        <b>${cf.length}</b><span>${cf.length ? 'ข้อขัดแย้งที่ต้องแก้' : 'ไม่พบข้อขัดแย้ง ✓'}</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="row" style="justify-content:space-between;margin-bottom:12px">
+        <h2 style="margin:0">ภาระงานครูรายสัปดาห์</h2>
+        <span class="tag ok">เป้าหมายรวม ${d.teachers.reduce((s,t)=>s+(t.load||0),0)} คาบ</span>
+      </div>
+      ${d.teachers.length ? `
+        <table class="t">
+          <tr><th>ชื่อ-สกุลครู</th><th>จัดแล้ว</th><th>เป้าหมาย</th><th>ความคืบหน้า</th><th>สถานะ</th></tr>
+          ${d.teachers.map(t => {
+            const c = cnt(t.id), p = t.load ? Math.min(100, Math.round(c / t.load * 100)) : 0;
+            const isOk = t.load && c == t.load;
+            const isHi = t.load && c > t.load;
+            return `
+              <tr>
+                <td><b>${t.name}</b></td>
+                <td><b style="color:${isHi?'var(--ruby)':isOk?'var(--mint)':'inherit'}">${c}</b> คาบ</td>
+                <td>${t.load || '-'} คาบ</td>
+                <td style="width:180px">
+                  <div class="bargr"><i class="${isOk ? 'ok' : isHi ? 'hi' : ''}" style="width:${p}%"></i></div>
+                </td>
+                <td>
+                  <span class="tag ${isOk ? 'ok' : isHi ? 'no' : ''}">
+                    ${isOk ? '✓ ครบตามเป้า' : isHi ? '⚠️ เกิน ' + (c - t.load) + ' คาบ' : 'ขาด ' + ((t.load || 0) - c) + ' คาบ'}
+                  </span>
+                </td>
+              </tr>
+            `;
+          }).join('')}
+        </table>
+      ` : '<p class="sub">ยังไม่มีข้อมูลครู ไปที่เมนู "ข้อมูลพื้นฐาน" เพื่อเพิ่มรายชื่อครู</p>'}
+    </div>
+    
+    ${setupCard()}
+    ${notifCard()}
+  `;
+}
+
+function vTT() {
+  const d = S.d, m = S.mode;
+  const pc = s => d.entries.filter(e => e.class_id == S.sel && e.subject_id == s.id).length;
+  const l = m == 'class' ? d.classes : m == 'room' ? d.rooms : d.teachers;
+  if (!by(l, S.sel)) S.sel = l[0]?.id;
+
+  return `
+    <div class="page-head">
+      <div>
+        <h1>จัดตารางสอน</h1>
+        <p class="sub">${canEdit() ? 'ลากวิชาไปวางในช่องว่าง หรือคลิกที่ช่องเพื่อเพิ่ม/แก้ไขคาบ' : 'โหมดอ่านอย่างเดียว'}</p>
+      </div>
+      <div class="row noprint">
+        <button class="btn" data-act="check">🛡️ ตรวจสอบคาบชน</button>
+        <button class="btn gold" data-act="printcur">🖨️ พิมพ์ตารางนี้</button>
+      </div>
+    </div>
+
+    <div class="bar noprint">
+      <select data-ch="mode">
+        <option value="class" ${m == 'class' ? 'selected' : ''}>ตารางรายชั้นเรียน</option>
+        <option value="teacher" ${m == 'teacher' ? 'selected' : ''}>ตารางรายครู</option>
+        <option value="room" ${m == 'room' ? 'selected' : ''}>ตารางรายห้อง</option>
+      </select>
+      <select data-ch="sel">${opts(l, S.sel)}</select>
+      <input id="q" placeholder="🔍 ค้นหาวิชา / ครู / ห้อง" style="width:200px">
+      <button class="btn" data-act="undo" ${S.un.length ? '' : 'disabled'}>↶ ย้อนกลับ</button>
+      <button class="btn" data-act="redo" ${S.re.length ? '' : 'disabled'}>↷ ทำซ้ำ</button>
+      ${S.clip ? '<button class="btn gold" data-act="noclip">ยกเลิกการคัดลอก</button>' : ''}
+    </div>
+
+    ${m == 'class' && canEdit() ? `
+      <div class="pal">
+        <span style="font-weight:600;font-size:13px;color:var(--tx)">เลือกวิชา:</span>
+        ${d.subjects.length ? d.subjects.map(s => `
+          <span class="chip ${s.periods && pc(s) >= s.periods ? 'done' : ''}" draggable="true" data-drag="S:${s.id}" style="--h:${col(s.name)}" title="ลากไปวางในช่องตาราง">
+            ${s.name}<em>${pc(s)}${s.periods ? '/' + s.periods : ''}</em>
+          </span>
+        `).join('') : '<span style="color:var(--tx-mut)">ยังไม่มีรายวิชา</span>'}
+      </div>
+      <p class="hint">💡 เคล็ดลับ: ลากชื่อวิชาไปวางในช่องว่าง · ระบบจะแสดงเงาจางของชั้นอื่นเพื่อป้องกันครูหรือห้องชนกัน</p>
+    ` : ''}
+
+    ${grid(m, S.sel, true)}
+  `;
+}
+
+const tnm = e => [e.teacher_id, e.teacher2_id].filter(Boolean).map(i => by(S.d.teachers, i)?.name).filter(Boolean).join(' / ');
+
+function blk(e, m, ui) {
+  const s = by(S.d.subjects, e.subject_id);
+  const c = by(S.d.classes, e.class_id);
+  const r = by(S.d.rooms, e.room_id);
+  const o = getCO()[m];
+  const L = [];
+
+  if (o.subject || o.code) {
+    L.push(`<b>${o.subject ? esc(s?.name || '-') : ''}${o.code && s?.code ? `<i class="cd">${o.subject ? ' ' : ''}${esc(s.code)}</i>` : ''}</b>`);
+  }
+  const tn = o.teacher ? tnm(e) : '';
+  if (tn) L.push(`<small>👨‍🏫 ${esc(tn)}</small>`);
+  const x = [o.class && c?.name, o.room && r?.name].filter(Boolean).join(' · ');
+  if (x) L.push(`<small>📍 ${esc(x)}</small>`);
+  if (!L.length) L.push('<b>-</b>');
+
+  return `
+    <div class="blk" 
+      ${ui ? `data-act="edit" data-id="${e.id}" ${m == 'class' ? `draggable="true" data-drag="E:${e.id}"` : ''}` : ''} 
+      style="--h:${col(s?.name)}"
+      title="${s?.name || ''} (${tnm(e)})">
+      ${L.join('')}
+    </div>
+  `;
+}
+
+function grid(m, id, ui) {
+  const P = S.d.periods, u = ui && canEdit();
+  return `
+    <div class="gridw">
+      <table class="g">
+        <thead>
+          <tr>
+            <th>วัน</th>
+            ${P.map(p => `
+              <th>
+                ${p.is_break ? p.label : 'คาบ ' + p.label}
+                <small>${p.start || ''}${p.end ? '–' + p.end : ''}</small>
+              </th>
+            `).join('')}
+          </tr>
+        </thead>
+        <tbody>
+          ${D.map((n, i) => `
+            <tr>
+              <th class="${new Date().getDay() == i + 1 ? 'tod' : ''}">${n}</th>
+              ${P.map(p => {
+                if (+p.is_break) return `<td class="brk">${p.label}</td>`;
+                const es = S.d.entries.filter(e => e.day == i + 1 && e.period == p.id && (m == 'class' ? e.class_id == id : m == 'room' ? e.room_id == id : (e.teacher_id == id || e.teacher2_id == id)));
+                return `
+                  <td class="${es.length ? '' : 'empty'}" ${u && m == 'class' ? `data-d="${i + 1}" data-p="${p.id}"` : ''}>
+                    ${es.length ? `<div class="cin">${es.map(e => blk(e, m, u)).join('')}</div>` : ''}
+                  </td>
+                `;
+              }).join('')}
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+function busyAt(day, per, ex) {
+  const t = {}, r = {};
+  for (const x of S.d.entries) {
+    if (x.day == day && x.period == per && x.id != ex) {
+      const cn = by(S.d.classes, x.class_id)?.name || '';
+      if (x.teacher_id) t[x.teacher_id] = cn;
+      if (x.teacher2_id) t[x.teacher2_id] = cn;
+      if (x.room_id) r[x.room_id] = cn;
+    }
+  }
+  return { t, r };
+}
+
+function entryModal(e) {
+  const d = S.d, b = busyAt(e.day, e.period, e.id);
+  S.ed = e;
+  if (!e.teacher_id) {
+    const c = {};
+    d.entries.filter(x => x.subject_id == e.subject_id).forEach(x => c[x.teacher_id] = (c[x.teacher_id] || 0) + (x.class_id == e.class_id ? 5 : 1));
+    const p = Object.keys(c).filter(k => !b.t[k]).sort((a, z) => c[z] - c[a])[0];
+    if (p) e.teacher_id = +p;
+  }
+  const so = (l, m, s) => l.map(x => `<option value="${x.id}" ${x.id == s ? 'selected' : ''} ${m[x.id] ? 'disabled' : ''}>${x.name}${m[x.id] ? ' — ติดสอน ' + m[x.id] : ''}</option>`).join('');
+
+  modal(`
+    <h3>${e.id ? 'แก้ไขคาบเรียน' : 'เพิ่มคาบเรียน'} · ${D[e.day - 1]} คาบ ${by(d.periods, e.period)?.label || ''}</h3>
+    <label>รายวิชา
+      <select id="f1">${opts(d.subjects, e.subject_id)}</select>
+    </label>
+    <label>ครูผู้สอน (ครูที่ติดคาบนี้จะเลือกไม่ได้)
+      <select id="f2"><option value="">เลือกครู</option>${so(d.teachers, b.t, e.teacher_id)}</select>
+    </label>
+    <label>ครูคนที่ 2 (ถ้ามี เช่น ครูประจำชั้นร่วม)
+      <select id="f4"><option value="">-</option>${so(d.teachers, b.t, e.teacher2_id)}</select>
+    </label>
+    <label>ห้องเรียนพิเศษ (ถ้ามี)
+      <select id="f3"><option value="">- ห้องปกติ -</option>${so(d.rooms, b.r, e.room_id)}</select>
+    </label>
+    <div class="row" style="margin-top:10px">
+      <button class="btn pri" data-act="saveE">💾 บันทึกคาบ</button>
+      ${e.id ? `
+        <button class="btn" data-act="copyE">📋 คัดลอก</button>
+        <button class="btn dng" data-act="delE">ลบคาบ</button>
+      ` : ''}
+      <button class="btn" data-act="close">ยกเลิก</button>
+    </div>
+  `);
+}
+
+/* =========================================================
+   PRINT VIEW WITH THEME SWITCHER
+   ========================================================= */
+const PM = [
+  ['class1', 'ตารางรายชั้น (เลือกชั้น)'],
+  ['classN', 'ทุกชั้นเรียน (พิมพ์แยกหน้า A4)'],
+  ['teacher1', 'ตารางครูรายบุคคล (เลือกครู)'],
+  ['teacherN', 'ครูทุกคน (พิมพ์แยกหน้า A4)'],
+  ['room1', 'ตารางการใช้ห้อง (เลือกห้อง)'],
+  ['roomN', 'ทุกห้องเรียน (พิมพ์แยกหน้า A4)'],
+  ['report', 'รายงานสรุปฝ่ายวิชาการ']
+];
+
+function vPrint() {
+  if (S.pm == 'report') return reportH();
+  const d = S.d, pm = S.pm;
+  const one = pm.endsWith('1');
+  const isT = pm.startsWith('teacher');
+  const isR = pm.startsWith('room');
+  const mode = isT ? 'teacher' : isR ? 'room' : 'class';
+  const l = isT ? d.teachers : isR ? d.rooms : d.classes;
+  const si = schoolInfo();
+  if (!by(l, S.ps)) S.ps = l[0]?.id;
+
+  const currentTheme = S.printTheme || 'academic';
+  const themeClass = `theme-${currentTheme}`;
+
+  const sig = (n, t) => `<div class="sig"><i></i>${n ? `(${esc(n)})<br>` : ''}${t}</div>`;
+
+  const sheet = x => {
+    const n = d.entries.filter(e => isT ? (e.teacher_id == x.id || e.teacher2_id == x.id) : isR ? e.room_id == x.id : e.class_id == x.id).length;
+    const hr = isT ? (hrOf(x.id) ? 'ครูประจำชั้น ' + hrOf(x.id) : '') : isR ? '' : (hrNames(x.id) ? 'ครูประจำชั้น: ' + hrNames(x.id) : '');
+
+    return `
+      <div class="pv">
+        <section class="sheet ${themeClass}">
+          <header>
+            <img src="logo.png" alt="ตราโรงเรียน">
+            <div>
+              <b>${esc(si.school)}</b> · ${esc(si.office)}<br>
+              ${isT ? 'ตารางสอนครู' : isR ? 'ตารางการใช้ห้อง' : 'ตารางเรียนชั้น'} <b>${esc(x.name)}</b> · ${term()}
+              ${hr ? `<br><span style="font-size:0.9em;opacity:0.9">${esc(hr)}</span>` : ''}
+            </div>
+          </header>
+          ${grid(mode, x.id, false)}
+          <footer>
+            <div style="font-size:14px;font-weight:600">รวมทั้งหมด ${n} คาบ/สัปดาห์</div>
+            ${sig(si.director, 'ผู้อำนวยการโรงเรียน')}
+            ${sig(si.academic, 'หัวหน้าฝ่ายวิชาการ')}
+          </footer>
+          ${si.credit ? '<div class="credit">BR Smart Timetable · พัฒนาโดย ครูเฉลิมพล จันทร์แดง · โรงเรียนบ้านไร่</div>' : ''}
+        </section>
+      </div>
+    `;
+  };
+
+  return `
+    <div class="noprint">
+      <div class="page-head">
+        <div>
+          <h1>พิมพ์ตารางสอน</h1>
+          <p class="sub">กระดาษ A4 แนวนอน พอดี 1 หน้า · เลือกธีมวิชาการหรือพาสเทลเพื่อพิมพ์หรือบันทึกเป็น PDF ได้ทันที</p>
+        </div>
+        <div class="row">
+          <button class="btn" data-act="pzoom">${S.pz == 'full' ? '🔍 ย่อให้พอดีจอ' : '🔍 ดูขนาดจริง'}</button>
+          <button class="btn gold big" data-act="print" style="padding:10px 24px">🖨️ พิมพ์ / บันทึก PDF</button>
+        </div>
+      </div>
+
+      <!-- Theme Selector Bar -->
+      <div class="theme-selector-bar">
+        <div class="theme-title">
+          <span>🎨 เลือกธีมและสไตล์สำหรับพิมพ์ตารางสอน:</span>
+          <span class="tag ok" style="margin-left:auto">ธีมปัจจุบัน: ${THEMES.find(t=>t.id==currentTheme)?.name || 'ทางวิชาการ'}</span>
+        </div>
+        <div class="theme-options">
+          ${THEMES.map(t => `
+            <button class="theme-btn ${currentTheme == t.id ? 'on' : ''}" data-act="settheme" data-theme="${t.id}" title="${t.desc}">
+              <span class="theme-chip-dot" style="background:${t.dot}"></span>
+              <span>${t.name}</span>
+            </button>
+          `).join('')}
+        </div>
+      </div>
+
+      <div class="bar">
+        <label style="display:flex;align-items:center;gap:6px;font-weight:500">
+          ประเภทตาราง:
+          <select data-ch="pm">${PM.map(o => `<option value="${o[0]}" ${pm == o[0] ? 'selected' : ''}>${o[1]}</option>`).join('')}</select>
+        </label>
+        ${one ? `
+          <label style="display:flex;align-items:center;gap:6px;font-weight:500">
+            เลือกรายการ:
+            <select data-ch="ps">${opts(l, S.ps)}</select>
+          </label>
+        ` : ''}
+      </div>
+
+      <details class="man" style="padding:0 18px">
+        <summary style="font-size:14.5px;padding:12px 0">⚙️ ปรับข้อมูลที่แสดงในช่องตาราง (${MODEN[mode]})</summary>
+        <div>
+          ${coPanel([mode])}
+          <p class="hint" style="margin:8px 0 0">ระบบจะย่อขนาดตัวอักษรให้พอดีกับช่องตารางอัตโนมัติ โดยไม่ล้นขอบกระดาษ</p>
+        </div>
+      </details>
+    </div>
+
+    ${(one ? l.filter(x => x.id == S.ps) : l).map(sheet).join('') || '<p class="sub">ยังไม่มีข้อมูล</p>'}
+  `;
+}
+
+function reportH() {
+  const d = S.d, slots = d.periods.filter(p => !+p.is_break).length * 5;
+  const cf = conflicts().length;
+  const pub = d.versions.find(v => v.status == 'published');
+  const sb = d.subs.filter(s => s.status == 'approved').length;
+  const si = schoolInfo();
+
+  return `
+    <div class="noprint">
+      <div class="page-head">
+        <div>
+          <h1>พิมพ์ตารางสอน</h1>
+          <p class="sub">รายงานสรุปฝ่ายวิชาการ · A4 แนวนอน</p>
+        </div>
+        <div class="row">
+          <select data-ch="pm">${PM.map(o => `<option value="${o[0]}" ${S.pm == o[0] ? 'selected' : ''}>${o[1]}</option>`).join('')}</select>
+          <button class="btn gold big" data-act="print" style="padding:10px 24px">🖨️ พิมพ์ / บันทึก PDF</button>
+        </div>
+      </div>
+    </div>
+
+    <section class="sheet rep theme-${S.printTheme || 'academic'}">
+      <header>
+        <img src="logo.png" alt="โลโก้โรงเรียน">
+        <div>
+          <b>รายงานฝ่ายวิชาการ · การจัดตารางสอน</b><br>
+          ${esc(si.school)} ${esc(si.office)} · ${term()}<br>
+          ฉบับเผยแพร่: ${pub ? pub.name : 'ยังไม่มี'} · ข้อขัดแย้ง ${cf} รายการ · สอนแทนที่อนุมัติแล้ว ${sb} ครั้ง
+        </div>
+      </header>
+
+      <table class="t">
+        <tr><th>ครูผู้สอน</th><th>เป้าหมาย (คาบ)</th><th>จัดจริง</th><th>ส่วนต่าง</th><th>สถานะ</th></tr>
+        ${d.teachers.map(t => {
+          const c = d.entries.filter(e => e.teacher_id == t.id || e.teacher2_id == t.id).length;
+          const diff = t.load ? c - t.load : '-';
+          return `
+            <tr>
+              <td><b>${t.name}</b></td>
+              <td>${t.load || '-'}</td>
+              <td>${c}</td>
+              <td>${diff > 0 ? '+' + diff : diff}</td>
+              <td><span class="tag ${c == t.load ? 'ok' : c > t.load ? 'no' : ''}">${c == t.load ? 'ครบ' : c > t.load ? 'เกิน' : 'ขาด'}</span></td>
+            </tr>
+          `;
+        }).join('')}
+      </table>
+      <br>
+      <table class="t">
+        <tr><th>ชั้นเรียน</th><th>คาบที่จัดแล้ว</th><th>ช่องทั้งหมด</th><th>ช่องว่าง</th></tr>
+        ${d.classes.map(c => {
+          const n = d.entries.filter(e => e.class_id == c.id).length;
+          return `
+            <tr>
+              <td><b>${c.name}</b></td>
+              <td>${n}</td>
+              <td>${slots}</td>
+              <td>${slots - n}</td>
+            </tr>
+          `;
+        }).join('')}
+      </table>
+
+      <footer>
+        <div></div>
+        <div class="sig"><i></i>${si.academic ? `(${esc(si.academic)})<br>` : ''}หัวหน้าฝ่ายวิชาการ</div>
+        <div class="sig"><i></i>${si.director ? `(${esc(si.director)})<br>` : ''}ผู้อำนวยการโรงเรียน</div>
+      </footer>
+    </section>
+  `;
+}
+
+function vSub() {
+  const d = S.d;
+  const dow = new Date(S.sd + 'T00:00:00Z').getUTCDay();
+  const pi = id => d.periods.findIndex(p => p.id == id);
+  const es = d.entries.filter(e => e.day == dow).sort((a, b) => pi(a.period) - pi(b.period));
+  const act = e => d.subs.find(s => s.entry_id == e.id && s.date == S.sd && s.status == 'approved');
+
+  return `
+    <div class="page-head">
+      <div>
+        <h1>ระบบสอนแทน</h1>
+        <p class="sub">มอบหมายครูสอนแทนรายวัน โดยไม่กระทบตารางสอนปกติ</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="bar">
+        <label style="display:flex;align-items:center;gap:8px;font-weight:600">
+          📅 เลือกวันที่:
+          <input type="date" data-ch="sd" value="${S.sd}">
+        </label>
+      </div>
+
+      ${dow < 1 || dow > 5 ? '<p class="sub">วันหยุดสุดสัปดาห์ ไม่มีคาบเรียน</p>' : es.length ? `
+        <table class="t">
+          <tr><th>คาบ</th><th>ชั้น</th><th>วิชา</th><th>ครูเจ้าของคาบ</th><th>สถานะสอนแทน</th></tr>
+          ${es.map(e => {
+            const a = act(e);
+            return `
+              <tr>
+                <td><b>${by(d.periods, e.period)?.label || ''}</b></td>
+                <td>${by(d.classes, e.class_id)?.name || ''}</td>
+                <td>${by(d.subjects, e.subject_id)?.name || ''}</td>
+                <td>${tnm(e)}</td>
+                <td>
+                  ${a ? `
+                    <span class="tag ok">👨‍🏫 แทนโดย ${by(d.teachers, a.sub_teacher_id)?.name || ''}</span>
+                  ` : canEdit() ? `
+                    <button class="btn" data-act="subnew" data-id="${e.id}">+ มอบหมายสอนแทน</button>
+                  ` : '-'}
+                </td>
+              </tr>
+            `;
+          }).join('')}
+        </table>
+      ` : '<p class="sub">ไม่มีคาบสอนในวันที่เลือก</p>'}
+    </div>
+
+    <div class="card">
+      <h2>ประวัติการสอนแทน</h2>
+      <table class="t">
+        <tr><th>วันที่</th><th>ชั้น / วิชา</th><th>ครูเดิม → ครูแทน</th><th>เหตุผล</th><th>สถานะ</th><th></th></tr>
+        ${[...d.subs].reverse().map(s => {
+          const e = by(d.entries, s.entry_id);
+          return `
+            <tr>
+              <td>${s.date}</td>
+              <td>${e ? by(d.classes, e.class_id)?.name + ' ' + by(d.subjects, e.subject_id)?.name : '(คาบเดิมถูกลบ)'}</td>
+              <td>${e ? tnm(e) : '-'} → <b>${by(d.teachers, s.sub_teacher_id)?.name || ''}</b></td>
+              <td>${s.reason || '-'}<br><small style="color:var(--tx-mut)">โดย ${s.by || ''}</small></td>
+              <td><span class="tag ${s.status == 'approved' ? 'ok' : 'no'}">${s.status == 'approved' ? 'อนุมัติ' : 'ยกเลิก'}</span></td>
+              <td>${s.status == 'approved' && canEdit() ? `<button class="btn dng" data-act="subcancel" data-id="${s.id}">ยกเลิก</button>` : ''}</td>
+            </tr>
+          `;
+        }).join('') || '<tr><td colspan="6">ยังไม่มีประวัติการสอนแทน</td></tr>'}
+      </table>
+    </div>
+  `;
+}
+
+function subModal(id) {
+  const d = S.d, e = by(d.entries, id);
+  const busy = new Set(d.entries.filter(x => x.day == e.day && x.period == e.period).flatMap(x => [x.teacher_id, x.teacher2_id].filter(Boolean)));
+  d.subs.filter(s => s.status == 'approved' && s.date == S.sd).forEach(s => {
+    const x = by(d.entries, s.entry_id);
+    if (x && x.period == e.period) busy.add(s.sub_teacher_id);
+  });
+  const free = d.teachers.filter(t => !busy.has(t.id));
+  S.se = id;
+
+  modal(`
+    <h3>มอบหมายครูสอนแทน</h3>
+    <p class="sub" style="margin:0">ชั้น ${by(d.classes, e.class_id)?.name} · วิชา ${by(d.subjects, e.subject_id)?.name}</p>
+    <label>เลือกครูที่ว่างในคาบนี้
+      <select id="f1">${opts(free)}</select>
+    </label>
+    <label>เหตุผลการลา / มอบหมายสอนแทน
+      <textarea id="f2" rows="2" placeholder="เช่น ลาป่วย, ไปราชการ, อบรม"></textarea>
+    </label>
+    <div class="row" style="margin-top:10px">
+      <button class="btn pri" data-act="subsave" ${free.length ? '' : 'disabled'}>บันทึกรายการ</button>
+      <button class="btn" data-act="close">ยกเลิก</button>
+    </div>
+    ${free.length ? '' : '<p class="hint" style="color:var(--ruby)">ไม่มีครูท่านใดว่างในคาบนี้</p>'}
+  `);
+}
+
+/* =========================================================
+   BASIC DATA & SETTINGS VIEW
+   ========================================================= */
+const F = {
+  teachers: [['name', 'ชื่อ-สกุลครู'], ['load', 'ภาระงานเป้าหมาย (คาบ/สัปดาห์)', 'number']],
+  subjects: [['code', 'รหัสวิชา'], ['name', 'ชื่อรายวิชา'], ['periods', 'จำนวนคาบ/สัปดาห์', 'number']],
+  classes: [['name', 'ชื่อชั้นเรียน']],
+  rooms: [['name', 'ชื่อห้องเรียนพิเศษ']],
+  periods: [['label', 'ชื่อคาบ'], ['start', 'เวลาเริ่ม', 'time'], ['end', 'เวลาสิ้นสุด', 'time'], ['is_break', 'เป็นช่วงพัก (1=ใช่, 0=ไม่ใช่)', 'number']]
+};
+const TN = {
+  teachers: 'รายชื่อครู',
+  subjects: 'รายวิชา',
+  assignments: 'การมอบหมายสอน',
+  classes: 'ชั้นเรียน',
+  rooms: 'ห้องเรียน',
+  periods: 'คาบ/เวลาเรียน',
+  settings: 'ตั้งค่าโรงเรียนและธีม'
+};
+
+function setH() {
+  const d = S.d, si = schoolInfo(), on = canEdit(), dis = on ? '' : 'disabled';
+  const tsel = (cid, i) => `<select data-hr="${cid}.${i}" ${dis}><option value="">-</option>${opts(d.teachers, (getHR()[cid] || [])[i])}</select>`;
+
+  return `
+    <h2>ข้อมูลโรงเรียนและปีการศึกษา</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-bottom:20px">
+      <label>ปีการศึกษา<input id="yr" value="${esc(d.settings.year || '2569')}" ${dis}></label>
+      <label>ภาคเรียนที่<input id="tm" value="${esc(d.settings.term || '1')}" ${dis}></label>
+      <label>ชื่อโรงเรียน<input id="sc" value="${esc(si.school)}" ${dis}></label>
+      <label>สังกัดหน่วยงาน<input id="of" value="${esc(si.office)}" ${dis}></label>
+      <label>ชื่อผู้อำนวยการ (พิมพ์ใต้ลายเซ็น)<input id="dr" value="${esc(si.director)}" placeholder="เช่น นายสมพงษ์ มั่นคง" ${dis}></label>
+      <label>ชื่อหัวหน้าฝ่ายวิชาการ (พิมพ์ใต้ลายเซ็น)<input id="ac" value="${esc(si.academic)}" placeholder="เช่น นางสาวสายพิณ ตุ่นแก้ว" ${dis}></label>
+      <label>ธีมเริ่มต้นสำหรับพิมพ์ตารางสอน
+        <select id="ptm" ${dis}>
+          ${THEMES.map(t => `<option value="${t.id}" ${(S.printTheme || 'academic') == t.id ? 'selected' : ''}>${t.name} — ${t.desc}</option>`).join('')}
+        </select>
+      </label>
+    </div>
+
+    <label style="display:inline-flex;align-items:center;gap:8px;cursor:pointer;margin-bottom:20px">
+      <input type="checkbox" id="scr" ${si.credit ? 'checked' : ''} ${dis}> แสดงเครดิตผู้พัฒนาท้ายตารางสอนที่พิมพ์
+    </label>
+
+    <h2>ครูประจำชั้น</h2>
+    <table class="t" style="margin-bottom:24px">
+      <tr><th>ชั้นเรียน</th><th>ครูประจำชั้นคนที่ 1</th><th>ครูประจำชั้นคนที่ 2 (ถ้ามี)</th></tr>
+      ${d.classes.map(c => `
+        <tr>
+          <td><b>${esc(c.name)}</b></td>
+          <td>${tsel(c.id, 0)}</td>
+          <td>${tsel(c.id, 1)}</td>
+        </tr>
+      `).join('') || '<tr><td colspan="3">ยังไม่มีชั้นเรียน</td></tr>'}
+    </table>
+
+    <h2>ข้อมูลที่แสดงในช่องตารางสอน</h2>
+    <p class="hint">เลือกข้อมูลที่ต้องการให้ปรากฏในแต่ละช่องตาราง ตัวอักษรจะปรับขนาดให้พอดีช่องอัตโนมัติ</p>
+    ${coPanel(['class', 'teacher', 'room'])}
+
+    ${on ? `
+      <div class="bar" style="margin-top:20px">
+        <button class="btn pri big" data-act="saveset">💾 บันทึกการตั้งค่าทั้งหมด</button>
+      </div>
+    ` : ''}
+  `;
+}
+
+function vData() {
+  const t = S.tab;
+  const tabs = Object.keys(TN);
+  if (!tabs.includes(t)) S.tab = tabs[0];
+  let body = '';
+
+  if (F[t]) {
+    const f = F[t];
+    const row = r => `
+      <tr data-t="${t}" data-id="${r.id || ''}">
+        ${f.map(c => `<td><input data-k="${c[0]}" type="${c[2] || 'text'}" value="${r[c[0]] ?? ''}" ${canEdit() ? '' : 'disabled'}></td>`).join('')}
+        <td style="width:100px;text-align:right">
+          ${canEdit() ? (r.id ? `
+            <button class="btn dng" data-act="del" data-t="${t}" data-id="${r.id}">ลบ</button>
+          ` : `
+            <button class="btn pri" data-act="add">+ เพิ่ม</button>
+          `) : ''}
+        </td>
+      </tr>
+    `;
+    body = `
+      <table class="t">
+        <tr>${f.map(c => `<th>${c[1]}</th>`).join('')}<th></th></tr>
+        ${S.d[t].map(row).join('')}
+        ${canEdit() ? row({}) : ''}
+      </table>
+      <p class="hint" style="margin-top:12px">💡 แก้ไขข้อมูลในช่องแล้วระบบจะบันทึกอัตโนมัติ (แถวล่างสุดคือแถวสำหรับเพิ่มรายการใหม่)</p>
+    `;
+  } else if (t == 'assignments') {
+    body = asgH();
+  } else if (t == 'settings') {
+    body = setH();
+  }
+
+  return `
+    <div class="page-head">
+      <div>
+        <h1>ข้อมูลพื้นฐานและตั้งค่า</h1>
+        <p class="sub">จัดการข้อมูลครู วิชา ชั้นเรียน ห้องเรียน และการตั้งค่าตารางสอน</p>
+      </div>
+    </div>
+    <div class="tabs">
+      ${tabs.map(k => `<button class="btn ${k == t ? 'on' : ''}" data-act="tab" data-v="${k}">${TN[k]}</button>`).join('')}
+    </div>
+    <div class="card" style="overflow-x:auto">${body}</div>
+  `;
+}
+
+function asgH() {
+  const d = S.d, L = d.assignments || [], on = canEdit();
+  const sl = (l, v, k, ph) => `<select data-ak="${k}" ${on ? '' : 'disabled'}><option value="">${ph}</option>${opts(l, v)}</select>`;
+  const row = a => `
+    <tr data-as="${a.id || ''}">
+      ${[[d.classes, 'class_id', 'เลือกชั้น'], [d.subjects, 'subject_id', 'เลือกวิชา'], [d.teachers, 'teacher_id', 'เลือกครู'], [d.teachers, 'teacher2_id', 'ครูคนที่ 2 (ถ้ามี)'], [d.rooms, 'room_id', 'ห้องพิเศษ (ถ้ามี)']].map(x => `<td>${sl(x[0], a[x[1]], x[1], x[2])}</td>`).join('')}
+      <td><input data-ak="periods" type="number" min="1" value="${a.periods || ''}" style="width:80px" ${on ? '' : 'disabled'}></td>
+      <td style="width:100px;text-align:right">
+        ${on ? (a.id ? `
+          <button class="btn dng" data-act="asgdel" data-id="${a.id}">ลบ</button>
+        ` : `
+          <button class="btn pri" data-act="asgadd">+ เพิ่ม</button>
+        `) : ''}
+      </td>
+    </tr>
+  `;
+
+  return `
+    <div class="bar">
+      <button class="btn gold" data-act="autoopen">⚡ จัดตารางอัตโนมัติ</button>
+      <button class="btn" data-act="asgimp">📥 นำเข้าจากการจัดตารางปัจจุบัน</button>
+    </div>
+    <table class="t">
+      <tr><th>ชั้นเรียน</th><th>รายวิชา</th><th>ครูผู้สอน</th><th>ครูคนที่ 2</th><th>ห้องเรียน</th><th>คาบ/สัปดาห์</th><th></th></tr>
+      ${L.map(row).join('')}
+      ${on ? row({}) : ''}
+    </table>
+    <p class="hint" style="margin-top:12px">กำหนดว่าชั้นไหนเรียนวิชาอะไร ใครสอน และกี่คาบต่อสัปดาห์ เพื่อนำไปจัดตารางอัตโนมัติ</p>
+  `;
+}
+
+function readAs(tr) {
+  const b = { id: tr.dataset.as || undefined };
+  tr.querySelectorAll('[data-ak]').forEach(i => b[i.dataset.ak] = i.value ? +i.value : null);
+  return b;
+}
+
+function setupCard() {
+  const d = S.d;
+  const st = [
+    ['เพิ่มรายชื่อครู', d.teachers.length, 'data', 'teachers'],
+    ['เพิ่มรายวิชาและกำหนดจำนวนคาบ', d.subjects.length, 'data', 'subjects'],
+    ['จัดคาบแรกในตารางสอน', d.entries.length, 'tt']
+  ];
+  if (st.every(x => x[1])) return '';
+  return `
+    <div class="card" style="border-left:4px solid var(--gold)">
+      <h2>เริ่มต้นใช้งาน</h2>
+      ${st.map(x => `
+        <div class="row" style="padding:6px 0">
+          <span class="tag ${x[1] ? 'ok' : ''}">${x[1] ? '✓' : '○'}</span>
+          <span>${x[0]}</span>
+          ${x[1] ? '' : `<button class="btn" data-act="goto" data-v="${x[2]}" data-t="${x[3] || ''}">ไปที่หน้านี้</button>`}
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+const fdt = x => String(x || '').slice(0, 16).replace('T', ' ');
+function notifCard() {
+  const n = S.d.notifs || [], u = n.filter(x => !x.seen).length;
+  return `
+    <div class="card">
+      <div class="row" style="justify-content:space-between;margin-bottom:8px">
+        <h2 style="margin:0">การแจ้งเตือน</h2>
+        ${u ? `<span class="tag no">${u} รายการใหม่</span>` : ''}
+      </div>
+      ${n.length ? n.slice(0, 6).map(x => `
+        <div style="padding:8px 0;border-bottom:1px solid var(--line);font-size:13.5px">
+          ${x.seen ? '' : '🔵 '}<b>${x.text}</b><br>
+          <small style="color:var(--tx-mut)">${fdt(x.at)}</small>
+        </div>
+      `).join('') : '<p class="sub">ยังไม่มีการแจ้งเตือน</p>'}
+      ${u ? '<br><button class="btn" data-act="nread">ทำเครื่องหมายว่าอ่านแล้วทั้งหมด</button>' : ''}
+    </div>
+  `;
+}
+
+function vVer() {
+  const d = S.d;
+  const ST = { draft: 'ฉบับร่าง (Draft)', checked: 'ตรวจแล้ว (Checked)', published: 'เผยแพร่ (Published)', archived: 'ฉบับเก่า (Archived)' };
+  const NX = { draft: 'ตรวจแล้ว', checked: 'เผยแพร่', published: 'เก็บถาวร' };
+
+  return `
+    <div class="page-head">
+      <div>
+        <h1>ฉบับตารางสอนและสำรองข้อมูล</h1>
+        <p class="sub">บันทึกสำเนาตารางสอน เผยแพร่ หรือสำรองข้อมูลทั้งระบบ</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>ฉบับตารางสอน</h2>
+      <div class="bar">
+        <input id="vn" placeholder="ชื่อฉบับ เช่น ฉบับทางการ 1/2569" style="width:260px">
+        <button class="btn pri" data-act="vsave">+ บันทึกฉบับใหม่จากตารางปัจจุบัน</button>
+      </div>
+      <table class="t">
+        <tr><th>ชื่อฉบับ</th><th>สถานะ</th><th>บันทึกเมื่อ</th><th></th></tr>
+        ${d.versions.map(v => `
+          <tr>
+            <td><b>${v.name}</b></td>
+            <td><span class="tag ${v.status == 'published' ? 'ok' : ''}">${ST[v.status] || v.status}</span></td>
+            <td>${fdt(v.created)}</td>
+            <td style="text-align:right">
+              <div class="row" style="justify-content:flex-end">
+                ${NX[v.status] ? `<button class="btn" data-act="vnext" data-id="${v.id}">→ เลื่อนเป็น ${NX[v.status]}</button>` : ''}
+                <button class="btn" data-act="vrest" data-id="${v.id}">กู้คืนฉบับนี้</button>
+                <button class="btn dng" data-act="vdel" data-id="${v.id}">ลบ</button>
+              </div>
+            </td>
+          </tr>
+        `).join('') || '<tr><td colspan="4">ยังไม่มีฉบับตาราง</td></tr>'}
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>สำรอง / กู้คืนข้อมูล</h2>
+      <p class="sub">ดาวน์โหลดไฟล์สำรองข้อมูล (.json) เพื่อเก็บไว้ในเครื่อง หรือกู้คืนข้อมูล</p>
+      <div class="bar">
+        <button class="btn gold" data-act="backup">⬇️ ดาวน์โหลดไฟล์สำรองข้อมูลทั้งระบบ</button>
+        <label class="btn" style="cursor:pointer">
+          ⬆️ กู้คืนจากไฟล์สำรอง (.json)
+          <input type="file" accept=".json" data-ch="restore" hidden>
+        </label>
+      </div>
+    </div>
+  `;
+}
+
+async function doRestore(f) {
+  if (!f || !confirm('การกู้คืนจะแทนที่ข้อมูลทั้งหมดในระบบ ดำเนินการต่อ?')) return;
+  try {
+    const j = JSON.parse(await f.text());
+    act(() => api('restore', 'POST', j), 'กู้คืนข้อมูลสำเร็จ');
+  } catch (e) {
+    toast('ไฟล์สำรองไม่ถูกต้อง', true);
+  }
+}
+
+function autoSched(o) {
+  const d = S.d, P = d.periods.filter(p => !+p.is_break).map(p => p.id), days = [1, 2, 3, 4, 5], L = d.assignments || [];
+  const base = o.keep ? d.entries.map(e => ({ ...e })) : [], need = [];
+  for (const a of L) {
+    const have = base.filter(e => e.class_id == a.class_id && e.subject_id == a.subject_id).length;
+    for (let i = have; i < (a.periods || 0); i++) need.push(a);
+  }
+  const load = {};
+  need.forEach(a => load[a.teacher_id] = (load[a.teacher_id] || 0) + 1);
+  let best = null;
+
+  for (let it = 0; it < 150; it++) {
+    const T = {}, C = {}, R = {}, TD = {}, CS = {}, rows = base.map(e => ({ ...e })), un = [];
+    let sc = 0;
+    const mark = e => {
+      const k = (x, y) => x + '|' + e.day + (y ? '|' + e.period : '');
+      T[k(e.teacher_id, 1)] = 1;
+      if (e.teacher2_id) T[k(e.teacher2_id, 1)] = 1;
+      C[k(e.class_id, 1)] = 1;
+      if (e.room_id) R[k(e.room_id, 1)] = 1;
+      TD[k(e.teacher_id)] = (TD[k(e.teacher_id)] || 0) + 1;
+      const cs = e.class_id + '|' + e.subject_id + '|' + e.day;
+      CS[cs] = (CS[cs] || 0) + 1;
+    };
+    rows.forEach(mark);
+
+    const order = need.map(a => ({ a, k: (load[a.teacher_id] || 0) + Math.random() * 6 + (a.room_id ? 4 : 0) })).sort((x, y) => y.k - x.k).map(x => x.a);
+    for (const a of order) {
+      const cd = by(d.subjects, a.subject_id)?.code || '';
+      let pick = null, ps = -1e9;
+      for (const day of days) {
+        for (let i = 0; i < P.length; i++) {
+          const p = P[i];
+          if (T[a.teacher_id + '|' + day + '|' + p] || (a.teacher2_id && T[a.teacher2_id + '|' + day + '|' + p]) || C[a.class_id + '|' + day + '|' + p] || (a.room_id && R[a.room_id + '|' + day + '|' + p]) || (TD[a.teacher_id + '|' + day] || 0) >= o.tmax) continue;
+          let s = Math.random() * 5 - (TD[a.teacher_id + '|' + day] || 0) * 1.5;
+          if (o.spread) s -= (CS[a.class_id + '|' + a.subject_id + '|' + day] || 0) * 50;
+          if (o.core && cd && 'ทคว'.includes(cd)) s += i < 4 ? 8 : -8;
+          if (o.light && cd && 'พศง'.includes(cd)) s += i >= 4 ? 8 : -8;
+          if (s > ps) { ps = s; pick = { day, p }; }
+        }
+      }
+      if (!pick) { un.push(a); continue; }
+      const e = { id: null, class_id: a.class_id, subject_id: a.subject_id, teacher_id: a.teacher_id, teacher2_id: a.teacher2_id || null, room_id: a.room_id || null, day: pick.day, period: pick.p };
+      rows.push(e);
+      mark(e);
+      sc += ps;
+    }
+    if (!best || un.length < best.un.length || (un.length == best.un.length && sc > best.sc)) best = { rows, un, sc, T, C };
+    if (!un.length && !o.spread && !o.core && !o.light) break;
+  }
+
+  const rep = [], gu = {};
+  best.un.forEach(a => {
+    const k = a.class_id + '|' + a.subject_id;
+    (gu[k] = gu[k] || { a, n: 0 }).n++;
+  });
+  for (const { a, n } of Object.values(gu).slice(0, 8)) {
+    let cf = 0, tf = 0;
+    for (const day of days) for (const p of P) if (!best.C[a.class_id + '|' + day + '|' + p]) {
+      cf++;
+      if (!best.T[a.teacher_id + '|' + day + '|' + p]) tf++;
+    }
+    rep.push([`${by(d.classes, a.class_id)?.name} · ${by(d.subjects, a.subject_id)?.name} ขาด ${n} คาบ — ${!cf ? 'ชั้นนี้เต็มทุกคาบแล้ว' : !tf ? 'ครู' + (by(d.teachers, a.teacher_id)?.name || '') + 'ไม่ว่างในคาบที่ชั้นนี้ว่าง' : 'ติดเงื่อนไขการจัด'}`, 1]);
+  }
+  const cs = {};
+  let v = 0;
+  best.rows.forEach(e => {
+    const k = e.class_id + '|' + e.subject_id + '|' + e.day;
+    cs[k] = (cs[k] || 0) + 1;
+    if (cs[k] > 1) v++;
+  });
+  if (o.spread && v) rep.push([`วิชาซ้ำวันเดียวกัน ${v} ครั้ง`, 1]);
+  if (!best.un.length) rep.push(['จัดตารางครบทุกรายการเรียบร้อย ไม่มีข้อขัดแย้ง ✓', 0]);
+  return { rows: best.rows, un: best.un, placed: best.rows.length - base.length, rep };
+}
+
+function vAuto() {
+  const L = S.d.assignments || [], o = S.ao || { keep: 1, spread: 1, core: 1, light: 0, tmax: 6 }, r = S.auto;
+  const ck = (id, k, t) => `<label style="display:flex;gap:8px;align-items:center;color:var(--tx);font-weight:500"><input type="checkbox" id="${id}" ${o[k] ? 'checked' : ''}> ${t}</label>`;
+
+  if (!L.length) {
+    return `
+      <h1>จัดตารางอัตโนมัติ</h1>
+      <p class="sub">ตั้งเงื่อนไขและดูผลการประมวลผลก่อนนำไปใช้จริง</p>
+      <div class="card">
+        <h2>ยังไม่มีรายการมอบหมายสอน</h2>
+        <p class="sub">คุณต้องกำหนดรายการมอบหมายสอน (ชั้น · วิชา · ครู · คาบ) ก่อนจึงจะจัดตารางอัตโนมัติได้</p>
+        <div class="row">
+          <button class="btn gold" data-act="asgimp">📥 นำเข้าจากตารางปัจจุบัน</button>
+          <button class="btn pri" data-act="agoto">✍️ ไปกรอกข้อมูลการมอบหมายสอน</button>
+        </div>
+      </div>
+    `;
+  }
+
+  const m = r ? r.un.length : 0;
+  return `
+    <div class="page-head">
+      <div>
+        <h1>จัดตารางอัตโนมัติ</h1>
+        <p class="sub">กำหนดเงื่อนไข ประมวลผลตัวอย่าง และยืนยันผลลัพธ์ (ระบบสำรองตารางก่อนหน้าให้อัตโนมัติ)</p>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px;align-items:start">
+      <div class="card" style="display:grid;gap:14px">
+        <h2 style="margin:0">เงื่อนไขการจัดตาราง</h2>
+        <div class="row" style="color:var(--tx-mut)">
+          <span>📋 ${L.length} รายการมอบหมายสอน</span>
+          <button class="btn" data-act="agoto">แก้ไขรายการ</button>
+        </div>
+        <label style="display:grid;gap:4px">
+          <b>รูปแบบการจัด:</b>
+          <select id="ao-m">
+            <option value="1" ${o.keep ? 'selected' : ''}>คงคาบที่จัดไว้แล้ว เติมเฉพาะช่องว่าง</option>
+            <option value="0" ${o.keep ? '' : 'selected'}>จัดใหม่ทั้งหมด (ล้างตารางเดิมแล้วจัดใหม่)</option>
+          </select>
+        </label>
+        ${ck('ao-s', 'spread', 'วิชาเดียวกันไม่ซ้ำวันเดียวกัน (ถ้าช่องพอ)')}
+        ${ck('ao-c', 'core', 'วิชาหลัก (ท ค ว) จัดไว้ช่วงเช้า')}
+        ${ck('ao-l', 'light', 'วิชาปฏิบัติ (พ ศ ง) จัดไว้ช่วงบ่าย')}
+        <label style="display:grid;gap:4px">
+          <b>ครูสอนไม่เกินกี่คาบต่อวัน:</b>
+          <input id="ao-t" type="number" min="1" max="8" value="${o.tmax}">
+        </label>
+        <button class="btn pri big" data-act="autorun" ${canEdit() ? '' : 'disabled'}>⚡ ประมวลผลตัวอย่าง</button>
+      </div>
+
+      <div class="card" style="display:grid;gap:12px">
+        <h2 style="margin:0">ผลการประมวลผลตัวอย่าง</h2>
+        ${r ? `
+          <div class="stats" style="margin:0">
+            <div class="stat" style="--c:#10b981"><b>${r.placed}</b><span>คาบที่จัดได้เพิ่ม</span></div>
+            <div class="stat" style="--c:${m ? '#ef4444' : '#10b981'}"><b>${m}</b><span>จัดไม่ได้</span></div>
+          </div>
+          ${r.rep.map(x => `<div class="tag ${x[1] ? 'no' : 'ok'}" style="padding:8px 12px;font-size:13px">${x[0]}</div>`).join('')}
+          <div class="row" style="margin-top:10px">
+            <button class="btn gold big" data-act="autoapply">✓ ยืนยันใช้ผลลัพธ์นี้</button>
+          </div>
+        ` : '<p class="sub" style="margin:0">กำหนดเงื่อนไขทางซ้าย แล้วกดปุ่ม "ประมวลผลตัวอย่าง"</p>'}
+      </div>
+    </div>
+  `;
+}
+
+function vHelp() {
+  const sec = (t, b, o) => `<details class="man" ${o ? 'open' : ''}><summary>${t}</summary><div>${b}</div></details>`;
+  const li = a => '<ul>' + a.map(x => `<li>${x}</li>`).join('') + '</ul>';
+  const ol = a => '<ol>' + a.map(x => `<li>${x}</li>`).join('') + '</ol>';
+
+  return `
+    <div class="page-head noprint">
+      <div>
+        <h1>คู่มือการใช้งาน</h1>
+        <p class="sub">วิธีใช้งาน BR Smart Timetable สำหรับครูและฝ่ายวิชาการ</p>
+      </div>
+      <div class="row">
+        <button class="btn" data-act="helpall">เปิด / ปิดทั้งหมด</button>
+        <button class="btn gold" data-act="print">🖨️ พิมพ์คู่มือ</button>
+      </div>
+    </div>
+
+    ${sec('🚀 เริ่มต้นใช้งานใน 6 ขั้นตอน', ol([
+      '<b>ตั้งค่าข้อมูลโรงเรียน:</b> ไปที่เมนู "ข้อมูลพื้นฐาน → ตั้งค่าโรงเรียนและธีม" กรอกปีการศึกษา ภาคเรียน ชื่อโรงเรียน และผู้ลงนาม',
+      '<b>เพิ่มข้อมูลพื้นฐาน:</b> กรอกรายชื่อครู ชั้นเรียน รายวิชา (ใส่จำนวนคาบ/สัปดาห์) และคาบเวลาเรียน',
+      '<b>จัดตารางสอน:</b> ไปที่หน้า "จัดตารางสอน" ลากชื่อวิชาไปวางในช่องว่าง หรือคลิกที่ช่องเพื่อเลือกวิชาและครู',
+      '<b>ตรวจสอบคาบชน:</b> กดปุ่ม "ตรวจสอบคาบชน" เพื่อดูว่ามีครูหรือห้องชนกันหรือไม่',
+      '<b>บันทึกฉบับตาราง:</b> ไปที่ "ฉบับตาราง/สำรอง" บันทึกเป็นฉบับและเลื่อนสถานะเป็น "เผยแพร่"',
+      '<b>พิมพ์หรือส่งออก PDF:</b> ไปที่ "พิมพ์ตารางสอน" เลือกธีมที่ชอบ (เช่น ทางวิชาการ หรือ พาสเทล) แล้วกด "พิมพ์ / บันทึก PDF"'
+    ]), 1)}
+
+    ${sec('🎨 การเลือกธีมพิมพ์ตารางสอน (วิชาการ & พาสเทล)', li([
+      '<b>🎓 ทางวิชาการ (Academic Formal):</b> ใช้ฟอนต์ TH Sarabun New เส้นตารางคมชัด เป็นทางการ เหมาะสำหรับส่ง สพป. หรือใส่แฟ้มประเมิน',
+      '<b>🌸 พาสเทลละมุน (Soft Pastel):</b> โทนสีหวาน แยกสีตามวัน (เหลือง ชมพู เขียว ส้ม ฟ้า) น่ารักสบายตา เหมาะสำหรับแจกนักเรียนและติดบอร์ดห้องเรียน',
+      '<b>✨ โมเดิร์นคลีน (Modern Clean):</b> หัวตารางสีกรมท่าเข้ม เส้นบาง คมชัดสไตล์สากล',
+      '<b>🏛️ กรมท่าพรีเมี่ยม (Executive Navy):</b> ลุคหรูหรา ภูมิฐาน คาดเส้นทอง สำหรับผู้บริหาร',
+      '<b>🖨️ ขาวดำประหยัดหมึก (Monochrome Eco):</b> คอนทราสต์ขาวดำ 100% ประหยัดหมึกพิมพ์เลเซอร์',
+      'สามารถคลิกเปลี่ยนธีมเพื่อดูพรีวิวได้ทันที และระบบจะจำธีมที่คุณเลือกไว้'
+    ]), 1)}
+
+    ${sec('📅 เคล็ดลับการจัดตารางด้วยมือ', li([
+      'บนคอมพิวเตอร์: ลากชื่อวิชาจากแถบด้านบนไปวางในช่องว่าง',
+      'ขณะลากจะเห็น <b>เงาจาง</b> ของวิชาที่ชั้นอื่นใช้อยู่ (สีแดง = ครูหรือห้องชน วางไม่ได้, สีเขียว = วางได้)',
+      'คลิกที่คาบที่จัดแล้ว เพื่อแก้ไข คัดลอก หรือลบคาบ',
+      'ปุ่ม Undo / Redo (หรือกด Ctrl+Z / Ctrl+Shift+Z) เพื่อย้อนกลับหรือทำซ้ำ'
+    ]))}
+
+    ${sec('⚡ การจัดตารางอัตโนมัติ', li([
+      'กำหนด "การมอบหมายสอน" ให้ครบถ้วนในเมนูข้อมูลพื้นฐาน',
+      'เลือกเงื่อนไข เช่น กระจายวิชาไม่ซ้ำวัน หรือวิชาหลักไว้ช่วงเช้า',
+      'กด "ประมวลผลตัวอย่าง" ตรวจสอบผลลัพธ์แล้วกดยืนยัน'
+    ]))}
+  `;
+}
+
+/* =========================================================
+   ACTIONS DISPATCHER
+   ========================================================= */
+const AX = {
+  autoopen: () => { S.view = 'auto'; render(); },
+  agoto: () => { S.view = 'data'; S.tab = 'assignments'; render(); },
+  autorun: () => {
+    S.ao = {
+      keep: $('#ao-m').value == '1' ? 1 : 0,
+      spread: $('#ao-s').checked,
+      core: $('#ao-c').checked,
+      light: $('#ao-l').checked,
+      tmax: +$('#ao-t').value || 6
+    };
+    S.auto = autoSched(S.ao);
+    render();
+  },
+  autoapply: () => {
+    const r = S.auto;
+    if (!r) return;
+    S.auto = null;
+    snap();
+    act(async () => {
+      await api('version', 'POST', { name: 'ก่อนจัดอัตโนมัติ ' + new Date().toISOString().slice(0, 16).replace('T', ' ') });
+      await api('entries/replace', 'POST', { rows: r.rows });
+    }, 'จัดตารางอัตโนมัติเรียบร้อย');
+  },
+  asgadd: e => {
+    const b = readAs(e.closest('tr'));
+    if (!(b.class_id && b.subject_id && b.teacher_id)) return toast('กรุณาเลือกชั้น วิชา และครูให้ครบ', true);
+    if (!b.periods) b.periods = by(S.d.subjects, b.subject_id)?.periods || 1;
+    act(() => api('crud/assignments', 'POST', b), 'เพิ่มรายการมอบหมายแล้ว');
+  },
+  asgdel: e => {
+    if (confirm('ลบรายการมอบหมายสอนนี้?')) act(() => api('crud/assignments/' + e.dataset.id, 'DELETE'), 'ลบแล้ว');
+  },
+  asgimp: () => {
+    const g = {};
+    S.d.entries.forEach(e => {
+      const k = [e.class_id, e.subject_id, e.teacher_id, e.teacher2_id || '', e.room_id || ''].join('|');
+      (g[k] = g[k] || { id: null, class_id: e.class_id, subject_id: e.subject_id, teacher_id: e.teacher_id, teacher2_id: e.teacher2_id || null, room_id: e.room_id || null, periods: 0 }).periods++;
+    });
+    const rows = Object.values(g);
+    if (!rows.length) return toast('ยังไม่มีคาบสอนในตารางให้นำเข้า', true);
+    if (!confirm(`นำเข้า ${rows.length} รายการมอบหมาย (แทนที่รายการเดิมทั้งหมด)?`)) return;
+    act(() => api('assignments/replace', 'POST', { rows }), 'นำเข้ารายการมอบหมายเรียบร้อย');
+  },
+  helpall: () => {
+    const a = [...document.querySelectorAll('details.man')], o = a.some(x => !x.open);
+    a.forEach(x => x.open = o);
+  }
+};
+
+function snap() {
+  S.un.push(JSON.stringify(S.d.entries));
+  if (S.un.length > 30) S.un.shift();
+  S.re = [];
+}
+
+const A = {
+  ...AX,
+  nav: e => { S.view = e.dataset.v; render(); },
+  tab: e => { S.tab = e.dataset.v; render(); },
+  logout: () => { S.entered = false; render(); },
+  print: () => window.print(),
+  close: () => modal(''),
+  maskclose: (e, ev) => { if (ev.target == e) modal(''); },
+  check: () => {
+    const c = conflicts();
+    modal(`
+      <h3>ผลการตรวจสอบตารางสอน</h3>
+      ${c.length ? c.map(x => `<div class="tag no" style="padding:10px 14px;display:block;margin-bottom:6px">${x.msg}</div>`).join('') : '<div class="tag ok" style="padding:12px 16px;display:block;font-size:14px">✓ ไม่พบข้อขัดแย้ง คาบสอนลงตัวทั้งหมด</div>'}
+      ${S.d.classes.flatMap(cl => S.d.subjects.map(sj => [cl, sj, S.d.entries.filter(e => e.class_id == cl.id && e.subject_id == sj.id).length])).filter(x => x[2] && x[1].periods && x[2] != x[1].periods).map(x => `<div class="tag" style="padding:8px 12px;display:block;margin-bottom:4px">คำเตือน: ${x[0].name} วิชา${x[1].name} จัด ${x[2]}/${x[1].periods} คาบ</div>`).join('')}
+      <div class="row" style="margin-top:14px">
+        <button class="btn pri" data-act="close">ปิดหน้าต่าง</button>
+      </div>
+    `);
+  },
+  edit: e => entryModal({ ...by(S.d.entries, e.dataset.id) }),
+  saveE: () => {
+    const b = { ...S.ed, subject_id: $('#f1').value, teacher_id: $('#f2').value, teacher2_id: $('#f4').value || null, room_id: $('#f3').value || null };
+    modal('');
+    snap();
+    S.clip = null;
+    act(() => api('entry', 'POST', b), 'บันทึกคาบเรียนเรียบร้อย');
+  },
+  delE: () => {
+    if (confirm('ลบคาบเรียนนี้?')) {
+      const id = S.ed.id;
+      modal('');
+      snap();
+      act(() => api('entry/' + id, 'DELETE'), 'ลบคาบแล้ว');
+    }
+  },
+  subnew: e => subModal(+e.dataset.id),
+  enter: () => { S.entered = true; render(); },
+  goto: e => {
+    if (e.dataset.t) S.tab = e.dataset.t;
+    S.view = e.dataset.v;
+    render();
+  },
+  printcur: () => {
+    S.pm = S.mode + '1';
+    S.ps = S.sel;
+    S.view = 'print';
+    render();
+  },
+  undo: () => {
+    if (!S.un.length) return;
+    S.re.push(JSON.stringify(S.d.entries));
+    const r = JSON.parse(S.un.pop());
+    act(() => api('entries/replace', 'POST', { rows: r }), 'ย้อนกลับแล้ว');
+  },
+  redo: () => {
+    if (!S.re.length) return;
+    S.un.push(JSON.stringify(S.d.entries));
+    const r = JSON.parse(S.re.pop());
+    act(() => api('entries/replace', 'POST', { rows: r }), 'ทำซ้ำแล้ว');
+  },
+  copyE: () => {
+    S.clip = { ...S.ed };
+    modal('');
+    render();
+    toast('คัดลอกคาบแล้ว คลิกที่ช่องว่างเพื่อวาง');
+  },
+  noclip: () => { S.clip = null; render(); },
+  vsave: () => act(() => api('version', 'POST', { name: $('#vn').value }), 'บันทึกฉบับตารางแล้ว'),
+  vnext: e => act(() => api(`version/${e.dataset.id}/status`, 'POST'), 'ปรับสถานะฉบับแล้ว'),
+  vrest: e => {
+    if (confirm('กู้คืนฉบับนี้เป็นตารางปัจจุบัน?')) {
+      snap();
+      act(() => api(`version/${e.dataset.id}/restore`, 'POST'), 'กู้คืนตารางแล้ว');
+    }
+  },
+  vdel: e => {
+    if (confirm('ลบฉบับนี้?')) act(() => api('version/' + e.dataset.id, 'DELETE'), 'ลบฉบับแล้ว');
+  },
+  nread: () => act(() => api('notif', 'POST')),
+  backup: async () => {
+    try {
+      const j = await api('backup').catch(() => S.d);
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([JSON.stringify(j, null, 2)], { type: 'application/json' }));
+      a.download = 'br-timetable-backup-' + new Date().toISOString().slice(0, 10) + '.json';
+      a.click();
+    } catch (x) {
+      toast(x.message, true);
+    }
+  },
+  subsave: () => {
+    const b = { date: S.sd, entry_id: S.se, sub_teacher_id: +$('#f1').value, reason: $('#f2').value };
+    modal('');
+    act(() => api('sub', 'POST', b), 'บันทึกการสอนแทนแล้ว');
+  },
+  subcancel: e => {
+    if (confirm('ยกเลิกรายการสอนแทนนี้?')) act(() => api('sub/' + e.dataset.id, 'DELETE'), 'ยกเลิกแล้ว');
+  },
+  del: e => {
+    if (confirm('ลบรายการนี้?')) act(() => api(`crud/${e.dataset.t}/${e.dataset.id}`, 'DELETE'), 'ลบแล้ว');
+  },
+  add: e => saveRow(e.closest('tr')),
+  saveset: () => {
+    const hr = {};
+    document.querySelectorAll('[data-hr]').forEach(x => {
+      const [c, i] = x.dataset.hr.split('.');
+      (hr[c] = hr[c] || [null, null])[+i] = x.value ? +x.value : null;
+    });
+    const pt = $('#ptm')?.value || S.printTheme;
+    S.printTheme = pt;
+    localStorage.setItem('brt_printtheme', pt);
+    act(() => api('settings', 'POST', {
+      year: $('#yr').value,
+      term: $('#tm').value,
+      school: $('#sc').value,
+      office: $('#of').value,
+      director: $('#dr').value,
+      academic: $('#ac').value,
+      showcredit: $('#scr').checked,
+      printtheme: pt,
+      homerooms: hr
+    }), 'บันทึกการตั้งค่าเรียบร้อย');
+  },
+  pzoom: () => {
+    S.pz = S.pz == 'full' ? 'fit' : 'full';
+    render();
+  },
+  settheme: e => {
+    const th = e.dataset.theme;
+    if (th) {
+      S.printTheme = th;
+      localStorage.setItem('brt_printtheme', th);
+      toast('เลือกธีมพิมพ์: ' + (THEMES.find(t => t.id == th)?.name || th));
+      render();
+      api('settings', 'POST', { printtheme: th }).catch(() => {});
+    }
+  }
+};
+
+function saveRow(tr) {
+  const b = { id: tr.dataset.id || undefined };
+  tr.querySelectorAll('input').forEach(i => b[i.dataset.k] = i.type == 'number' ? +i.value : i.value);
+  if (!(b.name || b.label)) return toast('กรุณากรอกชื่อ', true);
+  act(() => api('crud/' + tr.dataset.t, 'POST', b), 'บันทึกแล้ว');
+}
+
+document.addEventListener('click', ev => {
+  const e = ev.target.closest('[data-act]');
+  if (e) {
+    if (e.dataset.act == 'logout') ev.preventDefault();
+    return A[e.dataset.act]?.(e, ev);
+  }
+  const td = ev.target.closest('td.empty[data-d]');
+  if (td && canEdit() && S.mode == 'class') {
+    entryModal(S.clip ? {
+      ...S.clip,
+      id: 0,
+      class_id: S.sel,
+      day: +td.dataset.d,
+      period: +td.dataset.p
+    } : {
+      class_id: S.sel,
+      day: +td.dataset.d,
+      period: +td.dataset.p,
+      subject_id: S.d.subjects[0]?.id
+    });
+  }
+});
+
+document.addEventListener('change', ev => {
+  const t = ev.target, k = t.dataset.ch;
+  if (t.dataset.co) {
+    const [m, f] = t.dataset.co.split('.'), o = getCO();
+    o[m][f] = t.checked ? 1 : 0;
+    S.d.settings.cellopts = JSON.stringify(o);
+    render();
+    api('settings', 'POST', { cellopts: o }).catch(e => toast(e.message, true));
+    return;
+  }
+  if (k == 'restore') {
+    doRestore(t.files[0]);
+    return;
+  }
+  if (k) {
+    S[k == 'sel' ? (S.view == 'print' ? 'ps' : 'sel') : k] = k == 'mode' ? t.value : k == 'sd' || k == 'pm' ? t.value : +t.value;
+    if (k == 'mode') S.sel = null;
+    if (k == 'pm') S.ps = null;
+    render();
+    return;
+  }
+  const tr = t.closest('tr[data-t]');
+  if (tr && tr.dataset.id) saveRow(tr);
+});
+
+/* Drag and Drop with Ghost Previews */
+function ghostCtx(k, id) {
+  const d = S.d;
+  if (k == 'S') {
+    return {
+      k,
+      sid: +id,
+      t: new Set(d.entries.filter(e => e.subject_id == id).flatMap(e => [e.teacher_id, e.teacher2_id].filter(Boolean))),
+      r: null,
+      ex: 0
+    };
+  }
+  const e = by(d.entries, id);
+  return e ? {
+    k,
+    sid: e.subject_id,
+    t: new Set([e.teacher_id, e.teacher2_id].filter(Boolean)),
+    r: e.room_id,
+    ex: e.id
+  } : null;
+}
+
+function paintGhosts(c) {
+  document.querySelectorAll('td.empty[data-d]').forEach(td => {
+    const es = S.d.entries.filter(e => e.day == td.dataset.d && e.period == td.dataset.p && e.class_id != S.sel && e.id != c.ex);
+    const hit = e => c.t.has(e.teacher_id) || (e.teacher2_id && c.t.has(e.teacher2_id)) || (c.r && e.room_id == c.r);
+    const busy = new Set(es.flatMap(e => [e.teacher_id, e.teacher2_id].filter(Boolean)));
+    const bad = c.k == 'E' && es.some(hit);
+    const warn = c.k == 'S' && c.t.size > 0 && [...c.t].every(t => busy.has(t));
+    td.classList.add(bad ? 'bad' : warn ? 'warn' : 'ok');
+
+    const rank = e => hit(e) ? 0 : e.subject_id == c.sid ? 1 : 2;
+    const so = [...es].sort((a, b) => rank(a) - rank(b));
+    td.insertAdjacentHTML('beforeend', so.slice(0, 3).map(e => {
+      const sj = by(S.d.subjects, e.subject_id);
+      const tc = { name: tnm(e) };
+      return `<div class="ghost ${hit(e) ? 'hit' : e.subject_id == c.sid ? 'same' : ''}" style="--h:${col(sj?.name)}" title="${tc?.name || ''}">${by(S.d.classes, e.class_id)?.name} · ${sj?.name}</div>`;
+    }).join('') + (so.length > 3 ? `<div class="ghost more">+${so.length - 3} ชั้นอื่น</div>` : ''));
+  });
+}
+
+function clearGhosts() {
+  S.drag = null;
+  document.querySelectorAll('.ghost').forEach(x => x.remove());
+  document.querySelectorAll('td.ok,td.warn,td.bad,td.over').forEach(x => x.classList.remove('ok', 'warn', 'bad', 'over'));
+  document.querySelector('.legend')?.remove();
+}
+
+document.addEventListener('dragstart', ev => {
+  const t = ev.target.closest('[data-drag]');
+  if (!t) return;
+  ev.dataTransfer.setData('text/plain', t.dataset.drag);
+  ev.dataTransfer.effectAllowed = 'move';
+  const [k, id] = t.dataset.drag.split(':'), c = ghostCtx(k, +id);
+  if (!c) return;
+  S.drag = c;
+  setTimeout(() => {
+    paintGhosts(c);
+    document.body.insertAdjacentHTML('beforeend', `
+      <div class="legend">
+        <span><i style="background:#fff;border:1px dashed #8a93b5"></i>เงา = ชั้นอื่นใช้คาบนี้อยู่</span>
+        <span><i style="background:#f87171"></i>ครู/ห้องชน วางไม่ได้</span>
+        <span><i style="background:#fbbf24"></i>ครูวิชานี้ติดสอนทุกคน</span>
+      </div>
+    `);
+  }, 0);
+});
+
+document.addEventListener('dragover', ev => {
+  const td = ev.target.closest('td.empty[data-d]');
+  document.querySelectorAll('td.over').forEach(x => x.classList.remove('over'));
+  if (td) {
+    if (!(S.drag?.k == 'E' && td.classList.contains('bad'))) {
+      ev.preventDefault();
+      ev.dataTransfer.dropEffect = 'move';
+    }
+    td.classList.add('over');
+  }
+});
+
+document.addEventListener('drop', ev => {
+  const td = ev.target.closest('td.empty[data-d]');
+  if (!td) return;
+  ev.preventDefault();
+  const bad = td.classList.contains('bad') && S.drag?.k == 'E';
+  const [k, id] = ev.dataTransfer.getData('text/plain').split(':');
+  const day = +td.dataset.d, period = +td.dataset.p;
+  clearGhosts();
+
+  if (bad) return toast('ครูหรือห้องนี้มีคาบสอนอื่นในช่วงเวลานั้น วางไม่ได้', true);
+  if (k == 'S') {
+    entryModal({ class_id: S.sel, day, period, subject_id: +id });
+  } else if (k == 'E') {
+    const e = by(S.d.entries, id);
+    snap();
+    act(() => api('entry', 'POST', { ...e, day, period }), 'ย้ายคาบเรียนเรียบร้อย');
+  }
+});
+
+document.addEventListener('dragend', clearGhosts);
+
+document.addEventListener('input', ev => {
+  if (ev.target.id != 'q') return;
+  const v = ev.target.value.trim().toLowerCase();
+  document.querySelectorAll('.blk, .chip').forEach(b => {
+    b.style.opacity = !v || b.textContent.toLowerCase().includes(v) ? 1 : 0.18;
+  });
+});
+
+document.addEventListener('keydown', ev => {
+  if (ev.key == 'Escape') modal('');
+  if ((ev.ctrlKey || ev.metaKey) && ev.key == 'z' && S.view == 'tt' && !/INPUT|SELECT|TEXTAREA/.test(ev.target.tagName)) {
+    ev.preventDefault();
+    (ev.shiftKey ? A.redo : A.undo)();
+  }
+});
+
+// App Initialization
+(async () => {
+  render();
+  try {
+    await load();
+  } catch (e) {
+    console.log('Started with preloaded dataset:', e);
+  }
+  render();
+})();
+</script>
+</body>
+</html>
